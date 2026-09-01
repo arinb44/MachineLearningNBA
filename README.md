@@ -50,7 +50,7 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 │   ├── output/         Predictions and model analysis outputs
 │   └── tracking/       Accuracy tracking history (all-time + per-session)
 ├── models/             Trained model (nba_predictor.pkl)
-├── docs/               Guides (+ docs/reference/ for the original ML templates)
+├── docs/               Guides — see docs/README.md for an index
 ├── reports/            Generated graphs and betting spreadsheets
 ├── streamlit_app.py    Interactive demo (streamlit run streamlit_app.py)
 └── Dockerfile          Reproducible environment — see Quick start below
@@ -175,4 +175,4 @@ ATL BOS BKN CHA CHI CLE DAL DEN DET GSW HOU IND LAC LAL MEM MIA MIL MIN NOP NYK 
 - Early-season predictions are skipped/noisier until each team has 5+ games.
 - Don't use for playoff games (different dynamics), and treat predictions as one input among many.
 
-More detail in [docs/NBA_ML_COMPLETE_GUIDE.md](docs/NBA_ML_COMPLETE_GUIDE.md).
+More detail in [docs/](docs/README.md) — feature background, the accuracy-tracking file layout, and how to read the generated charts.

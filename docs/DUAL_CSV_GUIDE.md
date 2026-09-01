@@ -3,7 +3,7 @@
 ## Overview
 The accuracy tracker now outputs **TWO CSV files** with different purposes:
 
-## File 1: `prediction_tracking.csv` (Historical Data)
+## File 1: `data/tracking/prediction_tracking.csv` (Historical Data)
 **Purpose:** Cumulative tracking of ALL predictions across all sessions
 
 **Behavior:**
@@ -29,7 +29,7 @@ date,home_team,away_team,predicted_winner,actual_winner,correct,confidence,track
 2025-10-29,MIA,CHI,MIA,MIA,True,63.4,2025-10-29 09:15:00 Session 3
 ```
 
-## File 2: `session_results.csv` (Current Session Only)
+## File 2: `data/tracking/session_results.csv` (Current Session Only)
 **Purpose:** Contains ONLY the predictions from the most recent run
 
 **Behavior:**
@@ -55,30 +55,30 @@ date,home_team,away_team,predicted_winner,actual_winner,correct,confidence,track
 
 ### Day 1: Make First Predictions
 ```bash
-python predict_games.py  # Predict 10 games
-python track_accuracy.py
+python scripts/predict_games.py  # Predict 10 games
+python scripts/track_accuracy.py
 ```
 **Result:**
-- `prediction_tracking.csv` 10 rows
-- `session_results.csv` 10 rows
+- `data/tracking/prediction_tracking.csv` 10 rows
+- `data/tracking/session_results.csv` 10 rows
 
 ### Day 2: Make More Predictions
 ```bash
-python predict_games.py  # Predict 8 new games
-python track_accuracy.py
+python scripts/predict_games.py  # Predict 8 new games
+python scripts/track_accuracy.py
 ```
 **Result:**
-- `prediction_tracking.csv` 18 rows (10 + 8 appended)
-- `session_results.csv` 8 rows (overwritten with just Day 2)
+- `data/tracking/prediction_tracking.csv` 18 rows (10 + 8 appended)
+- `data/tracking/session_results.csv` 8 rows (overwritten with just Day 2)
 
 ### Day 3: Make More Predictions
 ```bash
-python predict_games.py  # Predict 12 new games
-python track_accuracy.py
+python scripts/predict_games.py  # Predict 12 new games
+python scripts/track_accuracy.py
 ```
 **Result:**
-- `prediction_tracking.csv` 30 rows (18 + 12 appended)
-- `session_results.csv` 12 rows (overwritten with just Day 3)
+- `data/tracking/prediction_tracking.csv` 30 rows (18 + 12 appended)
+- `data/tracking/session_results.csv` 12 rows (overwritten with just Day 3)
 
 ## Use Case Examples
 
@@ -87,7 +87,7 @@ python track_accuracy.py
 import pandas as pd
 
 # Load all historical data
-historical = pd.read_csv('prediction_tracking.csv')
+historical = pd.read_csv('data/tracking/prediction_tracking.csv')
 
 # Group by week
 historical['week'] = pd.to_datetime(historical['date']).dt.isocalendar().week
@@ -102,7 +102,7 @@ print(weekly_accuracy)
 import pandas as pd
 
 # Just look at today's results
-today = pd.read_csv('session_results.csv')
+today = pd.read_csv('data/tracking/session_results.csv')
 
 print(f"Today's Accuracy: {today['correct'].mean():.1%}")
 print(f"Games Predicted: {len(today)}")
@@ -113,7 +113,7 @@ print(f"Games Predicted: {len(today)}")
 import pandas as pd
 
 # Historical data shows model evolution
-all_data = pd.read_csv('prediction_tracking.csv')
+all_data = pd.read_csv('data/tracking/prediction_tracking.csv')
 
 # Compare accuracy before and after model update
 before = all_data[all_data['tracked_at'] < '2025-11-01']
@@ -127,32 +127,32 @@ print(f"Accuracy after update: {after['correct'].mean():.1%}")
 
 | Task | Use This File |
 |------|---------------|
-| Track long-term trends | `prediction_tracking.csv` |
-| See if model is improving | `prediction_tracking.csv` |
-| Create season visualizations | `prediction_tracking.csv` |
-| Quick check today's results | `session_results.csv` |
-| Share today's performance | `session_results.csv` |
-| Import to spreadsheet for today | `session_results.csv` |
-| Test specific prediction batch | `session_results.csv` |
+| Track long-term trends | `data/tracking/prediction_tracking.csv` |
+| See if model is improving | `data/tracking/prediction_tracking.csv` |
+| Create season visualizations | `data/tracking/prediction_tracking.csv` |
+| Quick check today's results | `data/tracking/session_results.csv` |
+| Share today's performance | `data/tracking/session_results.csv` |
+| Import to spreadsheet for today | `data/tracking/session_results.csv` |
+| Test specific prediction batch | `data/tracking/session_results.csv` |
 
 ## Pro Tips
 
 1. **Backup Historical Data**
    ```bash
-   cp prediction_tracking.csv prediction_tracking_backup.csv
+   cp data/tracking/prediction_tracking.csv prediction_tracking_backup.csv
    ```
 
 2. **Reset Historical Data**
    ```bash
    # Start fresh (delete old historical data)
-   rm prediction_tracking.csv
+   rm data/tracking/prediction_tracking.csv
    # Next run will create new file
    ```
 
 3. **Export Session for Analysis**
    ```bash
    # Rename session file before next run
-   cp session_results.csv results_2025-10-29.csv
+   cp data/tracking/session_results.csv results_2025-10-29.csv
    ```
 
 4. **Combine Multiple Sessions**
@@ -173,7 +173,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load historical data
-df = pd.read_csv('prediction_tracking.csv')
+df = pd.read_csv('data/tracking/prediction_tracking.csv')
 
 # Convert date column
 df['date'] = pd.to_datetime(df['date'])

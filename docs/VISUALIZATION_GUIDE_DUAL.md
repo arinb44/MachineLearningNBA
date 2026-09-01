@@ -6,11 +6,11 @@ The visualization tool now creates **TWO separate sets of visualizations** to ma
 ## Visualization Sets
 
 ### 1. Historical Visualizations (Season-Long Analysis)
-**Source Data:** `prediction_tracking.csv` (all cumulative predictions)
+**Source Data:** `data/tracking/prediction_tracking.csv` (all cumulative predictions)
 
 **Files Created:**
-- `historical_accuracy_graph.png` - All predictions over time
-- `historical_dashboard.png` - Comprehensive 4-panel analysis
+- `reports/historical_accuracy_graph.png` - All predictions over time
+- `reports/historical_dashboard.png` - Comprehensive 4-panel analysis
 
 **What You'll See:**
 Your model's evolution throughout the entire season
@@ -27,11 +27,11 @@ How your model improves (or regresses) over time
 ---
 
 ### 2. Session Visualizations (Current Batch Only)
-**Source Data:** `session_results.csv` (current run only)
+**Source Data:** `data/tracking/session_results.csv` (current run only)
 
 **Files Created:**
-- `session_accuracy_graph.png` - Just this batch of predictions
-- `session_dashboard.png` - Analysis of current session
+- `reports/session_accuracy_graph.png` - Just this batch of predictions
+- `reports/session_dashboard.png` - Analysis of current session
 
 **What You'll See:**
 Performance of just the predictions you ran today
@@ -204,49 +204,49 @@ Accuracy %
 ### Scenario 1: Daily Prediction Routine
 ```bash
 # Make today's predictions
-python predict_games.py
+python scripts/predict_games.py
 
 # Track accuracy
-python track_accuracy.py
+python scripts/track_accuracy.py
 
 # Visualize today's results
-python visualize_predictions.py
+python scripts/visualize_predictions.py
 
 # Check session graphs for today's performance
 # historical graphs update automatically
 ```
 
 **Look at:**
-- `session_accuracy_graph.png` - How did today go?
-- `session_dashboard.png` - Quick analysis
+- `reports/session_accuracy_graph.png` - How did today go?
+- `reports/session_dashboard.png` - Quick analysis
 
 ### Scenario 2: Weekly Performance Review
 ```bash
 # After a week of predictions
-python visualize_predictions.py
+python scripts/visualize_predictions.py
 
 # Check historical graphs for weekly trends
 ```
 
 **Look at:**
-- `historical_accuracy_graph.png` - Week-over-week performance
-- `historical_dashboard.png` - Panel 1: Is accuracy trending up?
+- `reports/historical_accuracy_graph.png` - Week-over-week performance
+- `reports/historical_dashboard.png` - Panel 1: Is accuracy trending up?
 
 ### Scenario 3: Model Update Testing
 ```bash
 # Before model update
-python visualize_predictions.py
-cp historical_accuracy_graph.png before_update.png
+python scripts/visualize_predictions.py
+cp reports/historical_accuracy_graph.png before_update.png
 
 # Update model...
 
 # After model update
-python predict_games.py
-python track_accuracy.py
-python visualize_predictions.py
+python scripts/predict_games.py
+python scripts/track_accuracy.py
+python scripts/visualize_predictions.py
 
 # Compare:
-# - before_update.png vs historical_accuracy_graph.png
+# - before_update.png vs reports/historical_accuracy_graph.png
 ```
 
 ## Interpreting Results
@@ -289,8 +289,8 @@ from PIL import Image
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
 
-historical = Image.open('historical_accuracy_graph.png')
-session = Image.open('session_accuracy_graph.png')
+historical = Image.open('reports/historical_accuracy_graph.png')
+session = Image.open('reports/session_accuracy_graph.png')
 
 ax1.imshow(historical)
 ax1.set_title('Historical (All Time)', fontsize=16)
@@ -306,7 +306,7 @@ plt.savefig('comparison.png', dpi=300, bbox_inches='tight')
 ### 2. Track Best Sessions
 ```bash
 # Save today's session if it was exceptional
-cp session_accuracy_graph.png best_sessions/session_2025-10-29.png
+cp reports/session_accuracy_graph.png best_sessions/session_2025-10-29.png
 ```
 
 ### 3. Identify Problem Games
@@ -334,10 +334,10 @@ Check Panel 2 in both dashboards:
 
 | File | Source | Purpose | Overwrites? |
 |------|--------|---------|-------------|
-| `historical_accuracy_graph.png` | prediction_tracking.csv | Season trends | Yes (updates) |
-| `historical_dashboard.png` | prediction_tracking.csv | Full analysis | Yes (updates) |
-| `session_accuracy_graph.png` | session_results.csv | Today's results | Yes |
-| `session_dashboard.png` | session_results.csv | Today's analysis | Yes |
+| `reports/historical_accuracy_graph.png` | data/tracking/prediction_tracking.csv | Season trends | Yes (updates) |
+| `reports/historical_dashboard.png` | data/tracking/prediction_tracking.csv | Full analysis | Yes (updates) |
+| `reports/session_accuracy_graph.png` | data/tracking/session_results.csv | Today's results | Yes |
+| `reports/session_dashboard.png` | data/tracking/session_results.csv | Today's analysis | Yes |
 
 ## Installation & Usage
 
@@ -348,7 +348,7 @@ pip install matplotlib --break-system-packages
 
 ### Regular Use:
 ```bash
-python visualize_predictions.py
+python scripts/visualize_predictions.py
 ```
 
 ### Expected Output:
@@ -356,23 +356,23 @@ python visualize_predictions.py
 NBA Prediction Visualization Tool
 ============================================================
 
-HISTORICAL DATA (prediction_tracking.csv)
+HISTORICAL DATA (data/tracking/prediction_tracking.csv)
 ------------------------------------------------------------
 Creating historical visualizations...
 Loaded 42 predictions
 Creating main accuracy graph...
-Saved: historical_accuracy_graph.png
+Saved: reports/historical_accuracy_graph.png
 Creating comprehensive dashboard...
-Saved: historical_dashboard.png
+Saved: reports/historical_dashboard.png
 
-SESSION DATA (session_results.csv)
+SESSION DATA (data/tracking/session_results.csv)
 ------------------------------------------------------------
 Creating session visualizations...
 Loaded 10 predictions
 Creating main accuracy graph...
-Saved: session_accuracy_graph.png
+Saved: reports/session_accuracy_graph.png
 Creating comprehensive dashboard...
-Saved: session_dashboard.png
+Saved: reports/session_dashboard.png
 
 ============================================================
 Visualization complete!
@@ -380,15 +380,15 @@ Visualization complete!
 Files created:
 
    HISTORICAL VISUALIZATIONS:
-   • historical_accuracy_graph.png
+   • reports/historical_accuracy_graph.png
      └─ Game-by-game performance over entire season
-   • historical_dashboard.png
+   • reports/historical_dashboard.png
      └─ Comprehensive 4-panel analysis
 
    SESSION VISUALIZATIONS:
-   • session_accuracy_graph.png
+   • reports/session_accuracy_graph.png
      └─ Performance for current prediction batch
-   • session_dashboard.png
+   • reports/session_dashboard.png
      └─ Analysis of current session only
 
 Use historical charts to see long-term trends
@@ -399,20 +399,20 @@ Use session charts for quick current batch analysis
 
 ```bash
 # Monday: Predict games
-python predict_games.py
-python track_accuracy.py
-python visualize_predictions.py
-# Check session_accuracy_graph.png
+python scripts/predict_games.py
+python scripts/track_accuracy.py
+python scripts/visualize_predictions.py
+# Check reports/session_accuracy_graph.png
 
 # Tuesday: More predictions
-python predict_games.py
-python track_accuracy.py
-python visualize_predictions.py
+python scripts/predict_games.py
+python scripts/track_accuracy.py
+python scripts/visualize_predictions.py
 # Check both session (today) and historical (all time)
 
 # Sunday: Weekly review
-python visualize_predictions.py
-# Analyze historical_dashboard.png for weekly trends
+python scripts/visualize_predictions.py
+# Analyze reports/historical_dashboard.png for weekly trends
 ```
 
 That's it! You now have powerful dual visualization tracking for both daily analysis and long-term trends!
