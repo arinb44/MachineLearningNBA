@@ -12,10 +12,12 @@ from datetime import datetime
 import os
 import re
 
+import config
+
 class AccuracyTracker:
     def __init__(self):
         self.predictions_file = "data/output/predictions_output.txt"
-        self.results_file = "data/tracking/nba_game_results_2025-26.csv"
+        self.results_file = config.game_results_file()
         self.tracking_file = "data/tracking/prediction_tracking.csv"
         self.session_file = "data/tracking/session_results.csv"
         
@@ -138,7 +140,12 @@ class AccuracyTracker:
                 # Calculate margin error
                 margin_error = abs(abs(pred.get('margin', 0)) - abs(actual_margin))
                 
-                matched_predictions.append({
+                # Margin signed from the home team's perspective
+                model_home_margin = pred.get('margin', 0)
+                if pred['winner'] != home:
+                    model_home_margin = -model_home_margin
+
+                row = {
                     'date': game['date'],
                     'home_team': home,
                     'away_team': away,
@@ -147,11 +154,15 @@ class AccuracyTracker:
                     'correct': correct,
                     'confidence': pred['confidence'],
                     'predicted_margin': pred.get('margin', 0),
+                    'model_home_margin': model_home_margin,
                     'actual_margin': actual_margin,
                     'margin_error': margin_error,
                     'home_score': game['home_score'],
                     'away_score': game['away_score']
-                })
+                }
+                if 'vegas_home_margin' in results_df.columns and pd.notna(game['vegas_home_margin']):
+                    row['vegas_home_margin'] = game['vegas_home_margin']
+                matched_predictions.append(row)
         
         return pd.DataFrame(matched_predictions)
     
@@ -212,7 +223,21 @@ class AccuracyTracker:
                 }
         
         metrics['team_accuracy'] = team_accuracy
-        
+
+        # Model vs Vegas, on games that have a line
+        # (add lines with scripts/merge_vegas_lines.py)
+        if 'vegas_home_margin' in matched_df.columns:
+            lined = matched_df.dropna(subset=['vegas_home_margin'])
+            if not lined.empty:
+                actual = lined['actual_margin']
+                metrics['vegas'] = {
+                    'games': len(lined),
+                    'model_mae': (lined['model_home_margin'] - actual).abs().mean(),
+                    'vegas_mae': (lined['vegas_home_margin'] - actual).abs().mean(),
+                    'model_acc': lined['correct'].mean() * 100,
+                    'vegas_acc': ((lined['vegas_home_margin'] > 0) == (actual > 0)).mean() * 100,
+                }
+
         return metrics
     
     def print_report(self, metrics):
@@ -232,6 +257,16 @@ class AccuracyTracker:
         for label, data in metrics['confidence_accuracy'].items():
             print(f"   {label:20s}: {data['correct']}/{data['total']} ({data['accuracy']:.1f}%)")
         
+        if 'vegas' in metrics:
+            v = metrics['vegas']
+            print(f"\n🎰 Model vs Vegas ({v['games']} games with lines):")
+            print(f"   Margin MAE:      model {v['model_mae']:.2f}  vs  Vegas {v['vegas_mae']:.2f}")
+            print(f"   Winner accuracy: model {v['model_acc']:.1f}%  vs  Vegas {v['vegas_acc']:.1f}%")
+            if v['model_mae'] < v['vegas_mae']:
+                print("   🏆 Model is beating the closing line — verify before trusting!")
+            else:
+                print("   ℹ️  Vegas is still sharper (expected — beating the line is very hard)")
+
         print("\n🏀 Top 5 Teams (Prediction Accuracy):")
         sorted_teams = sorted(
             metrics['team_accuracy'].items(),

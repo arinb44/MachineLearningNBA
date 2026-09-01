@@ -1,21 +1,24 @@
 """
-Fetch NBA player stats for 2025-26 season
+Fetch NBA player stats for a season (--season, default from config.py)
 This script downloads all player statistics and saves them to a CSV file
 """
 
+import argparse
 import pandas as pd
 from nba_api.stats.endpoints import leaguedashplayerstats
-from datetime import datetime
-import time
 
-print("Fetching 2025-26 NBA season player statistics...")
+import config
+
+parser = argparse.ArgumentParser(description=__doc__)
+config.add_season_arg(parser)
+args = parser.parse_args()
+
+print(f"Fetching {args.season} NBA season player statistics...")
 print("This may take 30-60 seconds...\n")
 
 try:
-    # Fetch player stats from the 2025-26 season
-    # Season format: '2025-26' for the 2025-26 season
     player_stats = leaguedashplayerstats.LeagueDashPlayerStats(
-        season='2025-26',
+        season=args.season,
         season_type_all_star='Regular Season',
         per_mode_detailed='PerGame',
         measure_type_detailed_defense='Base'
@@ -75,7 +78,7 @@ try:
     print("\nFetching advanced statistics...")
     
     advanced_stats = leaguedashplayerstats.LeagueDashPlayerStats(
-        season='2025-26',
+        season=args.season,
         season_type_all_star='Regular Season',
         per_mode_detailed='PerGame',
         measure_type_detailed_defense='Advanced'
@@ -115,7 +118,7 @@ try:
     df_final = df_final.sort_values('PTS', ascending=False)
     
     # Save to CSV
-    output_file = 'data/input/nba_player_stats_2025-26.csv'
+    output_file = config.player_stats_file(args.season)
     df_final.to_csv(output_file, index=False)
     
     print(f"\n✓ Merged {len(df_final)} player records")
@@ -148,7 +151,7 @@ except Exception as e:
     print("\nTroubleshooting tips:")
     print("1. Make sure nba_api is installed: pip install nba_api")
     print("2. Check your internet connection")
-    print("3. The 2025-26 season may not have started yet")
+    print("3. The season may not have started yet")
     print("4. Try running again in a few seconds (NBA API rate limiting)")
     import traceback
     print("\nFull error:")

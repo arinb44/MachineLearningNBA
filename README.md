@@ -12,18 +12,22 @@ Machine learning system for predicting NBA game outcomes (winner, margin, and ca
 
 ```
 ├── scripts/            All runnable scripts (run them from the repo root)
+│   ├── config.py                   Season + file paths (one place to change them)
 │   ├── features.py                 Shared point-in-time feature engineering
 │   ├── fetch_player_stats.py       Fetch latest player stats from the NBA API
 │   ├── fetch_game_results.py       Fetch latest game results
 │   ├── fetch_game_logs.py          Fetch game logs / per-game std deviations
+│   ├── fetch_injuries.py           Fetch current injuries from ESPN
 │   ├── injury_tracker.py           Manually track injuries, adjust predictions
 │   ├── adjust_team_power.py        Build injury-adjusted team power ratings
 │   ├── find_consistent_players.py  Find most consistent players per stat
 │   ├── train_model.py              Train the prediction model
 │   ├── predict_games.py            Predict games listed in data/input/games_to_predict.txt
-│   ├── track_accuracy.py           Compare predictions vs. actual results
+│   ├── track_accuracy.py           Compare predictions vs. actual results (and Vegas)
+│   ├── merge_vegas_lines.py        Merge point spreads for model-vs-Vegas reports
 │   ├── visualize_predictions.py    Generate accuracy graphs and dashboards
 │   └── check_files.py              Debug helper: verify data files exist
+├── tests/              Pytest suite for the feature engineering (run: pytest)
 ├── data/
 │   ├── input/          Fetched stats, training data, games to predict
 │   ├── output/         Predictions and model analysis outputs
@@ -47,11 +51,14 @@ On macOS, XGBoost needs OpenMP: `brew install libomp`.
 
 All scripts are run from the repository root.
 
+All fetch scripts accept `--season` (default `2025-26`; also settable via the `NBA_SEASON` env var or `scripts/config.py`).
+
 ### 1. Update data (weekly)
 
 ```bash
 python scripts/fetch_player_stats.py
 python scripts/fetch_game_results.py
+python scripts/fetch_injuries.py
 ```
 
 ### 2. Train the model
@@ -76,7 +83,7 @@ GSW vs BOS
 python scripts/predict_games.py
 ```
 
-Results land in `data/output/predictions_output.txt` and `data/output/predictions.csv`.
+Results land in `data/output/predictions_output.txt` and `data/output/predictions.csv`. If `fetch_injuries.py` has been run, each injured player's value (minutes × PIE, weighted by status) is subtracted from their team's predicted margin automatically.
 
 ### 4. Track accuracy & visualize
 
@@ -86,6 +93,17 @@ python scripts/visualize_predictions.py
 ```
 
 Graphs are saved to `reports/`.
+
+### 5. (Optional) Compare against Vegas
+
+Get historical point spreads (sportsbookreviewsonline.com season workbooks, Kaggle NBA odds datasets, or the-odds-api.com), shape them into a CSV with columns `date,home_team,away_team,home_spread`, then:
+
+```bash
+python scripts/merge_vegas_lines.py path/to/odds.csv
+python scripts/track_accuracy.py
+```
+
+The accuracy report will show model-vs-Vegas margin error and winner accuracy. Beating the closing line consistently is very hard — treat any "model wins" result with suspicion until it holds up over 100+ games.
 
 ## Team Abbreviations
 

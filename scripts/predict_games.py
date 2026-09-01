@@ -12,14 +12,84 @@ import numpy as np
 import pandas as pd
 import joblib
 import os
+import unicodedata
 from datetime import datetime
 
+import config
 import features
 
-MODEL_FILE = 'models/nba_predictor.pkl'
-GAMES_FILE = 'data/input/games_to_predict.txt'
-PREDICTIONS_CSV = 'data/output/predictions.csv'
-PREDICTIONS_TXT = 'data/output/predictions_output.txt'
+MODEL_FILE = config.MODEL_FILE
+GAMES_FILE = config.GAMES_TO_PREDICT_FILE
+PREDICTIONS_CSV = config.PREDICTIONS_CSV
+PREDICTIONS_TXT = config.PREDICTIONS_TXT
+
+# How much of an injured player's value is expected to be missing
+INJURY_STATUS_WEIGHTS = {
+    'out': 1.0,
+    'doubtful': 0.75,
+    'questionable': 0.4,
+    'day-to-day': 0.4,
+    'gtd': 0.4,
+    'probable': 0.1,
+}
+
+
+def _norm_name(name):
+    """Normalize player names so ESPN and NBA-stats spellings match."""
+    name = unicodedata.normalize('NFKD', str(name))
+    name = ''.join(c for c in name if not unicodedata.combining(c))
+    name = name.lower().replace('.', '').replace("'", '').strip()
+    for suffix in (' jr', ' sr', ' iii', ' ii', ' iv'):
+        if name.endswith(suffix):
+            name = name[: -len(suffix)].strip()
+    return name
+
+
+def load_injury_impacts():
+    """
+    Per-team injury impact in points, from data/input/injuries.csv
+    (fetch_injuries.py) weighted by each player's minutes and PIE.
+
+    Returns {team: {'points': float, 'players': [(name, status, pts), ...]}}
+    """
+    if not os.path.exists(config.INJURIES_FILE):
+        print("ℹ️  No injuries file — run scripts/fetch_injuries.py to adjust "
+              "for injuries")
+        return {}
+    if not os.path.exists(config.player_stats_file()):
+        print("ℹ️  No player stats file — run scripts/fetch_player_stats.py "
+              "to enable injury adjustments")
+        return {}
+
+    injuries = pd.read_csv(config.INJURIES_FILE)
+    stats = pd.read_csv(config.player_stats_file())
+    stats['norm_name'] = stats['PLAYER_NAME'].map(_norm_name)
+    stats = stats.set_index('norm_name')
+
+    impacts = {}
+    unmatched = 0
+    for row in injuries.itertuples():
+        weight = INJURY_STATUS_WEIGHTS.get(str(row.status).lower(), 0.4)
+        player = stats[stats.index == _norm_name(row.player)]
+        if player.empty:
+            unmatched += 1  # two-way/G-League players mostly; negligible impact
+            continue
+        pie = float(player['PIE'].iloc[0])
+        minutes = float(player['MIN'].iloc[0])
+        # A star (PIE ~0.18, 36 min) ≈ 4.7 pts; a rotation player ≈ 1 pt
+        points = max(0.0, pie - 0.05) * minutes * weight
+        if points < 0.2:
+            continue
+        team = impacts.setdefault(row.team, {'points': 0.0, 'players': []})
+        team['points'] += points
+        team['players'].append((row.player, row.status, round(points, 1)))
+
+    if impacts:
+        total_players = sum(len(t['players']) for t in impacts.values())
+        print(f"🏥 Injury adjustments loaded: {total_players} impact players "
+              f"across {len(impacts)} teams"
+              + (f" ({unmatched} minor/unmatched names ignored)" if unmatched else ""))
+    return impacts
 
 
 class NBAPredictor:
@@ -77,7 +147,7 @@ class NBAPredictor:
         # fallback if the model predates calibration
         return min(0.95, 0.5 + abs(margin) * 0.02)
 
-    def predict_game(self, game, builder, as_of_date):
+    def predict_game(self, game, builder, as_of_date, injuries):
         feats = builder.game_features(
             game['home_team'], game['away_team'], as_of_date
         )
@@ -88,6 +158,12 @@ class NBAPredictor:
 
         vector = np.array([[feats[name] for name in self.feature_names]])
         margin = float(self.model.predict(vector)[0])
+
+        # Injured home players push the margin down, injured away players up
+        home_inj = injuries.get(game['home_team'], {}).get('points', 0.0)
+        away_inj = injuries.get(game['away_team'], {}).get('points', 0.0)
+        injury_adjustment = away_inj - home_inj
+        margin += injury_adjustment
 
         home_prob = self.win_probability(margin)
         if margin > 0:
@@ -104,6 +180,7 @@ class NBAPredictor:
             # confidence == calibrated win probability, so track_accuracy.py's
             # accuracy-by-confidence report doubles as a calibration check
             'confidence': win_prob * 100,
+            'injury_adjustment': injury_adjustment,
             'date': datetime.now().strftime('%Y-%m-%d'),
         }
 
@@ -119,6 +196,9 @@ class NBAPredictor:
             print(f"   Predicted Margin: {abs(pred['predicted_margin']):.1f} points")
             print(f"   Win Probability: {pred['win_probability']:.1f}%")
             print(f"   Confidence: {pred['confidence']:.1f}%")
+            if abs(pred['injury_adjustment']) >= 0.05:
+                print(f"   Injury Adjustment: {pred['injury_adjustment']:+.1f} points "
+                      f"(applied to margin)")
         print("\n" + "=" * 80)
 
     def save_predictions(self, predictions):
@@ -140,7 +220,11 @@ class NBAPredictor:
                 f.write(f"🏆 Predicted Winner: {pred['predicted_winner']} ({side})\n")
                 f.write(f"   Margin: {abs(pred['predicted_margin']):.1f} points\n")
                 f.write(f"   Win Probability: {pred['win_probability']:.1f}%\n")
-                f.write(f"   Confidence: {pred['confidence']:.1f}%\n\n")
+                f.write(f"   Confidence: {pred['confidence']:.1f}%\n")
+                if abs(pred['injury_adjustment']) >= 0.05:
+                    f.write(f"   Injury Adjustment: "
+                            f"{pred['injury_adjustment']:+.1f} points\n")
+                f.write("\n")
             f.write("=" * 80 + "\n")
             f.write("💡 Win probability is calibrated on held-out games.\n")
             f.write("   Check injury reports — the model only sees game results.\n")
@@ -165,9 +249,11 @@ class NBAPredictor:
         if games is None:
             return False
 
+        injuries = load_injury_impacts()
+
         predictions = []
         for game in games:
-            pred = self.predict_game(game, builder, as_of_date)
+            pred = self.predict_game(game, builder, as_of_date, injuries)
             if pred:
                 predictions.append(pred)
 

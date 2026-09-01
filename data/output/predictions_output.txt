@@ -1,44 +1,48 @@
 ================================================================================
 🎯 NBA GAME PREDICTIONS
 ================================================================================
-Generated: 2026-08-31 23:31:54
+Generated: 2026-08-31 23:44:04
 Total Games: 7
 ================================================================================
 
 GAME 1: MIA vs PHX
 --------------------------------------------------------------------------------
 🏆 Predicted Winner: PHX (AWAY)
-   Margin: 0.5 points
-   Win Probability: 48.9%
-   Confidence: 48.9%
+   Margin: 2.5 points
+   Win Probability: 52.4%
+   Confidence: 52.4%
+   Injury Adjustment: -2.0 points
 
 GAME 2: HOU vs CHI
 --------------------------------------------------------------------------------
 🏆 Predicted Winner: HOU (HOME)
-   Margin: 8.9 points
-   Win Probability: 66.7%
-   Confidence: 66.7%
+   Margin: 8.8 points
+   Win Probability: 66.6%
+   Confidence: 66.6%
 
 GAME 3: MIL vs MIN
 --------------------------------------------------------------------------------
 🏆 Predicted Winner: MIL (HOME)
-   Margin: 3.1 points
-   Win Probability: 57.3%
-   Confidence: 57.3%
+   Margin: 3.3 points
+   Win Probability: 57.6%
+   Confidence: 57.6%
+   Injury Adjustment: +0.2 points
 
 GAME 4: NOP vs DEN
 --------------------------------------------------------------------------------
 🏆 Predicted Winner: NOP (HOME)
-   Margin: 0.0 points
-   Win Probability: 52.0%
-   Confidence: 52.0%
+   Margin: 0.9 points
+   Win Probability: 53.6%
+   Confidence: 53.6%
+   Injury Adjustment: +0.9 points
 
 GAME 5: OKC vs SAS
 --------------------------------------------------------------------------------
-🏆 Predicted Winner: OKC (HOME)
-   Margin: 0.7 points
-   Win Probability: 53.2%
-   Confidence: 53.2%
+🏆 Predicted Winner: SAS (AWAY)
+   Margin: 1.8 points
+   Win Probability: 51.1%
+   Confidence: 51.1%
+   Injury Adjustment: -2.5 points
 
 GAME 6: LAL vs ATL
 --------------------------------------------------------------------------------
@@ -50,9 +54,10 @@ GAME 6: LAL vs ATL
 GAME 7: GSW vs POR
 --------------------------------------------------------------------------------
 🏆 Predicted Winner: GSW (HOME)
-   Margin: 7.4 points
-   Win Probability: 64.4%
-   Confidence: 64.4%
+   Margin: 6.3 points
+   Win Probability: 62.6%
+   Confidence: 62.6%
+   Injury Adjustment: -1.2 points
 
 ================================================================================
 💡 Win probability is calibrated on held-out games.

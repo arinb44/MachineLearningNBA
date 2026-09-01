@@ -5,17 +5,20 @@ Fetches individual player game logs from NBA Stats API
 Calculates standard deviations for consistency analysis
 """
 
+import argparse
 import pandas as pd
 import requests
 import time
 import os
 from datetime import datetime
 
+import config
+
 class GameLogFetcher:
-    def __init__(self):
-        self.player_file = 'data/input/nba_player_stats_2025-26.csv'
-        self.output_file = 'data/input/nba_player_stats_with_std_2025-26.csv'
-        self.season = '2025-26'
+    def __init__(self, season=None):
+        self.season = season or config.current_season()
+        self.player_file = config.player_stats_file(self.season)
+        self.output_file = config.player_stats_std_file(self.season)
         
         # NBA Stats API headers
         self.headers = {
@@ -236,17 +239,18 @@ class GameLogFetcher:
         return False
 
 def main():
-    import sys
-    
-    # Check for test flag
-    test_mode = '--test' in sys.argv or '-t' in sys.argv
-    
-    fetcher = GameLogFetcher()
-    
-    if test_mode:
+    parser = argparse.ArgumentParser(description=__doc__)
+    config.add_season_arg(parser)
+    parser.add_argument('--test', '-t', action='store_true',
+                        help='test mode: fetch only a few players')
+    args = parser.parse_args()
+
+    fetcher = GameLogFetcher(season=args.season)
+
+    if args.test:
         print("\n🧪 Test mode enabled (--test flag detected)")
-    
-    fetcher.run(test_mode=test_mode)
+
+    fetcher.run(test_mode=args.test)
 
 if __name__ == "__main__":
     main()

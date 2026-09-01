@@ -8,7 +8,7 @@ All features are built from dated game results (data/tracking/*.csv).
 
 import pandas as pd
 
-GAME_RESULTS_FILE = 'data/tracking/nba_game_results_2025-26.csv'
+import config
 
 # Canonical feature order — the model is trained and queried with exactly this.
 FEATURE_COLUMNS = [
@@ -26,9 +26,9 @@ FEATURE_COLUMNS = [
 ]
 
 
-def load_games(path=GAME_RESULTS_FILE):
+def load_games(path=None):
     """Load game results sorted chronologically."""
-    games = pd.read_csv(path, parse_dates=['date'])
+    games = pd.read_csv(path or config.game_results_file(), parse_dates=['date'])
     return games.sort_values('date').reset_index(drop=True)
 
 
