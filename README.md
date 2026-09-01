@@ -1,5 +1,7 @@
 # NBA Game Predictor 🏀
 
+[![CI](https://github.com/arinb44/MachineLearningNBA/actions/workflows/ci.yml/badge.svg)](https://github.com/arinb44/MachineLearningNBA/actions/workflows/ci.yml)
+
 Machine learning system for predicting NBA game outcomes (winner, margin, and calibrated win probability) from game results.
 
 ## How the model works
