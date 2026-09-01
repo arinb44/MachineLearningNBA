@@ -84,9 +84,9 @@ class PredictionVisualizer:
         # Sort by date for better visualization
         df = df.sort_values('date')
         
-        # Create game labels
-        df['game_label'] = df.apply(lambda row: 
-            f"{row['away_team']}@{row['home_team']}\n{row['date']}", 
+        # Create game labels (matchup only — dates cluttered the axis)
+        df['game_label'] = df.apply(lambda row:
+            f"{row['away_team']}@{row['home_team']}",
             axis=1
         )
         
@@ -115,9 +115,14 @@ class PredictionVisualizer:
         # Add horizontal line at y=0
         ax.axhline(y=0, color='black', linestyle='-', linewidth=1)
         
-        # Set x-axis labels
-        ax.set_xticks(x_pos)
-        ax.set_xticklabels(df['game_label'], rotation=45, ha='right', fontsize=8)
+        # Per-game matchup labels are only readable for small sets;
+        # with many games, use a clean numeric axis instead
+        if len(df) <= 25:
+            ax.set_xticks(x_pos)
+            ax.set_xticklabels(df['game_label'], rotation=45, ha='right', fontsize=8)
+        else:
+            ax.set_xlabel('Games (chronological)', fontsize=12, fontweight='bold')
+            ax.margins(x=0.01)
         
         # Add grid
         ax.grid(True, alpha=0.3, axis='y')

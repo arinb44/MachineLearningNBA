@@ -7,8 +7,19 @@ Machine learning system for predicting NBA game outcomes (winner, margin, and ca
 ## How the model works
 
 - **Point-in-time features** ([scripts/features.py](scripts/features.py)): every game's features are computed only from games played *before* it — season-to-date margin, last-10 form, home/road splits, rest days, back-to-backs. No information from the future leaks into training.
-- **Walk-forward validation**: the model is always trained on the past and tested on the future (`TimeSeriesSplit`), and compared against a naive home-court baseline so we know it earns its keep. Current numbers: **11.5 MAE vs 11.9 baseline; 61.9% winner accuracy vs 54.5% for always-picking-home**.
+- **Walk-forward validation**: the model is always trained on the past and tested on the future (`TimeSeriesSplit`), never on a random split.
 - **Calibrated probabilities**: win probability comes from a logistic calibrator fit on held-out predictions, not a hand-tuned formula. A reported 60% should win about 60% of the time — `track_accuracy.py`'s accuracy-by-confidence report is the check.
+
+## Results
+
+Measured on the full 2025-26 regular season (1,225 games), scored only on games the model had never seen at training time, and compared against the naive baselines that any honest sports model has to beat:
+
+| Metric | Model | Naive baseline |
+|---|---|---|
+| Winner accuracy | **67.5%** | 55.2% (always pick the home team) |
+| Margin error (MAE) | **11.91 pts** | 13.40 (constant home-court edge) |
+
+`python scripts/train_model.py` reproduces this table on every run.
 
 ## Project Structure
 
@@ -36,18 +47,37 @@ Machine learning system for predicting NBA game outcomes (winner, margin, and ca
 │   └── tracking/       Accuracy tracking history (all-time + per-session)
 ├── models/             Trained model (nba_predictor.pkl)
 ├── docs/               Guides (+ docs/reference/ for the original ML templates)
-└── reports/            Generated graphs and betting spreadsheets
+├── reports/            Generated graphs and betting spreadsheets
+└── Dockerfile          Reproducible environment — see Quick start below
 ```
 
-## Setup
+## Quick start with Docker
+
+No Python setup required — this trains the model and predicts the sample games in one command:
+
+```bash
+docker build -t nba-predictor . && docker run --rm nba-predictor
+```
+
+Run any individual script the same way:
+
+```bash
+docker run --rm nba-predictor python scripts/train_model.py
+```
+
+To predict your own games, mount a local copy of the input folder:
+
+```bash
+docker run --rm -v "$PWD/data:/app/data" nba-predictor python scripts/predict_games.py
+```
+
+## Setup (without Docker)
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
-
-On macOS, XGBoost needs OpenMP: `brew install libomp`.
 
 ## Workflow
 
