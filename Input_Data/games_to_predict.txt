@@ -1,0 +1,17 @@
+# NBA Game Predictions Input File
+# Format: HOME_TEAM vs AWAY_TEAM
+# Example:
+#   LAL vs BOS
+#   GSW vs MIA
+#   OKC vs DEN
+# 
+# Enter your games below (one per line):
+# Remove the # to activate
+
+MIA vs PHX
+HOU vs CHI
+MIL vs MIN
+NOP vs DEN
+OKC vs SAS
+LAL vs ATL
+GSW vs POR

@@ -1,0 +1,1620 @@
+# NBA 2025-26 Regular Season Games
+# Format: HOME vs AWAY
+# Preseason games excluded
+
+# Week 1 (Oct 21 - Oct 26)
+
+# Tuesday, October 21
+OKC vs HOU
+LAL vs GSW
+
+# Wednesday, October 22
+NYK vs CLE
+CHA vs BKN
+ORL vs MIA
+ATL vs TOR
+BOS vs PHI
+CHI vs DET
+MEM vs NOP
+MIL vs WAS
+UTA vs LAC
+DAL vs SAS
+PHX vs SAC
+POR vs MIN
+
+# Thursday, October 23
+IND vs OKC
+GSW vs DEN
+
+# Friday, October 24
+TOR vs MIL
+ORL vs ATL
+NYK vs BOS
+BKN vs CLE
+HOU vs DET
+MEM vs MIA
+NOP vs SAS
+DAL vs WAS
+LAL vs MIN
+POR vs GSW
+SAC vs UTA
+LAC vs PHX
+
+# Saturday, October 25
+ORL vs CHI
+ATL vs OKC
+PHI vs CHA
+MEM vs IND
+DEN vs PHX
+
+# Sunday, October 26
+SAS vs BKN
+DET vs BOS
+CLE vs MIL
+MIA vs NYK
+WAS vs CHA
+MIN vs IND
+DAL vs TOR
+LAC vs POR
+SAC vs LAL
+
+# Week 2 (Oct 27 - Nov 2)
+
+# Monday, October 27
+DET vs CLE
+PHI vs ORL
+CHI vs ATL
+HOU vs BKN
+NOP vs BOS
+SAS vs TOR
+DAL vs OKC
+UTA vs PHX
+MIN vs DEN
+GSW vs MEM
+LAL vs POR
+
+# Tuesday, October 28
+WAS vs PHI
+MIA vs CHA
+MIL vs NYK
+OKC vs SAC
+GSW vs LAC
+
+# Wednesday, October 29
+TOR vs HOU
+BOS vs CLE
+DET vs ORL
+BKN vs ATL
+CHI vs SAC
+DAL vs IND
+DEN vs NOP
+UTA vs POR
+MIN vs LAL
+PHX vs MEM
+
+# Thursday, October 30
+CHA vs ORL
+MIL vs GSW
+OKC vs WAS
+SAS vs MIA
+
+# Friday, October 31 (NBA Cup)
+IND vs ATL
+PHI vs BOS
+CLE vs TOR
+CHI vs NYK
+MEM vs LAL
+PHX vs UTA
+POR vs DEN
+LAC vs NOP
+
+# Saturday, November 1
+MIL vs SAC
+CHA vs MIN
+IND vs GSW
+WAS vs ORL
+BOS vs HOU
+MX vs DAL
+
+# Sunday, November 2
+OKC vs NOP
+BKN vs PHI
+CHA vs UTA
+CLE vs ATL
+TOR vs MEM
+NYK vs CHI
+PHX vs SAS
+LAL vs MIA
+
+# Week 3 (Nov 3 - Nov 9)
+
+# Monday, November 3
+BKN vs MIN
+IND vs MIL
+BOS vs UTA
+NYK vs WAS
+HOU vs DAL
+MEM vs DET
+DEN vs SAC
+POR vs LAL
+LAC vs MIA
+
+# Tuesday, November 4
+TOR vs MIL
+ATL vs ORL
+CHI vs PHI
+NOP vs CHA
+GSW vs PHX
+LAC vs OKC
+
+# Wednesday, November 5
+CLE vs PHI
+DET vs UTA
+IND vs BKN
+BOS vs WAS
+NYK vs MIN
+MEM vs HOU
+DAL vs NOP
+DEN vs MIA
+LAL vs SAS
+POR vs OKC
+SAC vs GSW
+
+# Thursday, November 6
+PHX vs LAC
+
+# Friday, November 7 (NBA Cup)
+ORL vs BOS
+WAS vs CLE
+ATL vs TOR
+BKN vs DET
+SAS vs HOU
+MIA vs CHA
+MEM vs DAL
+MIL vs CHI
+MIN vs UTA
+DEN vs GSW
+SAC vs OKC
+
+# Saturday, November 8
+WAS vs DAL
+PHI vs TOR
+ATL vs LAL
+CLE vs CHI
+MIA vs POR
+SAS vs NOP
+DEN vs IND
+LAC vs PHX
+
+# Sunday, November 9
+MIL vs HOU
+NYK vs BKN
+ORL vs BOS
+MEM vs OKC
+PHI vs DET
+GSW vs IND
+SAC vs MIN
+
+# Week 4 (Nov 10 - Nov 16)
+
+# Monday, November 10
+CHA vs LAL
+DET vs WAS
+ORL vs POR
+MIA vs CLE
+CHI vs SAS
+DAL vs MIL
+PHX vs NOP
+UTA vs MIN
+LAC vs ATL
+
+# Tuesday, November 11
+BKN vs TOR
+NYK vs MEM
+PHI vs BOS
+OKC vs GSW
+UTA vs IND
+SAC vs DEN
+
+# Wednesday, November 12
+CHA vs MIL
+DET vs CHI
+NYK vs ORL
+BOS vs MEM
+MIA vs CLE
+HOU vs WAS
+NOP vs POR
+SAS vs GSW
+DAL vs PHX
+OKC vs LAL
+SAC vs ATL
+LAC vs DEN
+
+# Thursday, November 13
+CLE vs TOR
+PHX vs IND
+UTA vs ATL
+
+# Friday, November 14 (NBA Cup)
+NYK vs MIA
+ORL vs BKN
+DET vs PHI
+HOU vs POR
+MIL vs CHA
+MIN vs SAC
+NOP vs LAL
+DAL vs LAC
+SAS vs GSW
+
+# Saturday, November 15
+CLE vs MEM
+CHA vs OKC
+IND vs TOR
+MIL vs LAL
+MIN vs DEN
+
+# Sunday, November 16
+BOS vs LAC
+SAS vs SAC
+WAS vs BKN
+HOU vs ORL
+NOP vs GSW
+DAL vs POR
+PHX vs ATL
+UTA vs CHI
+
+# Week 5 (Nov 17 - Nov 23)
+
+# Monday, November 17
+CLE vs MIL
+DET vs IND
+PHI vs LAC
+MIA vs NYK
+TOR vs CHA
+MIN vs DAL
+NOP vs OKC
+DEN vs CHI
+
+# Tuesday, November 18
+ORL vs GSW
+BKN vs BOS
+ATL vs DET
+SAS vs MEM
+LAL vs UTA
+POR vs PHX
+
+# Wednesday, November 19
+CLE vs HOU
+IND vs CHA
+MIA vs GSW
+PHI vs TOR
+MIN vs WAS
+NOP vs DEN
+OKC vs SAC
+DAL vs NYK
+POR vs CHI
+
+# Thursday, November 20
+ORL vs LAC
+MEM vs SAC
+MIL vs PHI
+SAS vs ATL
+
+# Friday, November 21 (NBA Cup)
+CLE vs IND
+BOS vs BKN
+TOR vs WAS
+CHI vs MIA
+DAL vs NOP
+PHX vs MIN
+HOU vs DEN
+UTA vs OKC
+GSW vs POR
+
+# Saturday, November 22
+CHA vs LAC
+ORL vs NYK
+NOP vs ATL
+CHI vs WAS
+MIL vs DET
+DAL vs MEM
+DEN vs SAC
+
+# Sunday, November 23
+PHI vs MIA
+ATL vs CHA
+BOS vs ORL
+CLE vs LAC
+TOR vs BKN
+OKC vs POR
+PHX vs SAS
+UTA vs LAL
+
+# Week 6 (Nov 24 - Nov 30)
+
+# Monday, November 24
+IND vs DET
+TOR vs CLE
+BKN vs NYK
+MIA vs DAL
+MEM vs DEN
+MIL vs POR
+NOP vs CHI
+PHX vs HOU
+GSW vs UTA
+SAC vs MIN
+
+# Tuesday, November 25 (NBA Cup)
+WAS vs ATL
+PHI vs ORL
+LAL vs LAC
+
+# Wednesday, November 26 (NBA Cup)
+BOS vs DET
+CHA vs NYK
+MIA vs MIL
+TOR vs IND
+OKC vs MIN
+NOP vs MEM
+GSW vs HOU
+POR vs SAS
+SAC vs PHX
+
+# Friday, November 28 (NBA Cup)
+ATL vs CLE
+BKN vs PHI
+CHA vs CHI
+DET vs ORL
+IND vs WAS
+NYK vs MIL
+OKC vs PHX
+DEN vs SAS
+UTA vs SAC
+LAL vs DAL
+LAC vs MEM
+
+# Saturday, November 29
+MIN vs BOS
+CHA vs TOR
+IND vs CHI
+MIA vs DET
+MIL vs BKN
+GSW vs NOP
+PHX vs DEN
+LAC vs DAL
+
+# Sunday, November 30
+CLE vs BOS
+NYK vs TOR
+PHI vs ATL
+POR vs OKC
+MIN vs SAS
+SAC vs MEM
+LAL vs NOP
+
+# Week 7 (Dec 1 - Dec 7)
+
+# Monday, December 1, 2025
+DET vs ATL
+IND vs CLE
+WAS vs MIL
+BKN vs CHA
+MIA vs LAC
+ORL vs CHI
+DEN vs DAL
+UTA vs HOU
+LAL vs PHX
+
+# Tuesday, December 2, 2025
+PHI vs WAS
+TOR vs POR
+BOS vs NYK
+NOP vs MIN
+SAS vs MEM
+GSW vs OKC
+
+# Wednesday, December 3, 2025
+CLE vs POR
+IND vs DEN
+ORL vs SAS
+ATL vs LAC
+NYK vs CHA
+CHI vs BKN
+HOU vs SAC
+MIL vs DET
+DAL vs MIA
+
+# Thursday, December 4, 2025
+PHI vs GSW
+WAS vs BOS
+BKN vs UTA
+TOR vs LAL
+NOP vs MIN
+
+# Friday, December 5, 2025
+BOS vs LAL
+ORL vs MIA
+ATL vs DEN
+CLE vs SAS
+DET vs POR
+NYK vs UTA
+TOR vs CHA
+CHI vs IND
+HOU vs PHX
+MEM vs LAC
+MIL vs PHI
+OKC vs DAL
+
+# Saturday, December 6, 2025
+BKN vs NOP
+WAS vs ATL
+CLE vs GSW
+DET vs MIL
+MIA vs SAC
+MIN vs LAC
+DAL vs HOU
+
+# Sunday, December 7, 2025
+NYK vs ORL
+TOR vs BOS
+CHA vs DEN
+MEM vs POR
+CHI vs GSW
+PHI vs LAL
+UTA vs OKC
+
+# Week 8 (Dec 8 - Dec 14)
+
+# Monday, December 8, 2025
+IND vs SAC
+MIN vs PHX
+NOP vs SAS
+
+# Tuesday, December 9, 2025 (NBA Cup Quarterfinals)
+ORL vs MIA
+TOR vs NYK
+
+# Wednesday, December 10, 2025 (NBA Cup Quarterfinals)
+OKC vs PHX
+LAL vs SAS
+
+# Thursday, December 11, 2025
+HOU vs LAC
+MIL vs BOS
+NOP vs POR
+SAC vs DEN
+
+# Friday, December 12, 2025
+CHA vs CHI
+DET vs ATL
+PHI vs IND
+WAS vs CLE
+MEM vs UTA
+DAL vs BKN
+GSW vs MIN
+
+# Saturday, December 13, 2025 (NBA Cup Semifinals - Las Vegas)
+TBD vs TBD
+TBD vs TBD
+
+# Sunday, December 14, 2025
+IND vs WAS
+ATL vs PHI
+CLE vs CHA
+BKN vs MIL
+MIN vs SAC
+CHI vs NOP
+POR vs GSW
+
+# Week 9 (Dec 15 - Dec 21)
+
+# Monday, December 15, 2025
+BOS vs DET
+UTA vs DAL
+DEN vs HOU
+LAC vs MEM
+
+# Tuesday, December 16, 2025 (NBA Cup Championship - Las Vegas)
+TBD vs TBD
+
+# Wednesday, December 17, 2025
+CHI vs CLE
+MIN vs MEM
+OKC vs LAC
+SAS vs WAS
+
+# Thursday, December 18, 2025
+CHA vs ATL
+IND vs NYK
+BKN vs MIA
+MIL vs TOR
+NOP vs HOU
+DAL vs DET
+DEN vs ORL
+PHX vs GSW
+UTA vs LAL
+POR vs SAC
+
+# Friday, December 19, 2025
+BOS vs MIA
+NYK vs PHI
+ATL vs SAS
+CLE vs CHI
+MIN vs OKC
+
+# Saturday, December 20, 2025
+DEN vs HOU
+PHI vs DAL
+TOR vs BOS
+NOP vs IND
+DET vs CHA
+MEM vs WAS
+GSW vs PHX
+UTA vs ORL
+SAC vs POR
+LAC vs LAL
+
+# Sunday, December 21, 2025
+ATL vs CHI
+BKN vs TOR
+NYK vs MIA
+WAS vs SAS
+MIN vs MIL
+SAC vs HOU
+
+# Week 10 (Dec 22 - Dec 28)
+
+# Monday, December 22, 2025
+CLE vs CHA
+BOS vs IND
+NOP vs DAL
+DEN vs UTA
+OKC vs MEM
+GSW vs ORL
+POR vs DET
+
+# Tuesday, December 23, 2025
+CHA vs WAS
+PHI vs BKN
+ATL vs CHI
+CLE vs NOP
+IND vs MIL
+MIA vs TOR
+DAL vs DEN
+MIN vs NYK
+SAS vs OKC
+PHX vs LAL
+UTA vs MEM
+POR vs ORL
+SAC vs DET
+LAC vs HOU
+
+# Thursday, December 25, 2025 (Christmas Day)
+NYK vs CLE
+OKC vs SAS
+GSW vs DAL
+LAL vs HOU
+DEN vs MIN
+
+# Friday, December 26, 2025
+ATL vs MIA
+ORL vs CHA
+WAS vs TOR
+IND vs BOS
+CHI vs PHI
+MEM vs MIL
+NOP vs PHX
+UTA vs DET
+POR vs LAC
+
+# Saturday, December 27, 2025
+SAC vs DAL
+ORL vs DEN
+NOP vs PHX
+ATL vs NYK
+MIA vs IND
+CHI vs MIL
+HOU vs CLE
+MIN vs BKN
+SAS vs UTA
+
+# Sunday, December 28, 2025
+TOR vs GSW
+OKC vs PHI
+WAS vs MEM
+POR vs BOS
+LAC vs DET
+LAL vs SAC
+
+# Week 11 (Dec 29 - Jan 4)
+
+# Monday, December 29, 2025
+CHA vs MIL
+WAS vs PHX
+BKN vs GSW
+MIA vs DEN
+TOR vs ORL
+CHI vs MIN
+HOU vs IND
+NOP vs NYK
+OKC vs ATL
+SAS vs CLE
+POR vs DAL
+
+# Tuesday, December 30, 2025
+MEM vs PHI
+UTA vs BOS
+LAL vs DET
+LAC vs SAC
+
+# Wednesday, December 31, 2025
+CHA vs GSW
+ATL vs MIN
+IND vs ORL
+CLE vs PHX
+CHI vs NOP
+SAS vs NYK
+TOR vs DEN
+MIL vs WAS
+OKC vs POR
+
+# Thursday, January 1, 2026
+BKN vs HOU
+DET vs MIA
+DAL vs PHI
+SAC vs BOS
+LAC vs UTA
+
+# Friday, January 2, 2026
+IND vs SAS
+WAS vs BKN
+CLE vs DEN
+NYK vs ATL
+CHI vs ORL
+MIL vs CHA
+NOP vs POR
+PHX vs SAC
+GSW vs OKC
+LAL vs MEM
+
+# Saturday, January 3, 2026
+MIA vs MIN
+NYK vs PHI
+TOR vs ATL
+CHI vs CHA
+SAS vs POR
+DAL vs HOU
+GSW vs UTA
+LAC vs BOS
+
+# Sunday, January 4, 2026
+CLE vs DET
+ORL vs IND
+BKN vs DEN
+MIA vs NOP
+WAS vs MIN
+PHX vs OKC
+SAC vs MIL
+LAL vs MEM
+
+# Week 12 (Jan 5 - Jan 11)
+
+# Monday, January 5, 2026
+DET vs NYK
+BOS vs CHI
+TOR vs ATL
+HOU vs PHX
+OKC vs CHA
+PHI vs DEN
+LAC vs GSW
+POR vs UTA
+
+# Tuesday, January 6, 2026
+IND vs CLE
+WAS vs ORL
+MEM vs SAS
+MIN vs MIA
+NOP vs LAL
+SAC vs DAL
+
+# Wednesday, January 7, 2026
+CHA vs TOR
+DET vs CHI
+PHI vs WAS
+ATL vs NOP
+BOS vs DEN
+BKN vs ORL
+NYK vs LAC
+SAS vs LAL
+MEM vs PHX
+OKC vs UTA
+GSW vs MIL
+POR vs HOU
+
+# Thursday, January 8, 2026
+CHA vs IND
+CHI vs MIA
+MIN vs CLE
+UTA vs DAL
+
+# Friday, January 9, 2026
+BOS vs TOR
+ORL vs PHI
+WAS vs NOP
+BKN vs LAC
+MEM vs OKC
+DEN vs ATL
+PHX vs NYK
+GSW vs SAC
+POR vs HOU
+LAL vs MIL
+
+# Saturday, January 10, 2026
+CLE vs MIN
+IND vs MIA
+DET vs LAC
+BOS vs SAS
+CHI vs DAL
+UTA vs CHA
+
+# Sunday, January 11, 2026
+ORL vs NOP
+MEM vs BKN
+TOR vs PHI
+POR vs NYK
+MIN vs SAS
+OKC vs MIA
+DEN vs MIL
+PHX vs WAS
+GSW vs ATL
+SAC vs HOU
+
+# Week 13 (Jan 12 - Jan 18)
+
+# Monday, January 12, 2026
+CLE vs UTA
+IND vs BOS
+TOR vs PHI
+DAL vs BKN
+SAC vs LAL
+LAC vs CHA
+
+# Tuesday, January 13, 2026
+MIA vs PHX
+HOU vs CHI
+MIL vs MIN
+NOP vs DEN
+OKC vs SAS
+LAL vs ATL
+GSW vs POR
+
+# Wednesday, January 14, 2026
+IND vs TOR
+PHI vs CLE
+CHI vs UTA
+NOP vs BKN
+DAL vs DEN
+SAC vs NYK
+LAC vs WAS
+
+# Thursday, January 15, 2026
+ORL vs MEM (Berlin Game)
+DET vs PHX
+MIA vs BOS
+HOU vs OKC
+SAS vs MIL
+DAL vs UTA
+GSW vs NYK
+POR vs ATL
+LAL vs CHA
+
+# Friday, January 16, 2026
+BKN vs CHI
+IND vs NOP
+PHI vs CLE
+TOR vs LAC
+HOU vs MIN
+SAC vs WAS
+
+# Saturday, January 17, 2026
+DAL vs UTA
+ATL vs BOS
+DET vs IND
+NYK vs PHX
+MIA vs OKC
+SAS vs MIN
+GSW vs CHA
+DEN vs WAS
+POR vs LAL
+
+# Sunday, January 18, 2026
+MEM vs ORL (London Game)
+CHI vs BKN
+HOU vs NOP
+DEN vs CHA
+SAC vs POR
+LAL vs TOR
+
+# Week 14 (Jan 19 - Jan 25)
+
+# Monday, January 19, 2026 (MLK Day)
+ATL vs MIL
+CLE vs OKC
+WAS vs LAC
+NYK vs DAL
+SAS vs UTA
+PHI vs IND
+BKN vs PHX
+DET vs BOS
+GSW vs MIA
+
+# Tuesday, January 20, 2026
+PHI vs PHX
+CHI vs LAC
+HOU vs SAS
+UTA vs MIN
+DEN vs LAL
+GSW vs TOR
+SAC vs MIA
+
+# Wednesday, January 21, 2026
+CHA vs CLE
+BOS vs IND
+NYK vs BKN
+MEM vs ATL
+NOP vs DET
+MIL vs OKC
+SAC vs TOR
+
+# Thursday, January 22, 2026
+ORL vs CHA
+PHI vs HOU
+WAS vs DEN
+DAL vs GSW
+MIN vs CHI
+UTA vs SAS
+LAC vs LAL
+POR vs MIA
+
+# Friday, January 23, 2026
+DET vs HOU
+ATL vs PHX
+BKN vs BOS
+CLE vs SAC
+MEM vs NOP
+MIL vs DEN
+OKC vs IND
+POR vs TOR
+
+# Saturday, January 24, 2026
+PHI vs NYK
+MIN vs GSW
+CHA vs WAS
+ORL vs CLE
+CHI vs BOS
+DAL vs LAL
+UTA vs MIA
+
+# Sunday, January 25, 2026
+DET vs SAC
+MEM vs DEN
+MIL vs DAL
+OKC vs TOR
+SAS vs NOP
+PHX vs MIA
+LAC vs BKN
+
+# Week 15 (Jan 26 - Feb 1)
+
+# Monday, January 26, 2026
+CHA vs PHI
+CLE vs ORL
+ATL vs IND
+BOS vs POR
+CHI vs LAL
+HOU vs MEM
+MIN vs GSW
+
+# Tuesday, January 27, 2026
+WAS vs POR
+NYK vs SAC
+PHI vs MIL
+OKC vs NOP
+DEN vs DET
+PHX vs BKN
+UTA vs LAC
+
+# Wednesday, January 28, 2026
+CLE vs LAL
+IND vs CHI
+BOS vs ATL
+MIA vs ORL
+TOR vs NYK
+MEM vs CHA
+DAL vs MIN
+UTA vs GSW
+HOU vs SAS
+
+# Thursday, January 29, 2026
+PHI vs SAC
+WAS vs MIL
+ATL vs HOU
+DAL vs CHA
+DEN vs BKN
+PHX vs DET
+MIN vs OKC
+
+# Friday, January 30, 2026
+ORL vs TOR
+WAS vs LAL
+BOS vs SAC
+NYK vs POR
+NOP vs MEM
+MIA vs CHI
+PHX vs CLE
+UTA vs BKN
+DEN vs LAC
+GSW vs DET
+
+# Saturday, January 31, 2026
+CHA vs SAS
+IND vs ATL
+PHI vs NOP
+MEM vs MIN
+HOU vs DAL
+
+# Sunday, February 1, 2026
+BOS vs MIL
+SAS vs ORL
+DET vs BKN
+MIA vs CHI
+TOR vs UTA
+WAS vs SAC
+NYK vs LAL
+PHX vs LAC
+POR vs CLE
+DEN vs OKC
+
+# Week 16 (Feb 2 - Feb 8)
+
+# Monday, February 2, 2026
+CHA vs NOP
+IND vs HOU
+MEM vs MIN
+LAC vs PHI
+
+# Tuesday, February 3, 2026
+DET vs DEN
+IND vs UTA
+WAS vs NYK
+BKN vs LAL
+MIA vs ATL
+DAL vs BOS
+MIL vs CHI
+OKC vs ORL
+GSW vs PHI
+POR vs PHX
+
+# Wednesday, February 4, 2026
+NYK vs DEN
+TOR vs MIN
+HOU vs BOS
+MIL vs NOP
+SAS vs OKC
+SAC vs MEM
+LAC vs CLE
+
+# Thursday, February 5, 2026
+DET vs WAS
+ORL vs BKN
+ATL vs UTA
+TOR vs CHI
+HOU vs CHA
+DAL vs SAS
+PHX vs GSW
+LAL vs PHI
+
+# Friday, February 6, 2026
+BOS vs MIA
+DET vs NYK
+MIL vs IND
+MIN vs NOP
+POR vs MEM
+SAC vs LAC
+
+# Saturday, February 7, 2026
+BKN vs WAS
+OKC vs HOU
+SAS vs DAL
+ORL vs UTA
+ATL vs CHA
+CHI vs DEN
+LAL vs GSW
+PHX vs PHI
+POR vs MEM
+SAC vs CLE
+
+# Sunday, February 8, 2026
+BOS vs NYK
+WAS vs MIA
+TOR vs IND
+MIN vs LAC
+
+# Week 17 (Feb 9 - Feb 15)
+
+# Monday, February 9, 2026
+CHA vs DET
+BKN vs CHI
+MIA vs UTA
+ORL vs MIL
+MIN vs ATL
+NOP vs SAC
+DEN vs CLE
+GSW vs MEM
+LAL vs OKC
+POR vs PHI
+
+# Tuesday, February 10, 2026
+NYK vs IND
+HOU vs LAC
+PHX vs DAL
+LAL vs SAS
+
+# Wednesday, February 11, 2026
+CHA vs ATL
+CLE vs WAS
+ORL vs MIL
+BOS vs CHI
+BKN vs IND
+PHI vs NYK
+TOR vs DET
+HOU vs LAC
+MIN vs POR
+NOP vs MIA
+PHX vs OKC
+UTA vs SAC
+DEN vs MEM
+GSW vs SAS
+
+# Thursday, February 12, 2026
+OKC vs MIL
+UTA vs POR
+LAL vs DAL
+
+# Sunday, February 15, 2026 (All-Star Games - Los Angeles)
+All-Star Game 1
+All-Star Game 2
+All-Star Game 3
+All-Star Championship
+
+# Week 18 (Feb 16 - Feb 22)
+
+# Thursday, February 19, 2026
+CHA vs HOU
+CLE vs BKN
+PHI vs ATL
+WAS vs IND
+NYK vs DET
+CHI vs TOR
+SAS vs PHX
+GSW vs BOS
+SAC vs ORL
+LAC vs DEN
+
+# Friday, February 20, 2026
+CHA vs CLE
+WAS vs IND
+MEM vs UTA
+ATL vs MIA
+MIN vs DAL
+NOP vs MIL
+OKC vs BKN
+LAL vs LAC
+POR vs DEN
+
+# Saturday, February 21, 2026
+PHX vs ORL
+NOP vs PHI
+MIA vs MEM
+CHI vs DET
+SAS vs SAC
+NYK vs HOU
+
+# Sunday, February 22, 2026
+OKC vs CLE
+ATL vs BKN
+MIL vs TOR
+GSW vs DEN
+IND vs DAL
+WAS vs CHA
+LAL vs BOS
+MIN vs PHI
+CHI vs NYK
+PHX vs POR
+LAC vs ORL
+
+# Week 19 (Feb 23 - Mar 1)
+
+# Monday, February 23, 2026
+DET vs SAS
+MEM vs SAC
+HOU vs UTA
+
+# Tuesday, February 24, 2026
+IND vs PHI
+ATL vs WAS
+BKN vs DAL
+TOR vs OKC
+CLE vs NYK
+CHI vs CHA
+MIL vs MIA
+NOP vs GSW
+PHX vs BOS
+LAL vs ORL
+POR vs MIN
+
+# Wednesday, February 25, 2026
+DET vs OKC
+TOR vs SAS
+MEM vs GSW
+HOU vs SAC
+MIL vs CLE
+DEN vs BOS
+
+# Thursday, February 26, 2026
+IND vs CHA
+PHI vs MIA
+ATL vs WAS
+BKN vs SAS
+ORL vs HOU
+CHI vs POR
+DAL vs SAC
+PHX vs LAL
+UTA vs NOP
+LAC vs MIN
+
+# Friday, February 27, 2026
+DET vs CLE
+BOS vs BKN
+MIL vs NYK
+DAL vs MEM
+OKC vs DEN
+
+# Saturday, February 28, 2026
+CHA vs POR
+MIA vs HOU
+WAS vs TOR
+GSW vs LAL
+UTA vs NOP
+
+# Sunday, March 1, 2026
+NYK vs SAS
+BKN vs CLE
+CHI vs MIL
+DEN vs MIN
+IND vs MEM
+ATL vs POR
+BOS vs PHI
+ORL vs DET
+DAL vs OKC
+LAC vs NOP
+LAL vs SAC
+
+# Week 20 (Mar 2 - Mar 8)
+
+# Monday, March 2, 2026
+WAS vs HOU
+MIL vs BOS
+UTA vs DEN
+GSW vs LAC
+
+# Tuesday, March 3, 2026
+CHA vs DAL
+CLE vs DET
+ORL vs WAS
+MIA vs BKN
+TOR vs NYK
+PHI vs SAS
+CHI vs OKC
+MIN vs MEM
+LAL vs NOP
+SAC vs PHX
+
+# Wednesday, March 4, 2026
+NYK vs OKC
+BOS vs CHA
+PHI vs UTA
+MEM vs POR
+MIL vs ATL
+LAC vs IND
+
+# Thursday, March 5, 2026
+ORL vs DAL
+WAS vs UTA
+MIA vs BKN
+HOU vs GSW
+MIN vs TOR
+SAS vs DET
+PHX vs CHI
+DEN vs LAL
+SAC vs NOP
+
+# Friday, March 6, 2026
+BOS vs DAL
+CHA vs MIA
+HOU vs POR
+DEN vs NYK
+PHX vs NOP
+SAS vs LAC
+LAL vs IND
+
+# Saturday, March 7, 2026
+MIN vs ORL
+DET vs BKN
+ATL vs PHI
+MEM vs LAC
+MIL vs UTA
+OKC vs GSW
+
+# Sunday, March 8, 2026
+CLE vs BOS
+LAL vs NYK
+MIA vs DET
+TOR vs DAL
+NOP vs WAS
+MIL vs ORL
+SAS vs HOU
+PHX vs CHA
+POR vs IND
+SAC vs CHI
+
+# Week 21 (Mar 9 - Mar 15)
+
+# Monday, March 9, 2026
+CLE vs PHI
+BKN vs MEM
+OKC vs DEN
+UTA vs GSW
+LAC vs NYK
+
+# Tuesday, March 10, 2026
+PHI vs MEM
+BKN vs DET
+MIA vs WAS
+ATL vs DAL
+HOU vs TOR
+MIL vs PHX
+SAS vs BOS
+GSW vs CHI
+POR vs CHA
+SAC vs IND
+LAL vs MIN
+
+# Wednesday, March 11, 2026
+ORL vs CLE
+NOP vs TOR
+UTA vs NYK
+DEN vs HOU
+SAC vs CHA
+LAC vs MIN
+
+# Thursday, March 12, 2026
+DET vs PHI
+IND vs PHX
+ORL vs WAS
+ATL vs BKN
+MIA vs MIL
+SAS vs DEN
+OKC vs BOS
+LAL vs CHI
+
+# Friday, March 13, 2026
+DET vs MEM
+IND vs NYK
+TOR vs PHX
+HOU vs NOP
+DAL vs CLE
+GSW vs MIN
+POR vs UTA
+LAC vs CHI
+
+# Saturday, March 14, 2026
+PHI vs BKN
+ATL vs MIL
+BOS vs WAS
+MIA vs ORL
+SAS vs CHA
+LAL vs DEN
+LAC vs SAC
+
+# Sunday, March 15, 2026
+OKC vs MIN
+CLE vs DAL
+TOR vs DET
+MIL vs IND
+PHI vs POR
+NYK vs GSW
+SAC vs UTA
+
+# Week 22 (Mar 16 - Mar 22)
+
+# Monday, March 16, 2026
+ATL vs ORL
+WAS vs GSW
+BKN vs POR
+BOS vs PHX
+CHI vs MEM
+NOP vs DAL
+HOU vs LAL
+LAC vs SAS
+
+# Tuesday, March 17, 2026
+CHA vs MIA
+ORL vs OKC
+WAS vs DET
+NYK vs IND
+MIL vs CLE
+MIN vs PHX
+DEN vs PHI
+SAC vs SAS
+
+# Wednesday, March 18, 2026
+BOS vs GSW
+BKN vs OKC
+IND vs POR
+CHI vs TOR
+MEM vs NYK
+MIN vs UTA
+NOP vs LAC
+DAL vs ATL
+HOU vs LAL
+
+# Thursday, March 19, 2026
+CHA vs ORL
+WAS vs DET
+MIA vs LAL
+CHI vs CLE
+NOP vs LAC
+SAS vs PHX
+UTA vs MIL
+SAC vs PHI
+
+# Friday, March 20, 2026
+BKN vs NYK
+DET vs GSW
+HOU vs ATL
+MEM vs BOS
+MIN vs POR
+DEN vs TOR
+
+# Saturday, March 21, 2026
+WAS vs OKC
+CHA vs MEM
+ORL vs LAL
+NOP vs CLE
+ATL vs GSW
+HOU vs MIA
+SAS vs IND
+DAL vs LAC
+UTA vs PHI
+PHX vs MIL
+
+# Sunday, March 22, 2026
+DEN vs POR
+SAC vs BKN
+NYK vs WAS
+BOS vs MIN
+PHX vs TOR
+
+# Week 23 (Mar 23 - Mar 29)
+
+# Monday, March 23, 2026
+ATL vs MEM
+DET vs LAL
+ORL vs IND
+PHI vs OKC
+MIA vs SAS
+CHI vs HOU
+UTA vs TOR
+DAL vs GSW
+POR vs BKN
+LAC vs MIL
+
+# Tuesday, March 24, 2026
+CHA vs SAC
+NYK vs NOP
+CLE vs ORL
+PHX vs DEN
+
+# Wednesday, March 25, 2026
+DET vs ATL
+IND vs LAL
+PHI vs CHI
+BOS vs OKC
+CLE vs MIA
+MEM vs SAS
+UTA vs WAS
+MIN vs HOU
+DEN vs DAL
+GSW vs BKN
+POR vs MIL
+LAC vs TOR
+
+# Thursday, March 26, 2026
+CHA vs NYK
+DET vs NOP
+ORL vs SAC
+
+# Friday, March 27, 2026
+IND vs LAC
+BOS vs ATL
+CLE vs MIA
+MEM vs HOU
+OKC vs CHI
+TOR vs NOP
+DEN vs UTA
+GSW vs WAS
+POR vs DAL
+LAL vs BKN
+
+# Saturday, March 28, 2026
+MIL vs SAS
+CHA vs PHI
+ATL vs SAC
+MEM vs CHI
+MIN vs DET
+PHX vs UTA
+
+# Sunday, March 29, 2026
+MIL vs LAC
+IND vs MIA
+BKN vs SAC
+CHA vs BOS
+TOR vs ORL
+POR vs WAS
+NOP vs HOU
+OKC vs NYK
+DEN vs GSW
+
+# Week 24 (Mar 30 - Apr 5)
+
+# Monday, March 30, 2026
+MIA vs PHI
+ATL vs BOS
+MEM vs PHX
+SAS vs CHI
+DAL vs MIN
+UTA vs CLE
+OKC vs DET
+LAL vs WAS
+
+# Tuesday, March 31, 2026
+ORL vs PHX
+BKN vs CHA
+DET vs TOR
+HOU vs NYK
+LAL vs CLE
+LAC vs POR
+
+# Wednesday, April 1, 2026
+WAS vs PHI
+MIA vs BOS
+ORL vs ATL
+TOR vs SAC
+CHI vs IND
+HOU vs MIL
+MEM vs DAL
+UTA vs DEN
+GSW vs SAS
+
+# Thursday, April 2, 2026
+CHA vs PHX
+DET vs MIN
+OKC vs LAL
+GSW vs CLE
+POR vs NOP
+LAC vs SAS
+
+# Friday, April 3, 2026
+CHA vs IND
+PHI vs MIN
+BKN vs ATL
+NYK vs CHI
+HOU vs UTA
+MEM vs TOR
+MIL vs BOS
+DAL vs ORL
+SAC vs NOP
+
+# Saturday, April 4, 2026
+MIA vs WAS
+DEN vs SAS
+PHI vs DET
+
+# Sunday, April 5, 2026
+BOS vs TOR
+BKN vs WAS
+CHI vs PHX
+MIL vs MEM
+CLE vs IND
+MIN vs CHA
+NOP vs ORL
+OKC vs UTA
+DAL vs LAL
+SAC vs LAC
+GSW vs HOU
+
+# Week 25 (Apr 6 - Apr 12)
+
+# Monday, April 6, 2026
+ATL vs NYK
+ORL vs DET
+MEM vs CLE
+SAS vs PHI
+DEN vs POR
+
+# Tuesday, April 7, 2026
+WAS vs CHI
+BOS vs CHA
+BKN vs MIL
+TOR vs MIA
+IND vs MIN
+NOP vs UTA
+GSW vs SAC
+LAL vs OKC
+LAC vs DAL
+PHX vs HOU
+
+# Wednesday, April 8, 2026
+CLE vs ATL
+ORL vs MIN
+DET vs MIL
+SAS vs POR
+DEN vs MEM
+LAC vs OKC
+PHX vs DAL
+
+# Thursday, April 9, 2026
+TOR vs MIA
+WAS vs CHI
+BKN vs IND
+NYK vs BOS
+HOU vs PHI
+GSW vs LAL
+
+# Friday, April 10, 2026
+CHA vs DET
+WAS vs MIA
+ATL vs CLE
+BOS vs NOP
+IND vs PHI
+NYK vs TOR
+CHI vs ORL
+HOU vs MIN
+MIL vs BKN
+SAS vs DAL
+UTA vs MEM
+DEN vs OKC
+POR vs LAC
+SAC vs GSW
+LAL vs PHX
+
+# Sunday, April 12, 2026 (Final Day of Regular Season)
+BOS vs ORL
+CLE vs WAS
+IND vs DET
+MIA vs ATL
+NYK vs CHA
+PHI vs MIL
+TOR vs BKN
+DAL vs CHI
+HOU vs MEM
+MIN vs NOP
+OKC vs PHX
+SAS vs DEN
+LAL vs UTA
+LAC vs GSW
+POR vs SAC
+
+# END OF 2025-26 NBA REGULAR SEASON
+# Playoffs begin approximately April 15, 2026
