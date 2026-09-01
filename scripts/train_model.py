@@ -76,7 +76,7 @@ def walk_forward_evaluate(table):
 
 def report(folds):
     print("\n" + "=" * 72)
-    print("📊 WALK-FORWARD VALIDATION (train on past, test on future)")
+    print("WALK-FORWARD VALIDATION (train on past, test on future)")
     print("=" * 72)
     print(f"{'Fold':>4} {'Games':>6} {'Model MAE':>10} {'Baseline MAE':>13} "
           f"{'Winner Acc':>11} {'Always-Home':>12}")
@@ -95,16 +95,16 @@ def report(folds):
           f"{avg_acc:>10.1%} {avg_home:>11.1%}")
     print("=" * 72)
     if avg_mae < avg_base:
-        print(f"✅ Model beats the home-court baseline by "
+        print(f"Model beats the home-court baseline by "
               f"{avg_base - avg_mae:.2f} points of MAE")
     else:
-        print(f"⚠️  Model does NOT beat the home-court baseline "
+        print(f"Model does NOT beat the home-court baseline "
               f"({avg_mae:.2f} vs {avg_base:.2f} MAE) — treat predictions with care")
     if avg_acc > avg_home:
-        print(f"✅ Winner accuracy beats always-picking-home by "
+        print(f"Winner accuracy beats always-picking-home by "
               f"{avg_acc - avg_home:.1%}")
     else:
-        print(f"⚠️  Winner accuracy does not beat always-picking-home")
+        print(f"Winner accuracy does not beat always-picking-home")
     return {'mae': avg_mae, 'baseline_mae': avg_base,
             'winner_acc': avg_acc, 'always_home_acc': avg_home}
 
@@ -126,31 +126,31 @@ def save_feature_importance(model):
     }).sort_values('importance', ascending=False)
     os.makedirs('data/output', exist_ok=True)
     importance.to_csv(FEATURE_IMPORTANCE_FILE, index=False)
-    print("\n🏆 FEATURE IMPORTANCE")
+    print("\nFEATURE IMPORTANCE")
     for row in importance.itertuples():
         print(f"   {row.feature:24s} {row.importance:.4f}")
 
 
 def main():
-    print("🤖 NBA ML Model Training (point-in-time features)")
+    print("NBA ML Model Training (point-in-time features)")
     print("=" * 72)
 
     games = features.load_games()
-    print(f"✅ Loaded {len(games)} games "
+    print(f"Loaded {len(games)} games "
           f"({games['date'].min():%Y-%m-%d} → {games['date'].max():%Y-%m-%d})")
 
     table = features.build_training_table(games, min_gp=MIN_GAMES_PLAYED)
-    print(f"✅ {len(table)} training rows "
+    print(f"{len(table)} training rows "
           f"(skipped {len(games) - len(table)} early games where a team "
           f"had <{MIN_GAMES_PLAYED} prior games)")
 
     folds, oof_preds, oof_wins = walk_forward_evaluate(table)
     metrics = report(folds)
 
-    print("\n🎯 Calibrating win probabilities on out-of-fold predictions...")
+    print("\nCalibrating win probabilities on out-of-fold predictions...")
     calibrator = fit_calibrator(oof_preds, oof_wins)
 
-    print("\n🌲 Training final model on all data...")
+    print("\nTraining final model on all data...")
     model = make_model()
     model.fit(table[features.FEATURE_COLUMNS].values, table['home_margin'].values)
     save_feature_importance(model)
@@ -163,8 +163,8 @@ def main():
         'trained_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         'metrics': metrics,
     }, MODEL_FILE)
-    print(f"\n💾 Model saved to: {MODEL_FILE}")
-    print("\n💡 Next: python scripts/predict_games.py")
+    print(f"\nModel saved to: {MODEL_FILE}")
+    print("\nNext: python scripts/predict_games.py")
 
 
 if __name__ == '__main__':

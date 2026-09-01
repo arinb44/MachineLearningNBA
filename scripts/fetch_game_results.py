@@ -51,22 +51,22 @@ def main():
     print(f"Fetching {args.season} NBA season game data (30-60 seconds)...\n")
     try:
         games = fetch_games(args.season)
-        print(f"✓ Fetched {len(games)} game records (both teams per game)")
+        print(f"Fetched {len(games)} game records (both teams per game)")
 
         results_df = to_results(games)
         if results_df.empty:
-            print(f"\n⚠️  No games found for the {args.season} season yet.")
+            print(f"\nNo games found for the {args.season} season yet.")
             return
 
         results_df = results_df.sort_values('date')
         output_file = config.game_results_file(args.season)
         results_df.to_csv(output_file, index=False)
 
-        print(f"\n✓ Processed {len(results_df)} unique games")
-        print(f"✓ Date range: {results_df['date'].min()} to {results_df['date'].max()}")
-        print(f"✓ Saved to: {output_file}")
+        print(f"\nProcessed {len(results_df)} unique games")
+        print(f"Date range: {results_df['date'].min()} to {results_df['date'].max()}")
+        print(f"Saved to: {output_file}")
     except Exception as e:
-        print(f"\n❌ Error fetching data: {e}")
+        print(f"\nError fetching data: {e}")
         print("\nTroubleshooting:")
         print("1. pip install nba_api")
         print("2. Check your internet connection")

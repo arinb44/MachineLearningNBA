@@ -53,11 +53,11 @@ def load_injury_impacts():
     Returns {team: {'points': float, 'players': [(name, status, pts), ...]}}
     """
     if not os.path.exists(config.INJURIES_FILE):
-        print("ℹ️  No injuries file — run scripts/fetch_injuries.py to adjust "
+        print("No injuries file — run scripts/fetch_injuries.py to adjust "
               "for injuries")
         return {}
     if not os.path.exists(config.player_stats_file()):
-        print("ℹ️  No player stats file — run scripts/fetch_player_stats.py "
+        print("No player stats file — run scripts/fetch_player_stats.py "
               "to enable injury adjustments")
         return {}
 
@@ -86,7 +86,7 @@ def load_injury_impacts():
 
     if impacts:
         total_players = sum(len(t['players']) for t in impacts.values())
-        print(f"🏥 Injury adjustments loaded: {total_players} impact players "
+        print(f"Injury adjustments loaded: {total_players} impact players "
               f"across {len(impacts)} teams"
               + (f" ({unmatched} minor/unmatched names ignored)" if unmatched else ""))
     return impacts
@@ -100,16 +100,16 @@ class NBAPredictor:
 
     def load_model(self):
         if not os.path.exists(MODEL_FILE):
-            print(f"❌ Model not found: {MODEL_FILE}")
+            print(f"Model not found: {MODEL_FILE}")
             print("   Run: python scripts/train_model.py")
             return False
         model_data = joblib.load(MODEL_FILE)
         self.model = model_data['model']
         self.feature_names = model_data['features']
         self.calibrator = model_data.get('calibrator')
-        print(f"✅ Loaded model (trained: {model_data.get('trained_date', 'unknown')})")
+        print(f"Loaded model (trained: {model_data.get('trained_date', 'unknown')})")
         if self.feature_names != features.FEATURE_COLUMNS:
-            print("❌ Model was trained with a different feature set than features.py")
+            print("Model was trained with a different feature set than features.py")
             print("   Re-run: python scripts/train_model.py")
             return False
         return True
@@ -117,7 +117,7 @@ class NBAPredictor:
     def load_games_to_predict(self):
         """Accepts both 'HOME vs AWAY' and 'AWAY @ HOME' formats."""
         if not os.path.exists(GAMES_FILE):
-            print(f"❌ Games file not found: {GAMES_FILE}")
+            print(f"Games file not found: {GAMES_FILE}")
             print("   Format: HOME vs AWAY  (or)  AWAY @ HOME, one per line")
             return None
 
@@ -135,9 +135,9 @@ class NBAPredictor:
                     games.append({'home_team': home, 'away_team': away})
 
         if not games:
-            print(f"⚠️  No games found in {GAMES_FILE}")
+            print(f"No games found in {GAMES_FILE}")
             return None
-        print(f"✅ Loaded {len(games)} games to predict")
+        print(f"Loaded {len(games)} games to predict")
         return games
 
     def win_probability(self, margin):
@@ -152,7 +152,7 @@ class NBAPredictor:
             game['home_team'], game['away_team'], as_of_date
         )
         if feats is None:
-            print(f"⚠️  Skipping {game['home_team']} vs {game['away_team']}: "
+            print(f"Skipping {game['home_team']} vs {game['away_team']}: "
                   f"no game history for one of the teams (check the abbreviation)")
             return None
 
@@ -186,10 +186,10 @@ class NBAPredictor:
 
     def display_predictions(self, predictions):
         print("\n" + "=" * 80)
-        print("🎯 NBA GAME PREDICTIONS")
+        print("NBA GAME PREDICTIONS")
         print("=" * 80)
         for pred in predictions:
-            print(f"\n🏀 {pred['home_team']} vs {pred['away_team']}")
+            print(f"\n{pred['home_team']} vs {pred['away_team']}")
             print("-" * 80)
             side = 'HOME' if pred['predicted_winner'] == pred['home_team'] else 'AWAY'
             print(f"   Winner: {pred['predicted_winner']} ({side})")
@@ -204,11 +204,11 @@ class NBAPredictor:
     def save_predictions(self, predictions):
         os.makedirs('data/output', exist_ok=True)
         pd.DataFrame(predictions).to_csv(PREDICTIONS_CSV, index=False)
-        print(f"\n💾 Predictions saved to: {PREDICTIONS_CSV}")
+        print(f"\nPredictions saved to: {PREDICTIONS_CSV}")
 
         with open(PREDICTIONS_TXT, 'w') as f:
             f.write("=" * 80 + "\n")
-            f.write("🎯 NBA GAME PREDICTIONS\n")
+            f.write("NBA GAME PREDICTIONS\n")
             f.write("=" * 80 + "\n")
             f.write(f"Generated: {datetime.now():%Y-%m-%d %H:%M:%S}\n")
             f.write(f"Total Games: {len(predictions)}\n")
@@ -217,7 +217,7 @@ class NBAPredictor:
                 f.write(f"GAME {i}: {pred['home_team']} vs {pred['away_team']}\n")
                 f.write("-" * 80 + "\n")
                 side = 'HOME' if pred['predicted_winner'] == pred['home_team'] else 'AWAY'
-                f.write(f"🏆 Predicted Winner: {pred['predicted_winner']} ({side})\n")
+                f.write(f"Predicted Winner: {pred['predicted_winner']} ({side})\n")
                 f.write(f"   Margin: {abs(pred['predicted_margin']):.1f} points\n")
                 f.write(f"   Win Probability: {pred['win_probability']:.1f}%\n")
                 f.write(f"   Confidence: {pred['confidence']:.1f}%\n")
@@ -226,20 +226,20 @@ class NBAPredictor:
                             f"{pred['injury_adjustment']:+.1f} points\n")
                 f.write("\n")
             f.write("=" * 80 + "\n")
-            f.write("💡 Win probability is calibrated on held-out games.\n")
+            f.write("Win probability is calibrated on held-out games.\n")
             f.write("   Check injury reports — the model only sees game results.\n")
             f.write("=" * 80 + "\n")
-        print(f"💾 Text version saved to: {PREDICTIONS_TXT}")
+        print(f"Text version saved to: {PREDICTIONS_TXT}")
 
     def run(self):
-        print("🎯 NBA Game Predictor")
+        print("NBA Game Predictor")
         print("=" * 80)
 
         if not self.load_model():
             return False
 
         games_history = features.load_games()
-        print(f"✅ Loaded {len(games_history)} completed games through "
+        print(f"Loaded {len(games_history)} completed games through "
               f"{games_history['date'].max():%Y-%m-%d}")
         builder = features.FeatureBuilder(games_history)
         # Predicting future games: every completed game counts as history
@@ -258,14 +258,14 @@ class NBAPredictor:
                 predictions.append(pred)
 
         if not predictions:
-            print("❌ No predictions generated")
+            print("No predictions generated")
             return False
 
         self.display_predictions(predictions)
         self.save_predictions(predictions)
 
-        print("\n✅ PREDICTIONS COMPLETE")
-        print("💡 Next: wait for results, then run scripts/track_accuracy.py")
+        print("\nPREDICTIONS COMPLETE")
+        print("Next: wait for results, then run scripts/track_accuracy.py")
         return True
 
 

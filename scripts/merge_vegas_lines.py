@@ -33,7 +33,7 @@ def main():
     odds = pd.read_csv(args.odds_csv)
     missing = REQUIRED_COLUMNS - set(odds.columns)
     if missing:
-        print(f"❌ Odds CSV is missing columns: {sorted(missing)}")
+        print(f"Odds CSV is missing columns: {sorted(missing)}")
         print("   Expected: date, home_team, away_team, home_spread")
         return
 
@@ -54,12 +54,12 @@ def main():
     matched = int(merged['vegas_home_margin'].notna().sum())
 
     merged.to_csv(results_file, index=False)
-    print(f"✅ Merged lines for {matched}/{len(merged)} games "
+    print(f"Merged lines for {matched}/{len(merged)} games "
           f"(was {already}) → {results_file}")
     if matched < len(odds):
-        print(f"⚠️  {len(odds) - matched} odds rows didn't match any game — "
+        print(f"{len(odds) - matched} odds rows didn't match any game — "
               f"check team abbreviations and dates")
-    print("\n💡 Run scripts/track_accuracy.py to see model vs Vegas.")
+    print("\nRun scripts/track_accuracy.py to see model vs Vegas.")
 
 
 if __name__ == '__main__':

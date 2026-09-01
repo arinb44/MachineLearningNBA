@@ -40,7 +40,7 @@ def fetch_injuries():
         team_name = team_entry.get('displayName', '')
         abbr = TEAM_NAME_TO_ABBR.get(team_name)
         if abbr is None:
-            print(f"⚠️  Unknown team name from ESPN: {team_name!r} — skipping")
+            print(f"Unknown team name from ESPN: {team_name!r} — skipping")
             continue
         for injury in team_entry.get('injuries', []):
             athlete = injury.get('athlete', {})
@@ -55,26 +55,26 @@ def fetch_injuries():
 
 
 def main():
-    print("🏥 Fetching NBA injuries from ESPN...")
+    print("Fetching NBA injuries from ESPN...")
     try:
         df = fetch_injuries()
     except Exception as e:
-        print(f"❌ Error fetching injuries: {e}")
+        print(f"Error fetching injuries: {e}")
         print("   Check your internet connection and try again.")
         return
 
     if df.empty:
-        print("✅ No injuries reported (or off-season). Nothing saved.")
+        print("No injuries reported (or off-season). Nothing saved.")
         return
 
     df = df.sort_values(['team', 'player'])
     df.to_csv(config.INJURIES_FILE, index=False)
-    print(f"✅ Saved {len(df)} injuries across {df['team'].nunique()} teams "
+    print(f"Saved {len(df)} injuries across {df['team'].nunique()} teams "
           f"to {config.INJURIES_FILE}")
     print("\nStatus counts:")
     for status, count in df['status'].value_counts().items():
         print(f"   {status:15s} {count}")
-    print("\n💡 predict_games.py will apply these automatically.")
+    print("\npredict_games.py will apply these automatically.")
 
 
 if __name__ == '__main__':

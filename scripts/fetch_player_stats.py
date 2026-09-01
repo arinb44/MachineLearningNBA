@@ -23,17 +23,17 @@ try:
         per_mode_detailed='PerGame',
         measure_type_detailed_defense='Base'
     )
-    
+
     # Get the data
     df = player_stats.get_data_frames()[0]
-    
-    print(f"✓ Fetched stats for {len(df)} players")
-    
+
+    print(f"Fetched stats for {len(df)} players")
+
     # Filter for players with at least 1 game played
     df = df[df['GP'] > 0]
-    
-    print(f"✓ Filtered to {len(df)} players with games played")
-    
+
+    print(f"Filtered to {len(df)} players with games played")
+
     # Select and rename relevant columns
     columns_to_keep = {
         'PLAYER_ID': 'PLAYER_ID',
@@ -68,25 +68,25 @@ try:
         'PTS': 'PTS',
         'PLUS_MINUS': 'PLUS_MINUS',
     }
-    
+
     # Keep only columns that exist in the dataframe
     columns_present = {k: v for k, v in columns_to_keep.items() if k in df.columns}
     df_filtered = df[list(columns_present.keys())].copy()
     df_filtered.columns = list(columns_present.values())
-    
+
     # Now fetch advanced stats
     print("\nFetching advanced statistics...")
-    
+
     advanced_stats = leaguedashplayerstats.LeagueDashPlayerStats(
         season=args.season,
         season_type_all_star='Regular Season',
         per_mode_detailed='PerGame',
         measure_type_detailed_defense='Advanced'
     )
-    
+
     df_advanced = advanced_stats.get_data_frames()[0]
-    print(f"✓ Fetched advanced stats for {len(df_advanced)} players")
-    
+    print(f"Fetched advanced stats for {len(df_advanced)} players")
+
     # Select advanced metrics we need
     advanced_columns = {
         'PLAYER_ID': 'PLAYER_ID',
@@ -105,38 +105,38 @@ try:
         'PACE': 'PACE',
         'PIE': 'PIE',
     }
-    
+
     # Keep only columns that exist
     advanced_present = {k: v for k, v in advanced_columns.items() if k in df_advanced.columns}
     df_advanced_filtered = df_advanced[list(advanced_present.keys())].copy()
     df_advanced_filtered.columns = list(advanced_present.values())
-    
+
     # Merge basic and advanced stats
     df_final = df_filtered.merge(df_advanced_filtered, on='PLAYER_ID', how='left')
-    
+
     # Sort by points per game
     df_final = df_final.sort_values('PTS', ascending=False)
-    
+
     # Save to CSV
     output_file = config.player_stats_file(args.season)
     df_final.to_csv(output_file, index=False)
-    
-    print(f"\n✓ Merged {len(df_final)} player records")
-    print(f"✓ Saved to: {output_file}")
-    
+
+    print(f"\nMerged {len(df_final)} player records")
+    print(f"Saved to: {output_file}")
+
     # Show some stats
     print("\n" + "="*80)
     print("TOP 10 SCORERS (PPG):")
     print("="*80)
     top_scorers = df_final[['PLAYER_NAME', 'TEAM_ABBREVIATION', 'GP', 'MIN', 'PTS', 'REB', 'AST']].head(10)
     print(top_scorers.to_string(index=False))
-    
+
     print("\n" + "="*80)
     print("PLAYERS BY TEAM:")
     print("="*80)
     team_counts = df_final['TEAM_ABBREVIATION'].value_counts().sort_index()
     print(team_counts)
-    
+
     print("\n" + "="*80)
     print("DATASET SUMMARY:")
     print("="*80)
@@ -147,7 +147,7 @@ try:
     print(f"Average MIN: {df_final['MIN'].mean():.1f}")
 
 except Exception as e:
-    print(f"\n❌ Error fetching data: {e}")
+    print(f"\nError fetching data: {e}")
     print("\nTroubleshooting tips:")
     print("1. Make sure nba_api is installed: pip install nba_api")
     print("2. Check your internet connection")
@@ -157,4 +157,4 @@ except Exception as e:
     print("\nFull error:")
     traceback.print_exc()
 
-print("\n✓ Script complete!")
+print("\nScript complete!")
