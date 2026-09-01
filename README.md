@@ -1,8 +1,12 @@
 # NBA Game Predictor
 
+[![Live demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://machinelearningnba-p3cxa6nsk6hgcuclcwssdx.streamlit.app)
 [![CI](https://github.com/arinb44/MachineLearningNBA/actions/workflows/ci.yml/badge.svg)](https://github.com/arinb44/MachineLearningNBA/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Machine learning system for predicting NBA game outcomes (winner, margin, and calibrated win probability) from game results.
+
+**[Try the live demo](https://machinelearningnba-p3cxa6nsk6hgcuclcwssdx.streamlit.app)** — pick any two teams and see the prediction.
 
 ## How the model works
 
@@ -54,7 +58,9 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 
 ## Interactive demo
 
-Pick any two teams and see the predicted margin, calibrated win probability, injury adjustment, and each side's season form:
+**Hosted version: https://machinelearningnba-p3cxa6nsk6hgcuclcwssdx.streamlit.app**
+
+Pick any two teams and see the predicted margin, calibrated win probability, injury adjustment, and each side's season form. To run it locally:
 
 ```bash
 streamlit run streamlit_app.py
