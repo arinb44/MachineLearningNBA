@@ -1,64 +1,60 @@
 ================================================================================
 🎯 NBA GAME PREDICTIONS
 ================================================================================
-Generated: 2026-08-31 23:25:40
+Generated: 2026-08-31 23:31:54
 Total Games: 7
 ================================================================================
 
 GAME 1: MIA vs PHX
 --------------------------------------------------------------------------------
-🏆 Predicted Winner: MIA (HOME)
-   Margin: 3.8 points
-   Win Probability: 57.5%
-   Confidence: 55.6%
+🏆 Predicted Winner: PHX (AWAY)
+   Margin: 0.5 points
+   Win Probability: 48.9%
+   Confidence: 48.9%
 
 GAME 2: HOU vs CHI
 --------------------------------------------------------------------------------
 🏆 Predicted Winner: HOU (HOME)
-   Margin: 10.9 points
-   Win Probability: 71.9%
-   Confidence: 65.0%
+   Margin: 8.9 points
+   Win Probability: 66.7%
+   Confidence: 66.7%
 
 GAME 3: MIL vs MIN
 --------------------------------------------------------------------------------
 🏆 Predicted Winner: MIL (HOME)
-   Margin: 5.6 points
-   Win Probability: 61.2%
-   Confidence: 58.4%
+   Margin: 3.1 points
+   Win Probability: 57.3%
+   Confidence: 57.3%
 
 GAME 4: NOP vs DEN
 --------------------------------------------------------------------------------
-🏆 Predicted Winner: DEN (AWAY)
-   Margin: 6.5 points
-   Win Probability: 62.9%
-   Confidence: 74.7%
+🏆 Predicted Winner: NOP (HOME)
+   Margin: 0.0 points
+   Win Probability: 52.0%
+   Confidence: 52.0%
 
 GAME 5: OKC vs SAS
 --------------------------------------------------------------------------------
-🏆 Predicted Winner: SAS (AWAY)
-   Margin: 4.4 points
-   Win Probability: 58.8%
-   Confidence: 56.6%
+🏆 Predicted Winner: OKC (HOME)
+   Margin: 0.7 points
+   Win Probability: 53.2%
+   Confidence: 53.2%
 
 GAME 6: LAL vs ATL
 --------------------------------------------------------------------------------
 🏆 Predicted Winner: LAL (HOME)
-   Margin: 0.4 points
-   Win Probability: 50.8%
-   Confidence: 55.6%
+   Margin: 1.0 points
+   Win Probability: 53.7%
+   Confidence: 53.7%
 
 GAME 7: GSW vs POR
 --------------------------------------------------------------------------------
 🏆 Predicted Winner: GSW (HOME)
-   Margin: 1.3 points
-   Win Probability: 52.6%
-   Confidence: 57.0%
+   Margin: 7.4 points
+   Win Probability: 64.4%
+   Confidence: 64.4%
 
 ================================================================================
-💡 BETTING TIPS:
-================================================================================
-• Focus on predictions with >70% confidence
-• Larger margins = more confidence in the pick
-• Never bet more than 2-5% of bankroll per game
-• Track all bets to measure real accuracy
+💡 Win probability is calibrated on held-out games.
+   Check injury reports — the model only sees game results.
 ================================================================================

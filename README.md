@@ -1,11 +1,18 @@
 # NBA Game Predictor 🏀
 
-Machine learning system for predicting NBA game outcomes (predicted winner, margin, and confidence) from team stats, player stats, and injury-adjusted power ratings.
+Machine learning system for predicting NBA game outcomes (winner, margin, and calibrated win probability) from game results.
+
+## How the model works
+
+- **Point-in-time features** ([scripts/features.py](scripts/features.py)): every game's features are computed only from games played *before* it — season-to-date margin, last-10 form, home/road splits, rest days, back-to-backs. No information from the future leaks into training.
+- **Walk-forward validation**: the model is always trained on the past and tested on the future (`TimeSeriesSplit`), and compared against a naive home-court baseline so we know it earns its keep. Current numbers: **11.5 MAE vs 11.9 baseline; 61.9% winner accuracy vs 54.5% for always-picking-home**.
+- **Calibrated probabilities**: win probability comes from a logistic calibrator fit on held-out predictions, not a hand-tuned formula. A reported 60% should win about 60% of the time — `track_accuracy.py`'s accuracy-by-confidence report is the check.
 
 ## Project Structure
 
 ```
 ├── scripts/            All runnable scripts (run them from the repo root)
+│   ├── features.py                 Shared point-in-time feature engineering
 │   ├── fetch_player_stats.py       Fetch latest player stats from the NBA API
 │   ├── fetch_game_results.py       Fetch latest game results
 │   ├── fetch_game_logs.py          Fetch game logs / per-game std deviations
@@ -47,21 +54,15 @@ python scripts/fetch_player_stats.py
 python scripts/fetch_game_results.py
 ```
 
-### 2. (Optional) Adjust for injuries
-
-```bash
-python scripts/adjust_team_power.py
-```
-
-### 3. Train the model
+### 2. Train the model
 
 ```bash
 python scripts/train_model.py
 ```
 
-Saves the model to `models/nba_predictor.pkl` and feature importance to `data/output/feature_importance.csv`.
+Prints the walk-forward validation report (model vs. baseline), then saves the model to `models/nba_predictor.pkl` and feature importance to `data/output/feature_importance.csv`. Retrain whenever you fetch new results.
 
-### 4. Predict games
+### 3. Predict games
 
 Edit `data/input/games_to_predict.txt` (away team first):
 
@@ -77,7 +78,7 @@ python scripts/predict_games.py
 
 Results land in `data/output/predictions_output.txt` and `data/output/predictions.csv`.
 
-### 5. Track accuracy & visualize
+### 4. Track accuracy & visualize
 
 ```bash
 python scripts/track_accuracy.py
@@ -90,19 +91,15 @@ Graphs are saved to `reports/`.
 
 ATL BOS BKN CHA CHI CLE DAL DEN DET GSW HOU IND LAC LAL MEM MIA MIL MIN NOP NYK OKC ORL PHI PHX POR SAC SAS TOR UTA WAS
 
-## Understanding Confidence
+## Understanding the numbers
 
-- **0–30%**: Very close game (≤3 point margin)
-- **30–50%**: Moderate advantage (3–7 points)
-- **50–80%**: Strong favorite (7–12 points)
-- **80–100%**: Heavy favorite (12+ points)
-
-Low confidence is normal early in the season; predictions improve as more games are played (100+ games, usually by January).
+- **Win probability / confidence** is calibrated: ~50% means a true coin flip, ~68% is roughly a 10-point favorite. Don't expect many games above 75% — NBA games are genuinely uncertain, and honest probabilities reflect that.
+- **Predicted margin** has a typical error of ~11 points (MAE) — that's normal for NBA models; single-game variance is huge.
 
 ## Caveats
 
-- The model doesn't account for rest, travel, or same-day injury news — check injury reports before using predictions.
-- Early-season data is less predictive.
+- The model accounts for rest days and back-to-backs, but not travel or same-day injury news — check injury reports before using predictions (`scripts/injury_tracker.py` can apply manual adjustments).
+- Early-season predictions are skipped/noisier until each team has 5+ games.
 - Don't use for playoff games (different dynamics), and treat predictions as one input among many.
 
 More detail in [docs/NBA_ML_COMPLETE_GUIDE.md](docs/NBA_ML_COMPLETE_GUIDE.md).
