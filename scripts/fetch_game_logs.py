@@ -13,8 +13,8 @@ from datetime import datetime
 
 class GameLogFetcher:
     def __init__(self):
-        self.player_file = 'Input_Data/nba_player_stats_2025-26.csv'
-        self.output_file = 'Input_Data/nba_player_stats_with_std_2025-26.csv'
+        self.player_file = 'data/input/nba_player_stats_2025-26.csv'
+        self.output_file = 'data/input/nba_player_stats_with_std_2025-26.csv'
         self.season = '2025-26'
         
         # NBA Stats API headers

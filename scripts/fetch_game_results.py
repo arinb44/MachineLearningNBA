@@ -66,7 +66,7 @@ try:
         results_df = results_df.sort_values('date')
         
         # Save to CSV
-        output_file = 'Accuracy_Tracker/nba_game_results_2025-26.csv'
+        output_file = 'data/tracking/nba_game_results_2025-26.csv'
         results_df.to_csv(output_file, index=False)
         
         print(f"\n✓ Processed {len(results_df)} unique games")

@@ -20,13 +20,13 @@ from datetime import datetime
 class NBAModelTrainer:
     def __init__(self):
         # Data files
-        self.game_results_file = 'TrainingAccuracyGameData.csv'
-        self.player_stats_file = 'Input_Data/nba_player_stats_2025-26.csv'
-        self.team_power_file = 'Output_Data/adjusted_team_rankings.csv'
+        self.game_results_file = 'data/input/TrainingAccuracyGameData.csv'
+        self.player_stats_file = 'data/input/nba_player_stats_2025-26.csv'
+        self.team_power_file = 'data/input/adjusted_team_rankings.csv'
         
         # Output files
-        self.model_file = 'Models/nba_predictor.pkl'
-        self.feature_importance_file = 'Output_Data/feature_importance.csv'
+        self.model_file = 'models/nba_predictor.pkl'
+        self.feature_importance_file = 'data/output/feature_importance.csv'
         
         # Model
         self.model = None
@@ -301,7 +301,7 @@ class NBAModelTrainer:
         }).sort_values('importance', ascending=False)
         
         # Save to file
-        os.makedirs('Output_Data', exist_ok=True)
+        os.makedirs('data/output', exist_ok=True)
         importance_df.to_csv(self.feature_importance_file, index=False)
         
         print("\n" + "="*60)
@@ -313,7 +313,7 @@ class NBAModelTrainer:
     
     def save_model(self):
         """Save the trained model"""
-        os.makedirs('Models', exist_ok=True)
+        os.makedirs('models', exist_ok=True)
         
         model_data = {
             'model': self.model,

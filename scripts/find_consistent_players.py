@@ -10,9 +10,9 @@ import os
 
 class ConsistencyFinder:
     def __init__(self):
-        self.data_file = 'Input_Data/nba_player_stats_with_std_2025-26.csv'
-        self.fallback_file = 'Input_Data/nba_player_stats_2025-26.csv'
-        self.game_log_file = 'Input_Data/nba_game_logs_2025-26.csv'  # Optional
+        self.data_file = 'data/input/nba_player_stats_with_std_2025-26.csv'
+        self.fallback_file = 'data/input/nba_player_stats_2025-26.csv'
+        self.game_log_file = 'data/input/nba_game_logs_2025-26.csv'  # Optional
         self.min_minutes = 20
         
     def load_data(self):
@@ -98,7 +98,7 @@ class ConsistencyFinder:
     
     def save_results(self, results):
         """Save results to CSV files"""
-        output_dir = "Output_Data"
+        output_dir = "data/output"
         os.makedirs(output_dir, exist_ok=True)
         
         for stat_name, df in results.items():

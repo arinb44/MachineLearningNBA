@@ -12,7 +12,7 @@ def check_files():
     print("="*60)
     
     # Check predictions file
-    predictions_file = 'predictions_output.txt'
+    predictions_file = 'data/output/predictions_output.txt'
     print(f"\n1️⃣  Checking: {predictions_file}")
     
     if os.path.exists(predictions_file):
@@ -39,7 +39,7 @@ def check_files():
         print(f"   💡 Run 'python predict_games.py' to create this file")
     
     # Check results file
-    results_file = 'nba_game_results_2025-26.csv'
+    results_file = 'data/tracking/nba_game_results_2025-26.csv'
     print(f"\n2️⃣  Checking: {results_file}")
     
     if os.path.exists(results_file):
@@ -70,7 +70,7 @@ def check_files():
         print(f"   💡 Run 'python fetch_nba_games_2025-26.py' to create this file")
     
     # Check tracking file (if it exists)
-    tracking_file = 'prediction_tracking.csv'
+    tracking_file = 'data/tracking/prediction_tracking.csv'
     print(f"\n3️⃣  Checking: {tracking_file}")
     
     if os.path.exists(tracking_file):

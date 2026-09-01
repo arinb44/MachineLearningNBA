@@ -115,7 +115,7 @@ try:
     df_final = df_final.sort_values('PTS', ascending=False)
     
     # Save to CSV
-    output_file = 'Input_Data/nba_player_stats_2025-26.csv'
+    output_file = 'data/input/nba_player_stats_2025-26.csv'
     df_final.to_csv(output_file, index=False)
     
     print(f"\n✓ Merged {len(df_final)} player records")

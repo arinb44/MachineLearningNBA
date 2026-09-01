@@ -88,7 +88,7 @@ TEAMS = [
 
 def load_predictions():
     """Load today's predictions"""
-    predictions_file = 'Output_Data/predictions_output.txt'
+    predictions_file = 'data/output/predictions_output.txt'
     
     if not os.path.exists(predictions_file):
         print(f"❌ Can't find {predictions_file}")
@@ -362,7 +362,7 @@ def print_betting_report(predictions):
 
 def save_results(predictions):
     """Save adjusted predictions to formatted TXT file"""
-    output_dir = 'Output_Data'
+    output_dir = 'data/output'
     os.makedirs(output_dir, exist_ok=True)
     
     output_file = os.path.join(output_dir, 'injury_adjusted_predictions.txt')

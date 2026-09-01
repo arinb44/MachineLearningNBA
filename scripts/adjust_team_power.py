@@ -12,9 +12,9 @@ import os
 
 class PowerAdjuster:
     def __init__(self):
-        self.player_stats_file = 'Input_Data/nba_player_stats_2025-26.csv'
-        self.adjustments_file = 'Input_Data/team_power_adjustments.csv'
-        self.output_file = 'Input_Data/adjusted_team_rankings.csv'
+        self.player_stats_file = 'data/input/nba_player_stats_2025-26.csv'
+        self.adjustments_file = 'data/input/team_power_adjustments.csv'
+        self.output_file = 'data/input/adjusted_team_rankings.csv'
     
     def load_data(self):
         """Load player stats and adjustment data"""
@@ -165,7 +165,7 @@ class PowerAdjuster:
     
     def save_rankings(self, rankings):
         """Save rankings to CSV"""
-        os.makedirs('Output_Data', exist_ok=True)
+        os.makedirs('data/output', exist_ok=True)
         rankings.to_csv(self.output_file, index=False)
         print(f"\n💾 Saved rankings to: {self.output_file}")
     

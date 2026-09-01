@@ -19,8 +19,8 @@ import platform
 
 class PredictionVisualizer:
     def __init__(self):
-        self.historical_file = "Accuracy_Tracker/prediction_tracking.csv"
-        self.session_file = "Accuracy_Tracker/session_results.csv"
+        self.historical_file = "data/tracking/prediction_tracking.csv"
+        self.session_file = "data/tracking/session_results.csv"
         self.created_images = []  # Track created images to open them later
     
     def open_image(self, filepath):
@@ -265,8 +265,9 @@ class PredictionVisualizer:
         print(f"✅ Loaded {len(df)} predictions")
         
         # Create visualizations
-        main_graph = f"{prefix}_accuracy_graph.png"
-        dashboard = f"{prefix}_dashboard.png"
+        os.makedirs("reports", exist_ok=True)
+        main_graph = f"reports/{prefix}_accuracy_graph.png"
+        dashboard = f"reports/{prefix}_dashboard.png"
         
         print(f"📈 Creating main accuracy graph...")
         self.create_main_accuracy_graph(df, main_graph)

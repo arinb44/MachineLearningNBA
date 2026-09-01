@@ -14,10 +14,10 @@ import re
 
 class AccuracyTracker:
     def __init__(self):
-        self.predictions_file = "Output_Data/predictions_output.txt"
-        self.results_file = "Accuracy_Tracker/nba_game_results_2025-26.csv"
-        self.tracking_file = "Accuracy_Tracker/prediction_tracking.csv"
-        self.session_file = "Accuracy_Tracker/session_results.csv"
+        self.predictions_file = "data/output/predictions_output.txt"
+        self.results_file = "data/tracking/nba_game_results_2025-26.csv"
+        self.tracking_file = "data/tracking/prediction_tracking.csv"
+        self.session_file = "data/tracking/session_results.csv"
         
     def parse_predictions(self):
         """Parse predictions from the output file - expects 'HOME vs AWAY' format"""

@@ -17,13 +17,13 @@ from datetime import datetime
 class NBAPredictor:
     def __init__(self):
         # Data files
-        self.model_file = 'Models/nba_predictor.pkl'
-        self.player_stats_file = 'Input_Data/nba_player_stats_2025-26.csv'
-        self.team_power_file = 'Input_Data/adjusted_team_rankings.csv'
-        self.games_file = 'Input_Data/games_to_predict.txt'
+        self.model_file = 'models/nba_predictor.pkl'
+        self.player_stats_file = 'data/input/nba_player_stats_2025-26.csv'
+        self.team_power_file = 'data/input/adjusted_team_rankings.csv'
+        self.games_file = 'data/input/games_to_predict.txt'
         
         # Output
-        self.predictions_file = 'Output_Data/predictions.csv'
+        self.predictions_file = 'data/output/predictions.csv'
         
         # Model
         self.model = None
@@ -326,14 +326,14 @@ class NBAPredictor:
         """Save predictions to CSV and TXT - OUTPUT FORMAT: HOME vs AWAY"""
         df = pd.DataFrame(predictions)
     
-        os.makedirs('Output_Data', exist_ok=True)
+        os.makedirs('data/output', exist_ok=True)
     
         # Save CSV
         df.to_csv(self.predictions_file, index=False)
         print(f"\n💾 Predictions saved to: {self.predictions_file}")
     
         # Save TXT in "HOME vs AWAY" format
-        txt_file = 'Output_Data/predictions_output.txt'
+        txt_file = 'data/output/predictions_output.txt'
         with open(txt_file, 'w') as f:
             f.write("="*80 + "\n")
             f.write("🎯 NBA GAME PREDICTIONS\n")
