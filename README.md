@@ -48,8 +48,19 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 ├── models/             Trained model (nba_predictor.pkl)
 ├── docs/               Guides (+ docs/reference/ for the original ML templates)
 ├── reports/            Generated graphs and betting spreadsheets
+├── streamlit_app.py    Interactive demo (streamlit run streamlit_app.py)
 └── Dockerfile          Reproducible environment — see Quick start below
 ```
+
+## Interactive demo
+
+Pick any two teams and see the predicted margin, calibrated win probability, injury adjustment, and each side's season form:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+The demo calls the same prediction code path as the command-line tool, so it can never drift from the trained model.
 
 ## Quick start with Docker
 
@@ -69,6 +80,12 @@ To predict your own games, mount a local copy of the input folder:
 
 ```bash
 docker run --rm -v "$PWD/data:/app/data" nba-predictor python scripts/predict_games.py
+```
+
+Or serve the interactive demo at http://localhost:8501:
+
+```bash
+docker run --rm -p 8501:8501 nba-predictor streamlit run streamlit_app.py --server.address 0.0.0.0
 ```
 
 ## Setup (without Docker)
@@ -143,8 +160,8 @@ ATL BOS BKN CHA CHI CLE DAL DEN DET GSW HOU IND LAC LAL MEM MIA MIL MIN NOP NYK 
 
 ## Understanding the numbers
 
-- **Win probability / confidence** is calibrated: ~50% means a true coin flip, ~68% is roughly a 10-point favorite. Don't expect many games above 75% — NBA games are genuinely uncertain, and honest probabilities reflect that.
-- **Predicted margin** has a typical error of ~11 points (MAE) — that's normal for NBA models; single-game variance is huge.
+- **Win probability** is calibrated against held-out games, so a stated 65% really does win about 65% of the time. For scale: a 1-point edge is ~56%, a 5-point favorite ~66%, a 10-point favorite ~76%, and only lopsided matchups (15+ points) clear 85%.
+- **Predicted margin** has a typical error of ~12 points (MAE) — that's normal for NBA models; single-game variance is huge.
 
 ## Caveats
 

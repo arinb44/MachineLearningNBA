@@ -5,3 +5,4 @@ nba_api
 matplotlib
 joblib
 requests
+streamlit
