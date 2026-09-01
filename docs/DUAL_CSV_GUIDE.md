@@ -3,7 +3,7 @@
 ## Overview
 The accuracy tracker now outputs **TWO CSV files** with different purposes:
 
-## 📊 File 1: `prediction_tracking.csv` (Historical Data)
+## File 1: `prediction_tracking.csv` (Historical Data)
 **Purpose:** Cumulative tracking of ALL predictions across all sessions
 
 **Behavior:**
@@ -13,23 +13,23 @@ The accuracy tracker now outputs **TWO CSV files** with different purposes:
 - Contains complete historical record
 
 **Use Cases:**
-✅ Long-term performance analysis
-✅ Tracking model improvement over time
-✅ Season-long accuracy trends
-✅ Comparing different model versions
-✅ Creating charts showing performance evolution
+Long-term performance analysis
+Tracking model improvement over time
+Season-long accuracy trends
+Comparing different model versions
+Creating charts showing performance evolution
 
 **Example Data After 3 Sessions:**
 ```csv
 date,home_team,away_team,predicted_winner,actual_winner,correct,confidence,tracked_at
 2025-10-27,LAL,GSW,GSW,GSW,True,65.5,2025-10-27 10:00:00
 2025-10-27,OKC,HOU,OKC,OKC,True,72.3,2025-10-27 10:00:00
-2025-10-28,BOS,MIL,BOS,BOS,True,68.1,2025-10-28 15:30:00  ← Session 2
-2025-10-28,NYK,CLE,CLE,CLE,True,71.2,2025-10-28 15:30:00  ← Session 2
-2025-10-29,MIA,CHI,MIA,MIA,True,63.4,2025-10-29 09:15:00  ← Session 3
+2025-10-28,BOS,MIL,BOS,BOS,True,68.1,2025-10-28 15:30:00 Session 2
+2025-10-28,NYK,CLE,CLE,CLE,True,71.2,2025-10-28 15:30:00 Session 2
+2025-10-29,MIA,CHI,MIA,MIA,True,63.4,2025-10-29 09:15:00 Session 3
 ```
 
-## 📝 File 2: `session_results.csv` (Current Session Only)
+## File 2: `session_results.csv` (Current Session Only)
 **Purpose:** Contains ONLY the predictions from the most recent run
 
 **Behavior:**
@@ -38,11 +38,11 @@ date,home_team,away_team,predicted_winner,actual_winner,correct,confidence,track
 - Lightweight and focused on current analysis
 
 **Use Cases:**
-✅ Quick review of today's predictions
-✅ Importing into other tools for immediate analysis
-✅ Creating session-specific reports
-✅ Testing new prediction batches
-✅ Sharing results without full history
+Quick review of today's predictions
+Importing into other tools for immediate analysis
+Creating session-specific reports
+Testing new prediction batches
+Sharing results without full history
 
 **Example Data (Single Session):**
 ```csv
@@ -51,7 +51,7 @@ date,home_team,away_team,predicted_winner,actual_winner,correct,confidence,track
 2025-10-29,GSW,LAC,GSW,LAC,False,58.7,2025-10-29 09:15:00
 ```
 
-## 🔄 Workflow Example
+## Workflow Example
 
 ### Day 1: Make First Predictions
 ```bash
@@ -59,8 +59,8 @@ python predict_games.py  # Predict 10 games
 python track_accuracy.py
 ```
 **Result:**
-- `prediction_tracking.csv` → 10 rows
-- `session_results.csv` → 10 rows
+- `prediction_tracking.csv` 10 rows
+- `session_results.csv` 10 rows
 
 ### Day 2: Make More Predictions
 ```bash
@@ -68,8 +68,8 @@ python predict_games.py  # Predict 8 new games
 python track_accuracy.py
 ```
 **Result:**
-- `prediction_tracking.csv` → 18 rows (10 + 8 appended)
-- `session_results.csv` → 8 rows (overwritten with just Day 2)
+- `prediction_tracking.csv` 18 rows (10 + 8 appended)
+- `session_results.csv` 8 rows (overwritten with just Day 2)
 
 ### Day 3: Make More Predictions
 ```bash
@@ -77,10 +77,10 @@ python predict_games.py  # Predict 12 new games
 python track_accuracy.py
 ```
 **Result:**
-- `prediction_tracking.csv` → 30 rows (18 + 12 appended)
-- `session_results.csv` → 12 rows (overwritten with just Day 3)
+- `prediction_tracking.csv` 30 rows (18 + 12 appended)
+- `session_results.csv` 12 rows (overwritten with just Day 3)
 
-## 📈 Use Case Examples
+## Use Case Examples
 
 ### Example 1: Weekly Performance Report
 ```python
@@ -123,7 +123,7 @@ print(f"Accuracy before update: {before['correct'].mean():.1%}")
 print(f"Accuracy after update: {after['correct'].mean():.1%}")
 ```
 
-## 🎯 Which File Should You Use?
+## Which File Should You Use?
 
 | Task | Use This File |
 |------|---------------|
@@ -135,7 +135,7 @@ print(f"Accuracy after update: {after['correct'].mean():.1%}")
 | Import to spreadsheet for today | `session_results.csv` |
 | Test specific prediction batch | `session_results.csv` |
 
-## 💡 Pro Tips
+## Pro Tips
 
 1. **Backup Historical Data**
    ```bash
@@ -159,14 +159,14 @@ print(f"Accuracy after update: {after['correct'].mean():.1%}")
    ```python
    import pandas as pd
    import glob
-   
+
    # Combine all saved session files
    files = glob.glob('results_*.csv')
    combined = pd.concat([pd.read_csv(f) for f in files])
    combined.to_csv('combined_results.csv', index=False)
    ```
 
-## 📊 Sample Analysis Script
+## Sample Analysis Script
 
 ```python
 import pandas as pd
@@ -190,10 +190,10 @@ plt.xlabel('Date')
 plt.ylabel('Accuracy (%)')
 plt.grid(True)
 plt.savefig('accuracy_trend.png')
-print("✅ Saved accuracy_trend.png")
+print(" Saved accuracy_trend.png")
 ```
 
-## ✅ Summary
+## Summary
 
 - **Historical File** = Complete record of all predictions (cumulative)
 - **Session File** = Just this run's predictions (overwrites each time)

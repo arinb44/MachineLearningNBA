@@ -3,7 +3,7 @@
 ## Overview
 The visualization tool now creates **TWO separate sets of visualizations** to match your dual CSV tracking system:
 
-## 📊 Visualization Sets
+## Visualization Sets
 
 ### 1. Historical Visualizations (Season-Long Analysis)
 **Source Data:** `prediction_tracking.csv` (all cumulative predictions)
@@ -13,10 +13,10 @@ The visualization tool now creates **TWO separate sets of visualizations** to ma
 - `historical_dashboard.png` - Comprehensive 4-panel analysis
 
 **What You'll See:**
-✅ Your model's evolution throughout the entire season
-✅ Long-term accuracy trends
-✅ Cumulative performance metrics
-✅ How your model improves (or regresses) over time
+Your model's evolution throughout the entire season
+Long-term accuracy trends
+Cumulative performance metrics
+How your model improves (or regresses) over time
 
 **Best For:**
 - Tracking model improvement over weeks/months
@@ -34,9 +34,9 @@ The visualization tool now creates **TWO separate sets of visualizations** to ma
 - `session_dashboard.png` - Analysis of current session
 
 **What You'll See:**
-✅ Performance of just the predictions you ran today
-✅ Quick snapshot without historical noise
-✅ Focused analysis on specific game set
+Performance of just the predictions you ran today
+Quick snapshot without historical noise
+Focused analysis on specific game set
 
 **Best For:**
 - Quick performance check after prediction run
@@ -44,36 +44,36 @@ The visualization tool now creates **TWO separate sets of visualizations** to ma
 - Testing new strategies
 - Daily/weekly reports
 
-## 🎨 Visual Explanations
+## Visual Explanations
 
 ### Main Accuracy Graph (Both Versions)
 
 ```
      Signed Error
-         ↑
+
     +15  |     ████ Green bars = Correct prediction
-         |     ↑
+         |
     +10  |     |
          |     | Error bars = Margin accuracy
-     +5  |     ↓
+     +5  |
     ════════════════════════════════> Games
-     -5  |     ↑
-         |     | 
+     -5  |
+         |     |
     -10  |     ████ Red bars = Incorrect prediction
-         |     
+         |
     -15  |
 ```
 
 **Reading the Graph:**
 - **Y-axis (Signed Error):**
-  - Positive values = Predicted winner actually won ✅
-  - Negative values = Predicted winner lost ❌
+  - Positive values = Predicted winner actually won
+  - Negative values = Predicted winner lost
   - Distance from 0 = How wrong the margin prediction was
-  
+
 - **Bar Colors:**
-  - 🟢 Green = Correct winner prediction
-  - 🔴 Red = Incorrect winner prediction
-  
+  - Green = Correct winner prediction
+  - Red = Incorrect winner prediction
+
 - **Error Bars:**
   - Show margin prediction accuracy
   - Smaller error bars = Better margin predictions
@@ -82,12 +82,12 @@ The visualization tool now creates **TWO separate sets of visualizations** to ma
 ```
 Game: LAL vs GSW
 Bar: +8 (green)
-└─ Predicted winner: Won ✅
+└─ Predicted winner: Won
 └─ Margin off by 8 points
 
-Game: BOS vs MIA  
+Game: BOS vs MIA
 Bar: -12 (red)
-└─ Predicted winner: Lost ❌
+└─ Predicted winner: Lost
 └─ Margin off by 12 points
 ```
 
@@ -117,10 +117,10 @@ Accuracy %
 ```
 Accuracy %
    100 |    ────────
-       |             
-    80 |   ╱        
-       |  ╱         
-    60 | ╱          
+       |
+    80 |   ╱
+       |  ╱
+    60 | ╱
        |╱___________
     40 |
        └───────────> Games
@@ -134,48 +134,48 @@ Shows relationship between your confidence and accuracy
 
 ```
 Margin Error
-      ↑
+
    20 |  ○     ○
       |    ○ ○   ○
    15 |  ○   ●     ○
-      |    ●   ● 
+      |    ●   ●
    10 |  ●   ●   ●
       |    ●
     5 |  ●───────── Trend line
       |
     0 └─────────────> Confidence %
       50   60   70   80
-      
+
   ● = Correct prediction
   ○ = Incorrect prediction
 ```
 
 **What to Look For:**
-- Downward trend = Higher confidence → Lower error ✅ (good!)
-- Upward trend = Higher confidence → Higher error ❌ (overconfident!)
-- Scattered = Confidence doesn't match accuracy ⚠️
+- Downward trend = Higher confidence Lower error (good!)
+- Upward trend = Higher confidence Higher error (overconfident!)
+- Scattered = Confidence doesn't match accuracy
 
 #### Panel 3: Error Distribution
 Shows how often you make errors of different sizes
 
 ```
 Frequency
-    ↑
+
  15 |     █
     |     █
  10 |   █ █ █
     | █ █ █ █ █
   5 | █ █ █ █ █
-    |_█_█_█_█_█_→ Margin Error (pts)
+    |_█_█_█_█_█_ Margin Error (pts)
       0 5 10 15 20
-      
+
   █ Green = Correct predictions
   █ Red = Incorrect predictions
 ```
 
 **What to Look For:**
-- Peak near 0 = Most predictions have low error ✅
-- Spread out = Inconsistent margin predictions ⚠️
+- Peak near 0 = Most predictions have low error
+- Spread out = Inconsistent margin predictions
 - Separate peaks for correct/incorrect = Different error patterns
 
 #### Panel 4: Accuracy by Confidence Level
@@ -185,7 +185,7 @@ Shows how accurate you are at different confidence levels
 Accuracy %
    100 |        n=14
        |    █    █
-    80 |    █    █   
+    80 |    █    █
        |    █  n=5█  n=23
     60 |    █    █    █
        |    █    █    █
@@ -195,11 +195,11 @@ Accuracy %
 ```
 
 **What to Look For:**
-- Rising bars = Higher confidence → Higher accuracy ✅ (well-calibrated!)
-- Flat bars = Confidence doesn't predict accuracy ⚠️
+- Rising bars = Higher confidence Higher accuracy (well-calibrated!)
+- Flat bars = Confidence doesn't predict accuracy
 - Small n values = Not enough data in that range
 
-## 🔄 Usage Workflow
+## Usage Workflow
 
 ### Scenario 1: Daily Prediction Routine
 ```bash
@@ -249,17 +249,17 @@ python visualize_predictions.py
 # - before_update.png vs historical_accuracy_graph.png
 ```
 
-## 📈 Interpreting Results
+## Interpreting Results
 
 ### Historical Graphs - What to Look For:
 
-✅ **Good Signs:**
+**Good Signs:**
 - Accuracy increasing over time (upward trend in Panel 1)
 - High-confidence predictions more accurate (Panel 4 rising)
 - Error bars getting smaller (margin predictions improving)
 - Errors clustering near 0 (Panel 3)
 
-⚠️ **Warning Signs:**
+**Warning Signs:**
 - Accuracy declining over time (need retraining)
 - Random relationship between confidence and accuracy
 - Large error bars (inconsistent predictions)
@@ -267,19 +267,19 @@ python visualize_predictions.py
 
 ### Session Graphs - What to Look For:
 
-✅ **Good Session:**
+**Good Session:**
 - Most bars are green
 - Error bars are small
 - Accuracy > 60%
 - High confidence games mostly correct
 
-❌ **Bad Session:**
+**Bad Session:**
 - Many red bars
 - Large error bars
 - Accuracy < 55%
 - High confidence games incorrect (rethink model)
 
-## 💡 Pro Tips
+## Pro Tips
 
 ### 1. Compare Historical vs Session
 ```python
@@ -318,7 +318,7 @@ Check Panel 2 in both dashboards:
 - Historical: Are you generally well-calibrated?
 - Session: Was today's confidence appropriate?
 
-## 🎯 Quick Decision Guide
+## Quick Decision Guide
 
 | Question | Look At This |
 |----------|-------------|
@@ -330,7 +330,7 @@ Check Panel 2 in both dashboards:
 | Which teams do I struggle with? | Historical accuracy graph (red bars) |
 | Is this batch worth tracking? | Session dashboard - overall accuracy |
 
-## 📊 File Summary
+## File Summary
 
 | File | Source | Purpose | Overwrites? |
 |------|--------|---------|-------------|
@@ -339,7 +339,7 @@ Check Panel 2 in both dashboards:
 | `session_accuracy_graph.png` | session_results.csv | Today's results | Yes |
 | `session_dashboard.png` | session_results.csv | Today's analysis | Yes |
 
-## ✅ Installation & Usage
+## Installation & Usage
 
 ### First Time Setup:
 ```bash
@@ -353,31 +353,31 @@ python visualize_predictions.py
 
 ### Expected Output:
 ```
-🎨 NBA Prediction Visualization Tool
+NBA Prediction Visualization Tool
 ============================================================
 
-📚 HISTORICAL DATA (prediction_tracking.csv)
+HISTORICAL DATA (prediction_tracking.csv)
 ------------------------------------------------------------
-📊 Creating historical visualizations...
-✅ Loaded 42 predictions
-📈 Creating main accuracy graph...
-✅ Saved: historical_accuracy_graph.png
-📊 Creating comprehensive dashboard...
-✅ Saved: historical_dashboard.png
+Creating historical visualizations...
+Loaded 42 predictions
+Creating main accuracy graph...
+Saved: historical_accuracy_graph.png
+Creating comprehensive dashboard...
+Saved: historical_dashboard.png
 
-📝 SESSION DATA (session_results.csv)
+SESSION DATA (session_results.csv)
 ------------------------------------------------------------
-📊 Creating session visualizations...
-✅ Loaded 10 predictions
-📈 Creating main accuracy graph...
-✅ Saved: session_accuracy_graph.png
-📊 Creating comprehensive dashboard...
-✅ Saved: session_dashboard.png
+Creating session visualizations...
+Loaded 10 predictions
+Creating main accuracy graph...
+Saved: session_accuracy_graph.png
+Creating comprehensive dashboard...
+Saved: session_dashboard.png
 
 ============================================================
-✅ Visualization complete!
+Visualization complete!
 
-📂 Files created:
+Files created:
 
    HISTORICAL VISUALIZATIONS:
    • historical_accuracy_graph.png
@@ -391,11 +391,11 @@ python visualize_predictions.py
    • session_dashboard.png
      └─ Analysis of current session only
 
-💡 Use historical charts to see long-term trends
-💡 Use session charts for quick current batch analysis
+Use historical charts to see long-term trends
+Use session charts for quick current batch analysis
 ```
 
-## 🎬 Complete Workflow Example
+## Complete Workflow Example
 
 ```bash
 # Monday: Predict games
@@ -415,4 +415,4 @@ python visualize_predictions.py
 # Analyze historical_dashboard.png for weekly trends
 ```
 
-That's it! You now have powerful dual visualization tracking for both daily analysis and long-term trends! 🎯📊
+That's it! You now have powerful dual visualization tracking for both daily analysis and long-term trends!

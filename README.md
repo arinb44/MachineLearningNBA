@@ -1,4 +1,4 @@
-# NBA Game Predictor 🏀
+# NBA Game Predictor
 
 [![CI](https://github.com/arinb44/MachineLearningNBA/actions/workflows/ci.yml/badge.svg)](https://github.com/arinb44/MachineLearningNBA/actions/workflows/ci.yml)
 

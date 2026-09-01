@@ -24,7 +24,7 @@ Individual player advanced statistics from NBA.com/stats:
 #### Defensive Metrics
 | Metric | Description | Importance |
 |--------|-------------|------------|
-| DEF_RATING | Points allowed per 100 possessions ⚠️ LOWER IS BETTER | Primary defensive efficiency measure |
+| DEF_RATING | Points allowed per 100 possessions LOWER IS BETTER | Primary defensive efficiency measure |
 | DREB_PCT | Defensive rebound % | Limiting opponent second chances |
 | REB_PCT | Total rebound % | Overall rebounding impact |
 | STL | Steals per game | Defensive disruption |
@@ -149,10 +149,10 @@ motion_offense_vs_zone = home_ast_pct * away_opponent_3pt_pct
 ```python
 # Weighted recent form (more recent = higher weight)
 last_5_games_weighted = (
-    game_1 * 0.35 + 
-    game_2 * 0.25 + 
-    game_3 * 0.20 + 
-    game_4 * 0.12 + 
+    game_1 * 0.35 +
+    game_2 * 0.25 +
+    game_3 * 0.20 +
+    game_4 * 0.12 +
     game_5 * 0.08
 )
 ```
@@ -262,7 +262,7 @@ else: target = 4  # Blowout win
 
 ## Validation Strategy
 
-### ⚠️ Critical: Avoid Lookahead Bias
+### Critical: Avoid Lookahead Bias
 NEVER train on future games to predict past games!
 
 ### Time-Based Split
@@ -344,7 +344,7 @@ from sklearn.model_selection import TimeSeriesSplit
 from xgboost import XGBRegressor
 
 # Features
-feature_cols = [col for col in matchups.columns 
+feature_cols = [col for col in matchups.columns
                 if col not in ['home_score', 'away_score', 'date']]
 X = matchups[feature_cols]
 y = matchups['home_score'] - matchups['away_score']
@@ -356,7 +356,7 @@ tscv = TimeSeriesSplit(n_splits=5)
 for train_idx, val_idx in tscv.split(X):
     X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
     y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
-    
+
     model = XGBRegressor(n_estimators=1000, learning_rate=0.05)
     model.fit(X_train, y_train,
               eval_set=[(X_val, y_val)],
@@ -381,23 +381,23 @@ accuracy = (predictions > 0) == (y_true > 0).mean()
 
 ## Common Pitfalls & Solutions
 
-### ❌ Pitfall 1: Data Leakage
+### Pitfall 1: Data Leakage
 **Problem:** Using future information to predict past
 **Solution:** Strict time-based validation, no lookahead features
 
-### ❌ Pitfall 2: Ignoring Context
+### Pitfall 2: Ignoring Context
 **Problem:** Treating all games equally
 **Solution:** Add rest days, travel, injuries, playoff flag
 
-### ❌ Pitfall 3: Overfitting Recent Games
+### Pitfall 3: Overfitting Recent Games
 **Problem:** Model too sensitive to last 1-2 games
 **Solution:** Use longer windows (10-20 games) or exponential weighting
 
-### ❌ Pitfall 4: Ignoring Home Court
+### Pitfall 4: Ignoring Home Court
 **Problem:** Underestimating venue advantage
 **Solution:** Always include home indicator, consider altitude (DEN), etc.
 
-### ❌ Pitfall 5: Using Raw Stats Instead of Differentials
+### Pitfall 5: Using Raw Stats Instead of Differentials
 **Problem:** Model struggles to compare teams
 **Solution:** Create differential features (home - away) for key metrics
 
@@ -411,11 +411,11 @@ accuracy = (predictions > 0) == (y_true > 0).mean()
 - **Beat the Spread:** 52-54% (breakeven: 52.4% with juice)
 
 ### What Affects Accuracy
-- ✅ Regular season games: More predictable
-- ⚠️ Early season: Less historical data
-- ⚠️ Playoff games: Different intensity/strategy
-- ⚠️ Injured stars: Major impact not in stats
-- ⚠️ Trade deadline: New team chemistry
+- Regular season games: More predictable
+- Early season: Less historical data
+- Playoff games: Different intensity/strategy
+- Injured stars: Major impact not in stats
+- Trade deadline: New team chemistry
 
 ---
 
@@ -472,4 +472,4 @@ pip install pandas numpy scikit-learn xgboost lightgbm tensorflow
 
 ---
 
-**Good luck with your NBA ML predictions! 🏀📊**
+**Good luck with your NBA ML predictions! **
