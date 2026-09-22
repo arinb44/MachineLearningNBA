@@ -1,5 +1,5 @@
 """
-Download all 30 NBA team logos from ESPN's CDN into assets/logos/<ABBR>.png.
+Download all 30 NBA team logos from ESPN's CDN into static/logos/<ABBR>.png.
 
 Uses ESPN's dark-background variants (the demo app has a dark theme) and
 downsizes them to 256px so the repo stays small.

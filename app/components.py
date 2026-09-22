@@ -8,17 +8,16 @@ from html import escape
 
 import streamlit as st
 
-from app.common import logo_uri, team
+from app.common import logo_url, team
 
 
 def _side(abbr, side):
     t = team(abbr)
-    logo = logo_uri(abbr, 256) or ''
     return f"""
 <div class="mc-side {side}">
   <div class="mc-inner">
     <div class="mc-radial" style="--c:{t['accent']}55"></div>
-    <div class="mc-logo-zone"><img class="mc-logo" src="{logo}" alt="{escape(t['name'])} logo" style="--glow:{t['accent']}88"></div>
+    <div class="mc-logo-zone"><img class="mc-logo" src="{logo_url(abbr)}" alt="{escape(t['name'])} logo" style="--glow:{t['accent']}88"></div>
     <div class="mc-text">
       <span class="mc-city" style="color:{t['label']}">{escape(t['city'])}</span>
       <span class="mc-name">{escape(t['nickname'])}</span>
@@ -28,10 +27,42 @@ def _side(abbr, side):
 </div>"""
 
 
-def matchup_card(result, pill='Model pick'):
-    """The Figma matchup card: away team on the left, home team on the right."""
+def _game_pill(game):
+    network = game['broadcast'] or ('NBA' if game['season_type'] == 'regular' else '')
+    if game['season_type'] == 'preseason':
+        return f"Preseason · {network}" if network else 'Preseason'
+    return network
+
+
+def matchup_card(result, game=None):
+    """
+    The Figma matchup card: away team on the left, home team on the right.
+    With a scheduled game (a row from the schedule), the center shows the
+    network, date and tip-off time and the footer shows the arena, as in the
+    design; the model's pick sits underneath. Without one, the pick is the
+    headline.
+    """
     away, home = result['away_team'], result['home_team']
     winner = team(result['predicted_winner'])
+    pick = f"{escape(winner['nickname'])} by {abs(result['predicted_margin']):.1f}"
+    prob = f"{result['win_probability']:.0f}%"
+    if game is not None:
+        center = f"""
+      <div class="mc-pill">{escape(_game_pill(game))}</div>
+      <div class="mc-pick">
+        <span class="mc-pick-main">{game['date']:%a · %b %-d}</span>
+        <span class="mc-pick-sub">{escape(game['time_et'])} ET</span>
+      </div>
+      <div class="mc-pick-line">{pick} · {prob}</div>"""
+        place = ' · '.join(p for p in (game['venue'], game['city']) if p)
+    else:
+        center = f"""
+      <div class="mc-pill">Model pick</div>
+      <div class="mc-pick">
+        <span class="mc-pick-main">{pick}</span>
+        <span class="mc-pick-sub">{prob} WIN PROBABILITY</span>
+      </div>"""
+        place = f"Home court · {team(home)['home_city']}"
     html = f"""
 <div class="mc-wrap">
   <div class="mc" style="--away-glow:{team(away)['accent']}22;--home-glow:{team(home)['accent']}22">
@@ -39,14 +70,9 @@ def matchup_card(result, pill='Model pick'):
     <div class="mc-divider"></div>
     {_side(away, 'away')}
     {_side(home, 'home')}
-    <div class="mc-center">
-      <div class="mc-pill">{escape(pill)}</div>
-      <div class="mc-pick">
-        <span class="mc-pick-main">{escape(winner['nickname'])} by {abs(result['predicted_margin']):.1f}</span>
-        <span class="mc-pick-sub">{result['win_probability']:.0f}% WIN PROBABILITY</span>
-      </div>
+    <div class="mc-center">{center}
     </div>
-    <div class="mc-footer">Home court · {escape(team(home)['home_city'])}</div>
+    <div class="mc-footer">{escape(place)}</div>
   </div>
 </div>"""
     st.html(html)
@@ -60,12 +86,12 @@ def win_probability_bar(result):
     st.html(f"""
 <div class="wp">
   <div class="wp-row">
-    <img src="{logo_uri(away, 96)}" alt="{away}">
+    <img src="{logo_url(away)}" alt="{away}">
     <div class="wp-bar" role="img" aria-label="{away} {away_pct:.0f}%, {home} {home_pct:.0f}%">
       <div style="width:{away_pct}%;background:{team(away)['accent']}"></div>
       <div style="width:{home_pct}%;background:{team(home)['accent']}"></div>
     </div>
-    <img src="{logo_uri(home, 96)}" alt="{home}">
+    <img src="{logo_url(home)}" alt="{home}">
   </div>
   <div class="wp-labels">
     <span>{away} {away_pct:.0f}% <span class="muted">away</span></span>
@@ -107,8 +133,8 @@ def tale_of_the_tape(away, home, rows):
     st.html(f"""
 <div class="tape">
   <div class="tape-head">
-    <img src="{logo_uri(away, 96)}" alt="{away}">
-    <img src="{logo_uri(home, 96)}" alt="{home}">
+    <img src="{logo_url(away)}" alt="{away}">
+    <img src="{logo_url(home)}" alt="{home}">
   </div>
   {''.join(body)}
 </div>""")
@@ -119,7 +145,7 @@ def team_header(abbr, title=None, subtitle=None):
     t = team(abbr)
     st.html(f"""
 <div class="team-head">
-  <img src="{logo_uri(abbr, 128)}" alt="{escape(t['name'])} logo">
+  <img src="{logo_url(abbr)}" alt="{escape(t['name'])} logo">
   <div>
     <div class="t-city">{escape(subtitle or t['city'])}</div>
     <div class="t-name">{escape(title or t['nickname'])}</div>

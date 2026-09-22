@@ -5,3 +5,7 @@ secondaryBackgroundColor = "#16161d"
 textColor = "#f4f4f5"
 primaryColor = "#f58426"
 font = "sans serif"
+
+[server]
+# Serves static/ at app/static/ so logos load as cached image files
+enableStaticServing = true

@@ -11,7 +11,7 @@ COPY models/ models/
 COPY tests/ tests/
 COPY streamlit_app.py .
 COPY app/ app/
-COPY assets/ assets/
+COPY static/ static/
 COPY .streamlit/ .streamlit/
 
 # Interactive demo:

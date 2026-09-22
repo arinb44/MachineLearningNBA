@@ -5,7 +5,7 @@ and where each team's logo lives on disk.
 
 import os
 
-LOGO_DIR = 'assets/logos'
+LOGO_DIR = 'static/logos'  # served by Streamlit at app/static/logos/
 
 # abbr: (city, nickname, primary color, secondary color, ESPN logo slug, home city)
 _TEAMS = {

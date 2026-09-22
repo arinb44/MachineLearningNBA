@@ -35,7 +35,8 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 │   ├── fetch_game_results.py       Fetch latest game results
 │   ├── fetch_game_logs.py          Fetch game logs / per-game std deviations
 │   ├── fetch_injuries.py           Fetch current injuries from ESPN
-│   ├── fetch_team_logos.py         Download all 30 team logos to assets/logos/
+│   ├── fetch_schedule.py           Fetch the full NBA schedule from ESPN
+│   ├── fetch_team_logos.py         Download all 30 team logos to static/logos/
 │   ├── teams.py                    Team names, colors, and logo paths
 │   ├── injury_tracker.py           Manually track injuries, adjust predictions
 │   ├── adjust_team_power.py        Build injury-adjusted team power ratings
@@ -54,7 +55,7 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 ├── models/             Trained model (nba_predictor.pkl)
 ├── docs/               Guides — see docs/README.md for an index
 ├── reports/            Generated graphs and betting spreadsheets
-├── assets/logos/       Team logos (from ESPN) used by the demo's cards and charts
+├── static/logos/       Team logos (from ESPN) used by the demo's cards and charts
 ├── app/                Demo pages: predictions, teams, players
 ├── streamlit_app.py    Interactive demo (streamlit run streamlit_app.py)
 └── Dockerfile          Reproducible environment — see Quick start below
@@ -66,11 +67,19 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 
 The demo has three pages:
 
-- **Predictions**: pick any two teams and get the matchup card (the model's pick, predicted margin, and calibrated win probability), a tale-of-the-tape comparison, the injury report for both sides, and each team's form over the season. Every game in `data/input/games_to_predict.txt` is shown as its own card too.
+- **Predictions**: a daily slate from the NBA schedule, one matchup card per game with the TV network, tip-off time, arena, and the model's pick. Step through game days, or pick a team to see only its upcoming games. Below that, pick any two teams for the predicted margin, calibrated win probability, a tale-of-the-tape comparison, both injury reports, and each team's form over the season.
 - **Teams**: power rankings, offense vs. defense, a season race of games over .500, home vs. road margins, and a detail view for any team with its game-by-game results and top scorers.
-- **Players**: stat leaders for a dozen stats, scoring load vs. efficiency for every rotation player, and a percentile profile you can compare against another player.
+- **Players**: stat leaders for a dozen stats, scoring load vs. efficiency for every rotation player (highlight any teams or players), and a percentile profile you can compare against another player.
 
-Team logos mark every team in the charts. To refresh them, run `python scripts/fetch_team_logos.py`.
+Team logos mark every team in the charts. To refresh the schedule or the logos:
+
+```bash
+python scripts/fetch_schedule.py
+```
+
+```bash
+python scripts/fetch_team_logos.py
+```
 
 To run it locally:
 

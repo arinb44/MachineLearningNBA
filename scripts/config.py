@@ -7,6 +7,7 @@ The season can be set three ways (highest priority first):
   3. DEFAULT_SEASON below
 """
 
+import glob
 import os
 
 DEFAULT_SEASON = '2025-26'
@@ -26,6 +27,16 @@ def player_stats_file(season=None):
 
 def player_stats_std_file(season=None):
     return f"data/input/nba_player_stats_with_std_{season or current_season()}.csv"
+
+
+def schedule_file(season):
+    return f"data/input/nba_schedule_{season}.csv"
+
+
+def latest_schedule_file():
+    """Newest schedule saved by fetch_schedule.py, or None."""
+    found = sorted(glob.glob(schedule_file('*')))
+    return found[-1] if found else None
 
 
 INJURIES_FILE = 'data/input/injuries.csv'

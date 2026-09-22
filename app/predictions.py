@@ -1,13 +1,13 @@
-"""Predictions page: pick a matchup, see it on the Figma matchup card."""
+"""Predictions page: the daily slate from the NBA schedule, plus any matchup you pick."""
 
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-import config
-from app.common import (add_logo, load_builder, load_games, load_injuries,
-                        load_predictor, section, show, style_fig, team,
-                        team_game_log, team_label, team_summary)
+from app.common import (Calibrating, add_logo, load_builder, load_games,
+                        load_injuries, load_predictor, load_schedule, section,
+                        show, style_fig, team, team_game_log, team_label,
+                        team_summary)
 from app.components import matchup_card, tale_of_the_tape, win_probability_bar
 
 st.title('NBA Game Predictor')
@@ -16,25 +16,100 @@ st.caption(
     'form. Trained with walk-forward validation on the 2025-26 season.'
 )
 
+calib = Calibrating()
 predictor = load_predictor()
 if predictor is None:
+    calib.done()
     st.error('Model not found. Run `python scripts/train_model.py` to build it.')
     st.stop()
 
 games = load_games()
 builder = load_builder()
+calib.to(10)
 injuries = load_injuries()
+schedule = load_schedule()
+calib.to(20)
 as_of_date = games['date'].max() + pd.Timedelta(days=1)
 teams = sorted(set(games['home_team']) | set(games['away_team']))
+today = pd.Timestamp.now(tz='America/New_York').normalize().tz_localize(None)
 
 
-def predict(home, away):
+def predict(home, away, date=None):
+    # Features only ever use games played before the date, so a future
+    # game is predicted from all the results available today.
+    when = max(as_of_date, date) if date is not None else as_of_date
     return predictor.predict_game({'home_team': home, 'away_team': away},
-                                  builder, as_of_date, injuries)
+                                  builder, when, injuries)
 
+
+# ---------- daily slate ----------
+
+ALL_TEAMS = 'All teams'
+SHOW_COUNTS = {'Next 5 games': 5, 'Next 10 games': 10, 'Next 20 games': 20, 'Rest of season': None}
+
+
+def shift_game_day(step):
+    """Move the slate date to the previous/next date that has games."""
+    current = pd.Timestamp(st.session_state['slate_date'])
+    dates = game_dates[game_dates > current] if step > 0 else game_dates[game_dates < current][::-1]
+    if len(dates):
+        st.session_state['slate_date'] = dates[0].date()
+
+
+if schedule is None:
+    st.info('No schedule yet. Run `python scripts/fetch_schedule.py` to load the NBA schedule.')
+else:
+    game_dates = pd.DatetimeIndex(sorted(schedule['date'].unique()))
+    if 'slate_date' not in st.session_state:
+        upcoming = game_dates[game_dates >= today]
+        st.session_state['slate_date'] = (upcoming[0] if len(upcoming) else game_dates[-1]).date()
+
+    section('Daily slate')
+    c1, c2, c3, c4 = st.columns([1.3, 1.6, 0.8, 0.8], vertical_alignment='bottom')
+    c1.date_input('Date', key='slate_date', min_value=game_dates[0].date(),
+                  max_value=game_dates[-1].date(), format='MM/DD/YYYY')
+    slate_team = c2.selectbox('Team', [ALL_TEAMS] + teams,
+                              format_func=lambda t: t if t == ALL_TEAMS else team_label(t))
+    c3.button('Previous day', icon=':material/chevron_left:', on_click=shift_game_day,
+              args=(-1,), use_container_width=True)
+    c4.button('Next day', icon=':material/chevron_right:', on_click=shift_game_day,
+              args=(1,), use_container_width=True)
+
+    day = pd.Timestamp(st.session_state['slate_date'])
+    if slate_team == ALL_TEAMS:
+        slate = schedule[schedule['date'] == day]
+        heading = f"{day:%A, %B %-d, %Y}: {len(slate)} game{'s' if len(slate) != 1 else ''}"
+        empty = f"No games on {day:%B %-d}. Use Next day to jump to the next game day."
+    else:
+        count = st.radio('Show', list(SHOW_COUNTS), horizontal=True, label_visibility='collapsed')
+        slate = schedule[((schedule['home_team'] == slate_team) | (schedule['away_team'] == slate_team))
+                         & (schedule['date'] >= day)]
+        slate = slate.head(SHOW_COUNTS[count]) if SHOW_COUNTS[count] else slate
+        heading = f"{team(slate_team)['name']}: {len(slate)} games from {day:%B %-d}"
+        empty = f"{team(slate_team)['name']} have no games scheduled after {day:%B %-d}."
+
+    if slate.empty:
+        st.info(empty)
+    else:
+        st.caption(heading)
+        if day > as_of_date:
+            st.caption(f"Until new-season results come in, predictions use each team's form "
+                       f"through {games['date'].max():%B %-d, %Y}; summer roster moves "
+                       "aren't reflected yet.")
+        cols = st.columns(2, gap='medium')
+        for i, game in enumerate(slate.itertuples()):
+            result = predict(game.home_team, game.away_team, game.date)
+            if result is None:
+                continue
+            with cols[i % 2]:
+                matchup_card(result, game=game._asdict())
+                st.write('')
+            calib.to(20 + 25 * (i + 1) // len(slate))
+calib.to(45)
 
 # ---------- matchup picker ----------
 
+section('Any matchup', 'Pick two teams to see the model\'s read, the tale of the tape, and recent form.')
 col1, col2 = st.columns(2)
 with col1:
     away = st.selectbox('Away team', teams, index=teams.index('GSW'), format_func=team_label)
@@ -44,13 +119,22 @@ with col2:
                         index=home_options.index('BOS') if 'BOS' in home_options else 0,
                         format_func=team_label)
 
-result = predict(home, away)
+# If these two teams meet in this order on the schedule, show that game
+next_meeting = None
+if schedule is not None:
+    meetings = schedule[(schedule['home_team'] == home) & (schedule['away_team'] == away)
+                        & (schedule['date'] >= today)]
+    if not meetings.empty:
+        next_meeting = meetings.iloc[0].to_dict()
+
+result = predict(home, away, next_meeting['date'] if next_meeting else None)
 if result is None:
+    calib.done()
     st.warning('Not enough game history for one of these teams.')
     st.stop()
 
 st.write('')
-matchup_card(result)
+matchup_card(result, game=next_meeting)
 win_probability_bar(result)
 st.write('')
 
@@ -71,6 +155,8 @@ if result['win_probability'] < 60:
         'against held-out games rather than inflated for effect: a 10-point '
         'favorite sits near 76%, and only lopsided matchups clear 85%.'
     )
+
+calib.to(60)
 
 # ---------- tale of the tape ----------
 
@@ -113,6 +199,8 @@ with right:
             hide_index=True, use_container_width=True,
         )
 
+calib.to(75)
+
 # ---------- form trend ----------
 
 section('Form over the season', 'Rolling 10-game average point margin.')
@@ -138,17 +226,7 @@ fig.update_xaxes(range=[log['date'].min(), x_max], showgrid=False)
 fig.update_yaxes(title='Point margin', ticksuffix='')
 show(style_fig(fig, height=380, legend=True))
 
-# ---------- today's slate ----------
-
-slate = predictor.load_games_to_predict()
-if slate:
-    section('Slate', f"Games listed in {config.GAMES_TO_PREDICT_FILE}, predicted live.")
-    results = [r for r in (predict(g['home_team'], g['away_team']) for g in slate) if r]
-    cols = st.columns(2, gap='medium')
-    for i, r in enumerate(results):
-        with cols[i % 2]:
-            matchup_card(r, pill='Slate')
-            st.write('')
+calib.to(90)
 
 with st.expander('How this model works, and how well'):
     st.markdown(
@@ -181,3 +259,4 @@ st.caption(
     f"Model trained on games through {games['date'].max():%B %d, %Y}. "
     'Source: github.com/arinb44/MachineLearningNBA'
 )
+calib.done()

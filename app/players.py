@@ -4,8 +4,8 @@ import plotly.graph_objects as go
 import streamlit as st
 
 import config
-from app.common import (INK, add_logo, load_player_stats, section,
-                        show, style_fig, team)
+from app.common import (INK, INK_MUTED, NEUTRAL, SURFACE, Calibrating, add_logo,
+                        load_player_stats, section, show, style_fig, team, team_label)
 from app.components import team_header
 
 COMPARE_COLOR = '#a1a1aa'
@@ -28,7 +28,9 @@ STATS = {
 st.title('Players')
 st.caption(f"Per-game stats for the {config.current_season()} season from the NBA stats API.")
 
+calib = Calibrating()
 players = load_player_stats()
+calib.to(20)
 
 f1, f2 = st.columns([1, 1])
 min_games = f1.slider('Minimum games played', 1, int(players['GP'].max()), 20)
@@ -36,6 +38,7 @@ min_minutes = f2.slider('Minimum minutes per game', 0, 36, 15)
 qualified = players[(players['GP'] >= min_games) & (players['MIN'] >= min_minutes)].copy()
 st.caption(f"{len(qualified)} of {len(players)} players qualify.")
 if qualified.empty:
+    calib.done()
     st.warning('No players match these filters.')
     st.stop()
 
@@ -68,31 +71,57 @@ fig.update_xaxes(showgrid=False, showticklabels=False, zeroline=False,
 fig.update_yaxes(tickfont=dict(color=INK, size=12), showgrid=False)
 show(style_fig(fig, height=30 * len(leaders) + 40))
 
+calib.to(40)
+
 # ---------- efficiency scatter ----------
 
 section('Scoring load vs. efficiency',
         'Usage rate (share of team plays a player finishes) against true shooting %. '
-        'Each logo is a player; top-right players carry a big load efficiently.')
+        'Top-right players carry a big load efficiently. Pick teams or players to highlight them.')
 
 scorers = qualified[qualified['MIN'] >= max(min_minutes, 24)]
 if len(scorers) < 5:
     scorers = qualified
+h1, h2 = st.columns(2)
+hl_teams = h1.multiselect('Highlight teams', sorted(scorers['TEAM_ABBREVIATION'].unique()),
+                          format_func=team_label, placeholder='Choose teams')
+hl_players = h2.multiselect('Highlight players',
+                            scorers.sort_values('PTS', ascending=False)['PLAYER_NAME'].tolist(),
+                            placeholder='Choose players')
+
+highlighted = scorers['TEAM_ABBREVIATION'].isin(hl_teams) | scorers['PLAYER_NAME'].isin(hl_players)
+hover = ('<b>%{customdata[0]}</b> (%{customdata[1]})<br>%{customdata[2]:.1f} pts<br>'
+         'Usage %{x:.1%} · TS %{y:.1%}<extra></extra>')
+cols = ['PLAYER_NAME', 'TEAM_ABBREVIATION', 'PTS']
+fig = go.Figure()
+
+# Everyone not highlighted: a quiet gray field (brighter when nothing is picked)
+rest = scorers[~highlighted]
+fig.add_trace(go.Scatter(
+    x=rest['USG_PCT'], y=rest['TS_PCT'], mode='markers', name='Other players',
+    marker=dict(size=9, color=NEUTRAL if highlighted.any() else '#a1a1aa',
+                opacity=0.45 if highlighted.any() else 0.8,
+                line=dict(color=SURFACE, width=1)),
+    customdata=rest[cols], hovertemplate=hover, showlegend=bool(highlighted.any()),
+))
+# Highlighted players: one trace per team, in team colors, drawn on top
+picked = scorers[highlighted]
+for abbr, group in picked.groupby('TEAM_ABBREVIATION'):
+    fig.add_trace(go.Scatter(
+        x=group['USG_PCT'], y=group['TS_PCT'], mode='markers', name=team(abbr)['name'],
+        marker=dict(size=13, color=team(abbr)['accent'], line=dict(color=SURFACE, width=2)),
+        customdata=group[cols], hovertemplate=hover,
+    ))
+
+# Name the highlighted players (or the top scorers when nothing is picked)
+labeled = picked if highlighted.any() else scorers.nlargest(8, 'PTS')
+if len(labeled) <= 25:
+    for row in labeled.itertuples():
+        fig.add_annotation(x=row.USG_PCT, y=row.TS_PCT, text=row.PLAYER_NAME, showarrow=False,
+                           yshift=14, font=dict(color=INK if highlighted.any() else INK_MUTED, size=11))
+
 x_rng = scorers['USG_PCT'].max() - scorers['USG_PCT'].min()
 y_rng = scorers['TS_PCT'].max() - scorers['TS_PCT'].min()
-fig = go.Figure(go.Scatter(
-    x=scorers['USG_PCT'], y=scorers['TS_PCT'], mode='markers',
-    marker=dict(size=22, color='rgba(0,0,0,0)'),
-    customdata=scorers[['PLAYER_NAME', 'TEAM_ABBREVIATION', 'PTS']],
-    hovertemplate='<b>%{customdata[0]}</b> (%{customdata[1]})<br>%{customdata[2]:.1f} pts<br>'
-                  'Usage %{x:.1%} · TS %{y:.1%}<extra></extra>',
-))
-for row in scorers.itertuples():
-    add_logo(fig, row.TEAM_ABBREVIATION, row.USG_PCT, row.TS_PCT,
-             size=x_rng * 0.035, sizey=y_rng * 0.05)
-# Name the top scorers directly; everyone else is on hover
-for row in scorers.nlargest(8, 'PTS').itertuples():
-    fig.add_annotation(x=row.USG_PCT, y=row.TS_PCT, text=row.PLAYER_NAME.split(' ', 1)[-1],
-                       showarrow=False, yshift=16, font=dict(color=INK, size=11))
 avg_line = dict(color='rgba(255,255,255,0.22)', width=1, dash='dash')
 fig.add_vline(x=scorers['USG_PCT'].mean(), line=avg_line)
 fig.add_hline(y=scorers['TS_PCT'].mean(), line=avg_line)
@@ -100,7 +129,8 @@ fig.update_xaxes(title='Usage rate', tickformat='.0%',
                  range=[scorers['USG_PCT'].min() - x_rng * 0.05, scorers['USG_PCT'].max() + x_rng * 0.05])
 fig.update_yaxes(title='True shooting %', tickformat='.0%',
                  range=[scorers['TS_PCT'].min() - y_rng * 0.06, scorers['TS_PCT'].max() + y_rng * 0.08])
-show(style_fig(fig, height=560))
+show(style_fig(fig, height=560, legend=bool(highlighted.any())))
+calib.to(70)
 
 # ---------- player profile ----------
 
@@ -152,3 +182,4 @@ style_fig(fig, height=460, legend=len(series) > 1)
 fig.update_layout(barmode='group', bargap=0.3, bargroupgap=0.08)
 show(fig)
 st.caption("Dashed line = league median. Percentiles recompute when you change the filters above.")
+calib.done()

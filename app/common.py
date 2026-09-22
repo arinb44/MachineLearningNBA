@@ -1,15 +1,10 @@
 """
 Shared helpers for the demo app pages: cached data loaders, team logos as
-data URIs, and a Plotly theme that matches the app's dark design.
+URLs, a progress bar, and a Plotly theme that matches the app's dark design.
 """
-
-import base64
-import io
-import os
 
 import pandas as pd
 import streamlit as st
-from PIL import Image
 
 # streamlit_app.py puts scripts/ on the path and runs from the repo root, so
 # every data path below is repo-relative, the same as for the command-line scripts.
@@ -60,6 +55,18 @@ def load_player_stats():
 
 
 @st.cache_data
+def load_schedule():
+    """Newest schedule from fetch_schedule.py, or None if it hasn't been run."""
+    path = config.latest_schedule_file()
+    if path is None:
+        return None
+    schedule = pd.read_csv(path, parse_dates=['date'], dtype={'game_id': str})
+    schedule['broadcast'] = schedule['broadcast'].fillna('')
+    schedule['city'] = schedule['city'].fillna('')
+    return schedule.sort_values('tip_et').reset_index(drop=True)
+
+
+@st.cache_data
 def team_game_log():
     """One row per team per game, with running record and rolling margin."""
     long = features._long_format(load_games())
@@ -103,32 +110,42 @@ def team_summary():
 
 # ---------- logos ----------
 
-@st.cache_data
-def logo_uri(abbr, size=256):
-    """A team logo as a base64 PNG data URI, downsized for charts."""
-    logo_file = team(abbr)['logo_path']
-    if not os.path.exists(logo_file):
-        return None
-    image = Image.open(logo_file)
-    if size < max(image.size):
-        image.thumbnail((size, size), Image.LANCZOS)
-    buffer = io.BytesIO()
-    image.save(buffer, format='PNG', optimize=True)
-    return 'data:image/png;base64,' + base64.b64encode(buffer.getvalue()).decode()
+def logo_url(abbr):
+    """URL of a team logo, served from static/logos (see .streamlit/config.toml)."""
+    return f"app/static/logos/{abbr}.png"
 
 
 def add_logo(fig, abbr, x, y, size, xref='x', yref='y', xanchor='center',
              yanchor='middle', opacity=1.0, sizey=None):
     """Place a team logo on a Plotly figure at (x, y), sized in axis units."""
-    uri = logo_uri(abbr, 96)
-    if uri is None:
-        return
     fig.add_layout_image(
-        source=uri, x=x, y=y, xref=xref, yref=yref,
+        source=logo_url(abbr), x=x, y=y, xref=xref, yref=yref,
         sizex=size, sizey=sizey if sizey is not None else size,
         xanchor=xanchor, yanchor=yanchor, sizing='contain',
         opacity=opacity, layer='above',
     )
+
+
+# ---------- progress ----------
+
+class Calibrating:
+    """
+    A progress bar that climbs to 100% as a page builds, then disappears.
+    It floats over the page (see .st-key-calibrating in styles.css), so
+    showing and removing it never shifts the content underneath.
+    """
+
+    def __init__(self):
+        with st.container(key='calibrating'):
+            self.slot = st.empty()
+        self.to(0)
+
+    def to(self, pct):
+        self.slot.progress(pct, text=f"Calibrating... {pct}%")
+
+    def done(self):
+        self.to(100)
+        self.slot.empty()
 
 
 # ---------- chart theme ----------
