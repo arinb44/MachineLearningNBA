@@ -1,0 +1,50 @@
+name: Refresh rosters
+
+# Weekly: pull current rosters and this season's player stats from ESPN and
+# commit them, so the hosted demo picks up trades, signings, rookies, and
+# breakout players without anyone running fetch_rosters.py by hand.
+on:
+  schedule:
+    - cron: '0 10 * * 1'  # Mondays 10:00 UTC (6 AM Eastern)
+  workflow_dispatch:       # "Run workflow" button for an immediate refresh
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-rosters
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pandas requests
+
+      - name: Fetch rosters and stats from ESPN
+        run: python scripts/fetch_rosters.py | tee fetch.log
+
+      - name: Fail if nothing was fetched
+        # fetch_rosters.py prints an error and saves nothing when ESPN is unreachable
+        run: grep -q "rostered players" fetch.log
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # fetch_rosters.py only writes the rosters file (and the stats file once
+          # the season is under way), so adding the folder picks up just those
+          git add data/input
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Refresh rosters and player stats from ESPN"
+            git push
+          fi
