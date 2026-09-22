@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+/* App-wide type: Barlow Condensed for display, Inter for body (from the Figma design) */
+.stApp { font-family: 'Inter', system-ui, sans-serif; }
+h1, h2, h3, .section-title {
+  font-family: 'Barlow Condensed', sans-serif !important;
+  text-transform: uppercase; letter-spacing: 0.02em;
+}
+h1 { font-weight: 900 !important; }
+.section-title { font-weight: 800; font-size: 1.6rem; margin: 1.5rem 0 0.1rem; }
+.block-container { max-width: 1200px; padding-top: 2.5rem; }
+[data-testid="stMetricValue"] { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; }
+
+/* Matchup card: a translation of the Figma Make "team image card" design.
+   Sized in --u units (1/680 of the card width) so it scales like the
+   680x320 original in any column width. */
+
+.mc-wrap { container-type: inline-size; width: 100%; max-width: 680px; margin: 0 auto; }
+.mc {
+  --u: calc(100cqw / 680);
+  position: relative; overflow: hidden; user-select: none;
+  width: 100%; aspect-ratio: 680 / 320;
+  border-radius: calc(var(--u) * 16);
+  background: linear-gradient(135deg, #0a0a12 0%, #111118 50%, #0a0a12 100%);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 32px 64px rgba(0,0,0,0.7),
+              0 0 80px var(--away-glow), 0 0 80px var(--home-glow);
+  font-family: 'Barlow Condensed', sans-serif;
+}
+.mc-noise {
+  position: absolute; inset: 0; opacity: 0.03; pointer-events: none; z-index: 10;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px auto;
+}
+.mc-divider {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; transform: translateX(-50%);
+  opacity: 0.2; z-index: 5;
+  background: linear-gradient(transparent, white 30%, white 70%, transparent);
+}
+.mc-side { position: absolute; top: 0; bottom: 0; width: 50%; }
+.mc-side.away { left: 0; }
+.mc-side.home { left: 50%; }
+.mc-inner {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-bottom: calc(var(--u) * 28);
+}
+.mc-radial { position: absolute; inset: 0; }
+.away .mc-radial { background: radial-gradient(at 20% 50%, var(--c) 0%, transparent 70%); }
+.home .mc-radial { background: radial-gradient(at 80% 50%, var(--c) 0%, transparent 70%); }
+.mc-logo-zone {
+  position: absolute; top: 0; bottom: 0; width: 60%;
+  display: flex; align-items: center;
+}
+.away .mc-logo-zone {
+  left: 0; padding-left: calc(var(--u) * 32); justify-content: flex-start;
+  -webkit-mask-image: linear-gradient(to right, #000 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 60%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 60%, transparent 100%);
+}
+.home .mc-logo-zone {
+  right: 0; padding-right: calc(var(--u) * 32); justify-content: flex-end;
+  -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 60%, transparent 100%);
+          mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 60%, transparent 100%);
+}
+.mc-logo {
+  width: calc(var(--u) * 208); height: calc(var(--u) * 208);
+  /* The Figma art was translucent; real logos are solid, so fade them more */
+  object-fit: contain; opacity: 0.6;
+  filter: drop-shadow(0 0 32px var(--glow));
+}
+.mc-text {
+  position: relative; z-index: 10; display: flex; flex-direction: column;
+  padding: 0 calc(var(--u) * 28);
+}
+.home .mc-text { text-align: right; align-items: flex-end; }
+.mc-city {
+  font-size: max(9px, calc(var(--u) * 12)); font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; opacity: 0.75; margin-bottom: calc(var(--u) * 2);
+}
+.mc-name {
+  font-size: max(18px, calc(var(--u) * 36)); font-weight: 900; line-height: 1;
+  text-transform: uppercase; letter-spacing: -0.025em; color: #fff;
+}
+.mc-abbr {
+  font-size: max(10px, calc(var(--u) * 14)); font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-top: calc(var(--u) * 4);
+}
+.mc-center {
+  position: absolute; inset: 0; z-index: 8;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: calc(var(--u) * 8);
+}
+.mc-pill {
+  padding: calc(var(--u) * 2) calc(var(--u) * 12); border-radius: 999px;
+  font-size: max(9px, calc(var(--u) * 12)); font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: calc(var(--u) * 4);
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.5);
+}
+.mc-pick { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 2); margin-top: calc(var(--u) * 4); }
+.mc-pick-main {
+  font-size: max(11px, calc(var(--u) * 14)); font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #fff; opacity: 0.9;
+}
+.mc-pick-sub {
+  font-size: max(9px, calc(var(--u) * 12)); font-weight: 600; letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.45);
+}
+.mc-footer {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 9;
+  display: flex; justify-content: center; padding-bottom: calc(var(--u) * 12);
+  font-size: max(8px, calc(var(--u) * 12)); font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.25);
+}
+
+/* Win-probability bar under the card */
+.wp { max-width: 680px; margin: 18px auto 0; font-family: 'Barlow Condensed', sans-serif; }
+.wp-row { display: flex; align-items: center; gap: 10px; }
+.wp-row img { width: 34px; height: 34px; object-fit: contain; }
+.wp-bar { flex: 1; display: flex; gap: 2px; height: 12px; }
+.wp-bar div { height: 100%; }
+.wp-bar div:first-child { border-radius: 4px 0 0 4px; }
+.wp-bar div:last-child { border-radius: 0 4px 4px 0; }
+.wp-labels {
+  display: flex; justify-content: space-between; padding: 4px 44px 0;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  font-size: 15px; color: rgba(255,255,255,0.92);
+}
+.wp-labels span.muted { color: rgba(255,255,255,0.45); font-weight: 600; }
+
+/* Tale of the tape comparison rows */
+.tape { max-width: 680px; margin: 0 auto; font-family: 'Barlow Condensed', sans-serif; }
+.tape-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.tape-head img { width: 40px; height: 40px; object-fit: contain; }
+.tape-row {
+  display: grid; grid-template-columns: 56px 1fr 130px 1fr 56px; align-items: center;
+  gap: 8px; padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.06);
+}
+.tape-val { font-size: 18px; font-weight: 700; color: rgba(255,255,255,0.92); }
+.tape-val.left { text-align: left; }
+.tape-val.right { text-align: right; }
+.tape-label {
+  text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+}
+.tape-track { height: 8px; display: flex; }
+.tape-track.left { justify-content: flex-end; }
+.tape-track div { height: 100%; border-radius: 4px; }
+
+/* Compact team header used on the Teams and Players pages */
+.team-head { display: flex; align-items: center; gap: 14px; margin: 4px 0 8px; }
+.team-head img { width: 64px; height: 64px; object-fit: contain; }
+.team-head .t-city { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+.team-head .t-name { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 900;
+  line-height: 1; text-transform: uppercase; color: #fff; }
+
+@media (max-width: 520px) {
+  .tape-row { grid-template-columns: 44px 1fr 92px 1fr 44px; gap: 6px; }
+  .tape-val { font-size: 16px; }
+  .tape-label { font-size: 11px; }
+}

@@ -6,7 +6,7 @@
 
 Machine learning system for predicting NBA game outcomes (winner, margin, and calibrated win probability) from game results.
 
-**[Try the live demo](https://machinelearningnba-p3cxa6nsk6hgcuclcwssdx.streamlit.app)** — pick any two teams and see the prediction.
+**[Try the live demo](https://machinelearningnba-p3cxa6nsk6hgcuclcwssdx.streamlit.app)** — pick any two teams and see the prediction, then explore team and player charts.
 
 ## How the model works
 
@@ -35,6 +35,8 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 │   ├── fetch_game_results.py       Fetch latest game results
 │   ├── fetch_game_logs.py          Fetch game logs / per-game std deviations
 │   ├── fetch_injuries.py           Fetch current injuries from ESPN
+│   ├── fetch_team_logos.py         Download all 30 team logos to assets/logos/
+│   ├── teams.py                    Team names, colors, and logo paths
 │   ├── injury_tracker.py           Manually track injuries, adjust predictions
 │   ├── adjust_team_power.py        Build injury-adjusted team power ratings
 │   ├── find_consistent_players.py  Find most consistent players per stat
@@ -52,6 +54,8 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 ├── models/             Trained model (nba_predictor.pkl)
 ├── docs/               Guides — see docs/README.md for an index
 ├── reports/            Generated graphs and betting spreadsheets
+├── assets/logos/       Team logos (from ESPN) used by the demo's cards and charts
+├── app/                Demo pages: predictions, teams, players
 ├── streamlit_app.py    Interactive demo (streamlit run streamlit_app.py)
 └── Dockerfile          Reproducible environment — see Quick start below
 ```
@@ -60,7 +64,15 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 
 **Hosted version: https://machinelearningnba-p3cxa6nsk6hgcuclcwssdx.streamlit.app**
 
-Pick any two teams and see the predicted margin, calibrated win probability, injury adjustment, and each side's season form. To run it locally:
+The demo has three pages:
+
+- **Predictions**: pick any two teams and get the matchup card (the model's pick, predicted margin, and calibrated win probability), a tale-of-the-tape comparison, the injury report for both sides, and each team's form over the season. Every game in `data/input/games_to_predict.txt` is shown as its own card too.
+- **Teams**: power rankings, offense vs. defense, a season race of games over .500, home vs. road margins, and a detail view for any team with its game-by-game results and top scorers.
+- **Players**: stat leaders for a dozen stats, scoring load vs. efficiency for every rotation player, and a percentile profile you can compare against another player.
+
+Team logos mark every team in the charts. To refresh them, run `python scripts/fetch_team_logos.py`.
+
+To run it locally:
 
 ```bash
 streamlit run streamlit_app.py

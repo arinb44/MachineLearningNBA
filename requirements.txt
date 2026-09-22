@@ -6,3 +6,5 @@ matplotlib
 joblib
 requests
 streamlit
+plotly
+pillow

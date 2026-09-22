@@ -10,6 +10,9 @@ COPY data/ data/
 COPY models/ models/
 COPY tests/ tests/
 COPY streamlit_app.py .
+COPY app/ app/
+COPY assets/ assets/
+COPY .streamlit/ .streamlit/
 
 # Interactive demo:
 #   docker run --rm -p 8501:8501 nba-predictor \
