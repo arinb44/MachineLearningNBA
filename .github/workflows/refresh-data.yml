@@ -1,8 +1,9 @@
-name: Refresh rosters
+name: Refresh rosters and schedule
 
-# Weekly: pull current rosters and this season's player stats from ESPN and
-# commit them, so the hosted demo picks up trades, signings, rookies, and
-# breakout players without anyone running fetch_rosters.py by hand.
+# Weekly: pull current rosters, this season's player stats, and the schedule
+# from ESPN and commit them, so the hosted demo picks up trades, signings,
+# rookies, breakout players, NBA Cup games, and time changes without anyone
+# running the fetch scripts by hand.
 on:
   schedule:
     - cron: '0 10 * * 1'  # Mondays 10:00 UTC (6 AM Eastern)
@@ -12,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: refresh-rosters
+  group: refresh-data
   cancel-in-progress: false
 
 jobs:
@@ -31,20 +32,25 @@ jobs:
       - name: Fetch rosters and stats from ESPN
         run: python scripts/fetch_rosters.py | tee fetch.log
 
+      - name: Fetch schedule from ESPN
+        run: python scripts/fetch_schedule.py | tee -a fetch.log
+
       - name: Fail if nothing was fetched
-        # fetch_rosters.py prints an error and saves nothing when ESPN is unreachable
-        run: grep -q "rostered players" fetch.log
+        # The fetch scripts print an error and save nothing when ESPN is unreachable
+        run: |
+          grep -q "rostered players" fetch.log
+          grep -q "games to data/input/nba_schedule_" fetch.log
 
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # fetch_rosters.py only writes the rosters file (and the stats file once
-          # the season is under way), so adding the folder picks up just those
+          # The fetch scripts only write the rosters, schedule, and (once the
+          # season is under way) stats files, so adding the folder picks up just those
           git add data/input
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Refresh rosters and player stats from ESPN"
+            git commit -m "Refresh rosters, player stats, and schedule from ESPN"
             git push
           fi
