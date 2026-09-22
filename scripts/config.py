@@ -39,6 +39,26 @@ def latest_schedule_file():
     return found[-1] if found else None
 
 
+def rosters_file(season):
+    return f"data/input/nba_rosters_{season}.csv"
+
+
+def latest_rosters_file():
+    """Newest rosters saved by fetch_rosters.py, or None."""
+    found = sorted(glob.glob(rosters_file('*')))
+    return found[-1] if found else None
+
+
+def espn_stats_file(season):
+    return f"data/input/espn_player_stats_{season}.csv"
+
+
+def previous_season(season):
+    """'2026-27' -> '2025-26'"""
+    start = int(season[:4]) - 1
+    return f"{start}-{str(start + 1)[2:]}"
+
+
 INJURIES_FILE = 'data/input/injuries.csv'
 MODEL_FILE = 'models/nba_predictor.pkl'
 GAMES_TO_PREDICT_FILE = 'data/input/games_to_predict.txt'

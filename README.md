@@ -36,6 +36,8 @@ Measured on the full 2025-26 regular season (1,225 games), scored only on games 
 │   ├── fetch_game_logs.py          Fetch game logs / per-game std deviations
 │   ├── fetch_injuries.py           Fetch current injuries from ESPN
 │   ├── fetch_schedule.py           Fetch the full NBA schedule from ESPN
+│   ├── fetch_rosters.py            Fetch current rosters and this season's player stats from ESPN
+│   ├── player_pool.py              Build the Players page pool (current rosters, 15+ minutes)
 │   ├── fetch_team_logos.py         Download all 30 team logos to static/logos/
 │   ├── teams.py                    Team names, colors, and logo paths
 │   ├── injury_tracker.py           Manually track injuries, adjust predictions
@@ -69,12 +71,16 @@ The demo has three pages:
 
 - **Predictions**: a daily slate from the NBA schedule, one matchup card per game with the TV network, tip-off time, arena, and the model's pick. Step through game days, or pick a team to see only its upcoming games. Below that, pick any two teams for the predicted margin, calibrated win probability, a tale-of-the-tape comparison, both injury reports, and each team's form over the season.
 - **Teams**: power rankings, offense vs. defense, a season race of games over .500, home vs. road margins, and a detail view for any team with its game-by-game results and top scorers.
-- **Players**: stat leaders for a dozen stats, scoring load vs. efficiency for every rotation player (highlight any teams or players), and a percentile profile you can compare against another player.
+- **Players**: everyone on a current roster who averages 15+ minutes, on their current team. Stat leaders, scoring load vs. efficiency (highlight any teams or players), and a percentile profile with the player's headshot that you can compare against another player. Until new-season games are played, stats are from last season; after that they come from ESPN live. **Refresh rosters** pulls the latest from ESPN, and *New in the rotation* lists rookies and breakout players once they reach 15 minutes a game.
 
-Team logos mark every team in the charts. To refresh the schedule or the logos:
+Team logos mark every team in the charts. To refresh the schedule, rosters, or logos from the command line:
 
 ```bash
 python scripts/fetch_schedule.py
+```
+
+```bash
+python scripts/fetch_rosters.py
 ```
 
 ```bash

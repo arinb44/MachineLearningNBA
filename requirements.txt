@@ -5,6 +5,6 @@ nba_api
 matplotlib
 joblib
 requests
-streamlit
+streamlit>=1.50
 plotly
 pillow

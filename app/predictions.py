@@ -71,9 +71,9 @@ else:
     slate_team = c2.selectbox('Team', [ALL_TEAMS] + teams,
                               format_func=lambda t: t if t == ALL_TEAMS else team_label(t))
     c3.button('Previous day', icon=':material/chevron_left:', on_click=shift_game_day,
-              args=(-1,), use_container_width=True)
+              args=(-1,), width='stretch')
     c4.button('Next day', icon=':material/chevron_right:', on_click=shift_game_day,
-              args=(1,), use_container_width=True)
+              args=(1,), width='stretch')
 
     day = pd.Timestamp(st.session_state['slate_date'])
     if slate_team == ALL_TEAMS:
@@ -196,7 +196,7 @@ with right:
             continue
         st.dataframe(
             pd.DataFrame(info['players'], columns=['Player', 'Status', 'Pts impact']),
-            hide_index=True, use_container_width=True,
+            hide_index=True, width='stretch',
         )
 
 calib.to(75)

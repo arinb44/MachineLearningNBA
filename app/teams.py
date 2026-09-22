@@ -6,7 +6,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from app.common import (INK, INK_MUTED, NEUTRAL, Calibrating, add_logo, load_player_stats,
+from app.common import (INK, INK_MUTED, NEUTRAL, Calibrating, add_logo, load_player_pool,
                         section, show, style_fig, team, team_game_log,
                         team_label, team_summary)
 from app.components import team_header
@@ -197,7 +197,9 @@ style_fig(fig, height=300, title='Game by game (wins in team color, losses in gr
 fig.update_layout(bargap=0.15)
 show(fig)
 
-players = load_player_stats()
+# Current roster (players averaging 15+ minutes), with this season's stats once they exist
+pool_info = load_player_pool()
+players = pool_info['pool']
 roster = players[players['TEAM_ABBREVIATION'] == abbr].sort_values('PTS', ascending=False).head(10)
 if not roster.empty:
     roster = roster.iloc[::-1]
@@ -206,12 +208,12 @@ if not roster.empty:
         marker=dict(color=team(abbr)['accent'], cornerradius=4),
         text=roster['PTS'].map('{:.1f}'.format), textposition='outside',
         textfont=dict(color=INK), cliponaxis=False,
-        customdata=roster[['REB', 'AST', 'GP', 'MIN']],
+        customdata=roster[['REB', 'AST', 'GP', 'MIN', 'STATS_TEAM']],
         hovertemplate='<b>%{y}</b><br>%{x:.1f} pts · %{customdata[0]:.1f} reb · '
                       '%{customdata[1]:.1f} ast<br>%{customdata[2]} games, '
-                      '%{customdata[3]:.1f} min<extra></extra>',
+                      '%{customdata[3]:.1f} min with %{customdata[4]}<extra></extra>',
     ))
     fig.update_xaxes(showgrid=False, showticklabels=False, range=[0, roster['PTS'].max() * 1.15])
     fig.update_yaxes(tickfont=dict(color=INK, size=12))
-    show(style_fig(fig, height=34 * len(roster) + 60, title='Top scorers (points per game)'))
+    show(style_fig(fig, height=34 * len(roster) + 60, title=f"Current roster: top scorers ({pool_info['season']} points per game)"))
 calib.done()

@@ -151,3 +151,26 @@ def team_header(abbr, title=None, subtitle=None):
     <div class="t-name">{escape(title or t['nickname'])}</div>
   </div>
 </div>""")
+
+
+def player_header(player):
+    """Headshot, name, and team for a row of the player pool."""
+    t = team(player['TEAM_ABBREVIATION'])
+    details = [t['name']]
+    if isinstance(player.get('POSITION'), str) and player['POSITION']:
+        details.append(player['POSITION'])
+    if player.get('AGE') == player.get('AGE'):  # not NaN
+        details.append(f"Age {int(player['AGE'])}")
+    if player.get('STATS_TEAM') and player['STATS_TEAM'] != player['TEAM_ABBREVIATION']:
+        details.append(f"Stats below with {player['STATS_TEAM']}")
+    headshot = player.get('HEADSHOT') if isinstance(player.get('HEADSHOT'), str) else ''
+    photo = (f'<img class="p-photo" src="{escape(headshot)}" alt="">' if headshot
+             else f'<img class="p-photo" src="{logo_url(t["abbr"])}" alt="">')
+    st.html(f"""
+<div class="player-head" style="--c:{t['accent']}">
+  <div class="p-frame">{photo}<img class="p-logo" src="{logo_url(t['abbr'])}" alt="{t['abbr']}"></div>
+  <div>
+    <div class="t-city">{escape(' · '.join(details))}</div>
+    <div class="t-name">{escape(player['PLAYER_NAME'])}</div>
+  </div>
+</div>""")

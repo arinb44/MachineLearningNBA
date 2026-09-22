@@ -3,6 +3,8 @@ Shared helpers for the demo app pages: cached data loaders, team logos as
 URLs, a progress bar, and a Plotly theme that matches the app's dark design.
 """
 
+import os
+
 import pandas as pd
 import streamlit as st
 
@@ -10,6 +12,7 @@ import streamlit as st
 # every data path below is repo-relative, the same as for the command-line scripts.
 import config
 import features
+import player_pool
 from predict_games import NBAPredictor, load_injury_impacts
 from teams import team
 
@@ -52,6 +55,65 @@ def load_injuries():
 @st.cache_data
 def load_player_stats():
     return pd.read_csv(config.player_stats_file())
+
+
+@st.cache_data
+def load_rosters():
+    """(season, rosters) from fetch_rosters.py, or (None, None) if it hasn't been run."""
+    path = config.latest_rosters_file()
+    if path is None:
+        return None, None
+    season = os.path.basename(path)[len('nba_rosters_'):-len('.csv')]  # e.g. '2026-27'
+    return season, pd.read_csv(path, dtype={'espn_id': str})
+
+
+@st.cache_data
+def load_espn_stats(season):
+    path = config.espn_stats_file(season)
+    return pd.read_csv(path, dtype={'espn_id': str}) if os.path.exists(path) else None
+
+
+def clear_roster_caches():
+    load_rosters.clear()
+    load_espn_stats.clear()
+    load_player_pool.clear()
+
+
+@st.cache_data
+def load_player_pool(use_current=True):
+    """
+    Players on current rosters averaging 15+ minutes, as a dict:
+      pool       one row per player, current team in TEAM_ABBREVIATION
+      season     the season the stats are from
+      current    True if those are this season's (ESPN) stats
+      has_current  whether this season's stats exist at all
+      emerging   rookies/breakouts new to 15+ minutes this season (or None)
+      rosters, roster_season, updated
+    Falls back to last season's stats file, unfiltered by roster, when
+    fetch_rosters.py hasn't been run.
+    """
+    last_stats = load_player_stats()
+    roster_season, rosters = load_rosters()
+    if rosters is None:
+        pool = last_stats[last_stats['MIN'] >= player_pool.MIN_MINUTES].copy()
+        pool['STATS_TEAM'] = pool['TEAM_ABBREVIATION']
+        return {'pool': pool.reindex(columns=player_pool.COLUMNS), 'season': config.current_season(),
+                'current': False, 'has_current': False, 'emerging': None, 'rosters': None,
+                'roster_season': None, 'updated': None}
+
+    espn = load_espn_stats(roster_season)
+    has_current = espn is not None and not espn.empty
+    current_pool = player_pool.from_current_season(rosters, espn) if has_current else None
+    if use_current and has_current:
+        pool, season = current_pool, roster_season
+    else:
+        pool, season = player_pool.from_previous_season(rosters, last_stats), config.previous_season(roster_season)
+    return {
+        'pool': pool, 'season': season, 'current': pool is current_pool,
+        'has_current': has_current, 'rosters': rosters, 'roster_season': roster_season,
+        'emerging': player_pool.emerging_players(current_pool, last_stats) if has_current else None,
+        'updated': rosters['updated'].iloc[0] if 'updated' in rosters else None,
+    }
 
 
 @st.cache_data
@@ -138,9 +200,13 @@ class Calibrating:
     def __init__(self):
         with st.container(key='calibrating'):
             self.slot = st.empty()
+        self.pct = -1
         self.to(0)
 
     def to(self, pct):
+        if pct <= self.pct:  # only ever climbs, even if a step reports a lower value
+            return
+        self.pct = pct
         self.slot.progress(pct, text=f"Calibrating... {pct}%")
 
     def done(self):
@@ -175,8 +241,8 @@ def style_fig(fig, height=420, title=None, legend=False):
 
 
 def show(fig):
-    st.plotly_chart(fig, use_container_width=True,
-                    config={'displayModeBar': False, 'scrollZoom': False})
+    # Charts fill the column width by default
+    st.plotly_chart(fig, config={'displayModeBar': False, 'scrollZoom': False})
 
 
 def team_label(abbr):

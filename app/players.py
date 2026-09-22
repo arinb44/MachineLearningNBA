@@ -1,12 +1,15 @@
-"""Players page: stat leaders, scoring efficiency, and player profiles."""
+"""Players page: rotation players on current rosters, their stats, and who's emerging."""
 
+import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-import config
+import fetch_rosters
+import player_pool
 from app.common import (INK, INK_MUTED, NEUTRAL, SURFACE, Calibrating, add_logo,
-                        load_player_stats, section, show, style_fig, team, team_label)
-from app.components import team_header
+                        clear_roster_caches, load_player_pool, section, show, style_fig,
+                        team, team_label)
+from app.components import player_header
 
 COMPARE_COLOR = '#a1a1aa'
 
@@ -18,29 +21,106 @@ STATS = {
     'Blocks': ('BLK', '{:.1f}'),
     '3-pointers made': ('FG3M', '{:.1f}'),
     'True shooting %': ('TS_PCT', '{:.1%}'),
+    'Field goal %': ('FG_PCT', '{:.1%}'),
     '3-point %': ('FG3_PCT', '{:.1%}'),
+    'Free throw %': ('FT_PCT', '{:.1%}'),
     'Plus-minus': ('PLUS_MINUS', '{:+.1f}'),
     'Net rating': ('NET_RATING', '{:+.1f}'),
     'Player impact (PIE)': ('PIE', '{:.3f}'),
     'Usage %': ('USG_PCT', '{:.1%}'),
+    'Minutes': ('MIN', '{:.1f}'),
 }
+MIN_MINUTES = player_pool.MIN_MINUTES
 
 st.title('Players')
-st.caption(f"Per-game stats for the {config.current_season()} season from the NBA stats API.")
-
 calib = Calibrating()
-players = load_player_stats()
-calib.to(20)
 
+# ---------- roster refresh ----------
+
+top1, top2 = st.columns([3, 1], vertical_alignment='bottom')
+if top2.button('Refresh rosters', icon=':material/refresh:', width='stretch',
+               help='Pull the latest rosters and this season\'s stats from ESPN'):
+    try:
+        summary = fetch_rosters.refresh(lambda i, n: calib.to(5 + 80 * i // n))
+        clear_roster_caches()
+        st.toast(f"Rosters refreshed: {summary['players']} players"
+                 + (f", {summary['with_stats']} with {summary['season']} stats"
+                    if summary['with_stats'] else ''), icon=':material/check_circle:')
+    except Exception as exc:  # network trouble shouldn't take the page down
+        st.error(f"Couldn't reach ESPN to refresh rosters ({exc}). Showing the last saved rosters.")
+
+info = load_player_pool(use_current=True)
+if info['has_current']:
+    choice = top1.radio('Stats from', [info['roster_season'], 'Last season'], horizontal=True)
+    if choice == 'Last season':
+        info = load_player_pool(use_current=False)
+players = info['pool']
+calib.to(25)
+
+source = 'ESPN' if info['current'] else 'the NBA stats API'
+if info['rosters'] is not None:
+    top1.caption(
+        f"{len(players)} players on current rosters averaging {MIN_MINUTES}+ minutes, with "
+        f"{info['season']} per-game stats from {source}. "
+        f"Rosters updated {info['updated'] or 'recently'}.")
+else:
+    top1.caption(f"{info['season']} per-game stats for players averaging {MIN_MINUTES}+ minutes. "
+                 'Run `python scripts/fetch_rosters.py` for current rosters.')
+
+# ---------- new in the rotation ----------
+
+if info['rosters'] is not None:
+    section('New in the rotation',
+            f"Rookies and breakout players who now average {MIN_MINUTES}+ minutes "
+            f"but didn't last season.")
+    emerging = info['emerging']
+    if emerging is None:
+        st.info(f"Rookies and breakout players appear here once {info['roster_season']} "
+                f"games are played and they average {MIN_MINUTES}+ minutes. Press "
+                '**Refresh rosters** during the season to pull the latest.')
+        rookies = info['rosters'][info['rosters']['experience'] == 0]
+        with st.expander(f"Rookies on current rosters ({len(rookies)})"):
+            st.dataframe(
+                rookies[['headshot', 'player', 'team', 'position', 'age']].sort_values(['team', 'player']),
+                hide_index=True, width='stretch', row_height=48,
+                column_config={'headshot': st.column_config.ImageColumn('', width='small'),
+                               'player': 'Player', 'team': 'Team', 'position': 'Pos', 'age': 'Age'},
+            )
+    elif emerging.empty:
+        st.caption('No new rotation players yet.')
+    else:
+        table = emerging.assign(
+            LAST_MIN=emerging['LAST_MIN'].map(lambda m: '-' if pd.isna(m) else f"{m:.1f}"))
+        st.dataframe(
+            table[['HEADSHOT', 'PLAYER_NAME', 'TEAM_ABBREVIATION', 'KIND', 'GP', 'MIN',
+                   'LAST_MIN', 'PTS', 'REB', 'AST']],
+            hide_index=True, width='stretch', row_height=48,
+            column_config={
+                'HEADSHOT': st.column_config.ImageColumn('', width='small'),
+                'PLAYER_NAME': 'Player', 'TEAM_ABBREVIATION': 'Team', 'KIND': 'Type',
+                'GP': 'Games', 'MIN': st.column_config.NumberColumn('Min', format='%.1f'),
+                'LAST_MIN': 'Min last season',
+                'PTS': st.column_config.NumberColumn('Pts', format='%.1f'),
+                'REB': st.column_config.NumberColumn('Reb', format='%.1f'),
+                'AST': st.column_config.NumberColumn('Ast', format='%.1f'),
+            },
+        )
+
+# ---------- filters ----------
+
+max_gp = int(players['GP'].max()) if not players.empty else 1
 f1, f2 = st.columns([1, 1])
-min_games = f1.slider('Minimum games played', 1, int(players['GP'].max()), 20)
-min_minutes = f2.slider('Minimum minutes per game', 0, 36, 15)
+min_games = f1.slider('Minimum games played', 1, max_gp, min(20, max(1, max_gp // 4)))
+min_minutes = f2.slider('Minimum minutes per game', MIN_MINUTES, 36, MIN_MINUTES)
 qualified = players[(players['GP'] >= min_games) & (players['MIN'] >= min_minutes)].copy()
-st.caption(f"{len(qualified)} of {len(players)} players qualify.")
+st.caption(f"{len(qualified)} of {len(players)} players match these filters.")
 if qualified.empty:
     calib.done()
     st.warning('No players match these filters.')
     st.stop()
+
+# Only offer stats this season's source actually has (ESPN has no PIE or net rating)
+STATS = {name: spec for name, spec in STATS.items() if qualified[spec[0]].notna().any()}
 
 # ---------- stat leaders ----------
 
@@ -59,9 +139,10 @@ fig = go.Figure(go.Bar(
                 opacity=0.9, cornerradius=4),
     text=[fmt.format(v) for v in leaders[col]], textposition='outside',
     textfont=dict(color=INK, size=12), cliponaxis=False,
-    customdata=leaders[['TEAM_ABBREVIATION', 'GP', 'MIN']],
+    customdata=leaders[['TEAM_ABBREVIATION', 'GP', 'MIN', 'STATS_TEAM']],
     hovertemplate='<b>%{y}</b> (%{customdata[0]})<br>' + stat_name +
-                  ': %{text}<br>%{customdata[1]} games, %{customdata[2]:.1f} min<extra></extra>',
+                  ': %{text}<br>%{customdata[1]} games, %{customdata[2]:.1f} min'
+                  '<br>Stats with %{customdata[3]}<extra></extra>',
 ))
 # Team logo at the start of each bar, just right of the player name
 for i, abbr in enumerate(leaders['TEAM_ABBREVIATION']):
@@ -142,14 +223,15 @@ p1, p2 = st.columns(2)
 name = p1.selectbox('Player', names, index=0)
 compare = p2.selectbox('Compare with', ['(none)'] + [n for n in names if n != name])
 
-PROFILE = ['PTS', 'REB', 'AST', 'STL', 'BLK', 'FG3M', 'TS_PCT', 'USG_PCT', 'NET_RATING', 'PIE']
+PROFILE = [c for c in ('PTS', 'REB', 'AST', 'STL', 'BLK', 'FG3M', 'TS_PCT', 'USG_PCT', 'NET_RATING', 'PIE')
+           if qualified[c].notna().any()]
 PROFILE_LABELS = {v[0]: k for k, v in STATS.items()}
 pct = qualified[PROFILE].rank(pct=True) * 100
 pct.index = qualified['PLAYER_NAME']
 
 by_name = qualified.set_index('PLAYER_NAME')
 player = by_name.loc[name]
-team_header(player['TEAM_ABBREVIATION'], title=name, subtitle=team(player['TEAM_ABBREVIATION'])['name'])
+player_header({**player.to_dict(), 'PLAYER_NAME': name})
 
 k1, k2, k3, k4, k5 = st.columns(5)
 k1.metric('Points', f"{player['PTS']:.1f}")
@@ -181,5 +263,6 @@ fig.update_yaxes(tickfont=dict(color=INK, size=12), showgrid=False)
 style_fig(fig, height=460, legend=len(series) > 1)
 fig.update_layout(barmode='group', bargap=0.3, bargroupgap=0.08)
 show(fig)
-st.caption("Dashed line = league median. Percentiles recompute when you change the filters above.")
+st.caption('Dashed line = league median. Percentiles recompute when you change the filters above.'
+           + (' Usage % is estimated from ESPN box-score totals.' if info['current'] else ''))
 calib.done()
