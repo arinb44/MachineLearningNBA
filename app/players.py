@@ -6,7 +6,7 @@ import streamlit as st
 
 import fetch_rosters
 import player_pool
-from app.common import (INK, INK_MUTED, NEUTRAL, SURFACE, Calibrating, add_logo,
+from app.common import (INK, INK_MUTED, NEUTRAL, SURFACE, add_logo,
                         clear_roster_caches, load_player_pool, section, show, style_fig,
                         team, team_label)
 from app.components import player_header
@@ -33,7 +33,6 @@ STATS = {
 MIN_MINUTES = player_pool.MIN_MINUTES
 
 st.title('Players')
-calib = Calibrating()
 
 # ---------- roster refresh ----------
 
@@ -41,7 +40,8 @@ top1, top2 = st.columns([3, 1], vertical_alignment='bottom')
 if top2.button('Refresh rosters', icon=':material/refresh:', width='stretch',
                help='Pull the latest rosters and this season\'s stats from ESPN'):
     try:
-        summary = fetch_rosters.refresh(lambda i, n: calib.to(5 + 80 * i // n))
+        with st.spinner('Refreshing rosters from ESPN...'):
+            summary = fetch_rosters.refresh()
         clear_roster_caches()
         st.toast(f"Rosters refreshed: {summary['players']} players"
                  + (f", {summary['with_stats']} with {summary['season']} stats"
@@ -55,7 +55,6 @@ if info['has_current']:
     if choice == 'Last season':
         info = load_player_pool(use_current=False)
 players = info['pool']
-calib.to(25)
 
 source = 'ESPN' if info['current'] else 'the NBA stats API'
 if info['rosters'] is not None:
@@ -115,7 +114,6 @@ min_minutes = f2.slider('Minimum minutes per game', MIN_MINUTES, 36, MIN_MINUTES
 qualified = players[(players['GP'] >= min_games) & (players['MIN'] >= min_minutes)].copy()
 st.caption(f"{len(qualified)} of {len(players)} players match these filters.")
 if qualified.empty:
-    calib.done()
     st.warning('No players match these filters.')
     st.stop()
 
@@ -152,7 +150,6 @@ fig.update_xaxes(showgrid=False, showticklabels=False, zeroline=False,
 fig.update_yaxes(tickfont=dict(color=INK, size=12), showgrid=False)
 show(style_fig(fig, height=30 * len(leaders) + 40))
 
-calib.to(40)
 
 # ---------- efficiency scatter ----------
 
@@ -211,7 +208,6 @@ fig.update_xaxes(title='Usage rate', tickformat='.0%',
 fig.update_yaxes(title='True shooting %', tickformat='.0%',
                  range=[scorers['TS_PCT'].min() - y_rng * 0.06, scorers['TS_PCT'].max() + y_rng * 0.08])
 show(style_fig(fig, height=560, legend=bool(highlighted.any())))
-calib.to(70)
 
 # ---------- player profile ----------
 
@@ -265,4 +261,3 @@ fig.update_layout(barmode='group', bargap=0.3, bargroupgap=0.08)
 show(fig)
 st.caption('Dashed line = league median. Percentiles recompute when you change the filters above.'
            + (' Usage % is estimated from ESPN box-score totals.' if info['current'] else ''))
-calib.done()

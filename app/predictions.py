@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from app.common import (Calibrating, add_logo, load_builder, load_games,
+from app.common import (add_logo, load_builder, load_games,
                         load_injuries, load_predictor, load_schedule, section,
                         show, style_fig, team, team_game_log, team_label,
                         team_summary)
@@ -16,19 +16,15 @@ st.caption(
     'form. Trained with walk-forward validation on the 2025-26 season.'
 )
 
-calib = Calibrating()
 predictor = load_predictor()
 if predictor is None:
-    calib.done()
     st.error('Model not found. Run `python scripts/train_model.py` to build it.')
     st.stop()
 
 games = load_games()
 builder = load_builder()
-calib.to(10)
 injuries = load_injuries()
 schedule = load_schedule()
-calib.to(20)
 as_of_date = games['date'].max() + pd.Timedelta(days=1)
 teams = sorted(set(games['home_team']) | set(games['away_team']))
 today = pd.Timestamp.now(tz='America/New_York').normalize().tz_localize(None)
@@ -104,8 +100,6 @@ else:
             with cols[i % 2]:
                 matchup_card(result, game=game._asdict())
                 st.write('')
-            calib.to(20 + 25 * (i + 1) // len(slate))
-calib.to(45)
 
 # ---------- matchup picker ----------
 
@@ -129,7 +123,6 @@ if schedule is not None:
 
 result = predict(home, away, next_meeting['date'] if next_meeting else None)
 if result is None:
-    calib.done()
     st.warning('Not enough game history for one of these teams.')
     st.stop()
 
@@ -156,7 +149,6 @@ if result['win_probability'] < 60:
         'favorite sits near 76%, and only lopsided matchups clear 85%.'
     )
 
-calib.to(60)
 
 # ---------- tale of the tape ----------
 
@@ -199,7 +191,6 @@ with right:
             hide_index=True, width='stretch',
         )
 
-calib.to(75)
 
 # ---------- form trend ----------
 
@@ -226,7 +217,6 @@ fig.update_xaxes(range=[log['date'].min(), x_max], showgrid=False)
 fig.update_yaxes(title='Point margin', ticksuffix='')
 show(style_fig(fig, height=380, legend=True))
 
-calib.to(90)
 
 with st.expander('How this model works, and how well'):
     st.markdown(
@@ -259,4 +249,3 @@ st.caption(
     f"Model trained on games through {games['date'].max():%B %d, %Y}. "
     'Source: github.com/arinb44/MachineLearningNBA'
 )
-calib.done()

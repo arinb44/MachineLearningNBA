@@ -1,6 +1,6 @@
 """
 Shared helpers for the demo app pages: cached data loaders, team logos as
-URLs, a progress bar, and a Plotly theme that matches the app's dark design.
+URLs, and a Plotly theme that matches the app's dark design.
 """
 
 import os
@@ -186,32 +186,6 @@ def add_logo(fig, abbr, x, y, size, xref='x', yref='y', xanchor='center',
         xanchor=xanchor, yanchor=yanchor, sizing='contain',
         opacity=opacity, layer='above',
     )
-
-
-# ---------- progress ----------
-
-class Calibrating:
-    """
-    A progress bar that climbs to 100% as a page builds, then disappears.
-    It floats over the page (see .st-key-calibrating in styles.css), so
-    showing and removing it never shifts the content underneath.
-    """
-
-    def __init__(self):
-        with st.container(key='calibrating'):
-            self.slot = st.empty()
-        self.pct = -1
-        self.to(0)
-
-    def to(self, pct):
-        if pct <= self.pct:  # only ever climbs, even if a step reports a lower value
-            return
-        self.pct = pct
-        self.slot.progress(pct, text=f"Calibrating... {pct}%")
-
-    def done(self):
-        self.to(100)
-        self.slot.empty()
 
 
 # ---------- chart theme ----------

@@ -6,7 +6,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from app.common import (INK, INK_MUTED, NEUTRAL, Calibrating, add_logo, load_player_pool,
+from app.common import (INK, INK_MUTED, NEUTRAL, add_logo, load_player_pool,
                         section, show, style_fig, team, team_game_log,
                         team_label, team_summary)
 from app.components import team_header
@@ -17,11 +17,8 @@ ROAD_COLOR = '#5b9cf5'
 st.title('Teams')
 st.caption('How all 30 teams stack up this season, from every game result so far.')
 
-calib = Calibrating()
 summary = team_summary()
-calib.to(15)
 log = team_game_log()
-calib.to(30)
 
 if os.path.exists('data/input/adjusted_team_rankings.csv'):
     power = pd.read_csv('data/input/adjusted_team_rankings.csv')[['team', 'power_rating']]
@@ -69,7 +66,6 @@ style_fig(fig, height=30 * len(ranked) + 40)
 fig.update_layout(margin=dict(l=44, r=8, t=8, b=8), bargap=0.3)
 show(fig)
 
-calib.to(45)
 
 # ---------- offense vs defense ----------
 
@@ -103,7 +99,6 @@ fig.update_xaxes(title='Points scored per game', range=[x_lo, x_hi])
 fig.update_yaxes(title='Points allowed per game', range=[y_hi, y_lo])
 show(style_fig(fig, height=560))
 
-calib.to(60)
 
 # ---------- season race ----------
 
@@ -132,7 +127,6 @@ fig.update_xaxes(title='Games played', range=[0, max_game + 8], showgrid=False)
 fig.update_yaxes(title='Games over .500')
 show(style_fig(fig, height=440, legend=True))
 
-calib.to(72)
 
 # ---------- home vs road ----------
 
@@ -164,7 +158,6 @@ style_fig(fig, height=30 * len(hr) + 60, legend=True)
 fig.update_layout(margin=dict(l=44, r=8, t=30, b=8))
 show(fig)
 
-calib.to(85)
 
 # ---------- team drill-down ----------
 
@@ -216,4 +209,3 @@ if not roster.empty:
     fig.update_xaxes(showgrid=False, showticklabels=False, range=[0, roster['PTS'].max() * 1.15])
     fig.update_yaxes(tickfont=dict(color=INK, size=12))
     show(style_fig(fig, height=34 * len(roster) + 60, title=f"Current roster: top scorers ({pool_info['season']} points per game)"))
-calib.done()

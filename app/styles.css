@@ -11,21 +11,6 @@ h1 { font-weight: 900 !important; }
 .block-container { max-width: 1200px; padding-top: 2.5rem; }
 [data-testid="stMetricValue"] { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; }
 
-/* "Calibrating" progress bar: floats under the toolbar while a page builds */
-.st-key-calibrating {
-  position: fixed; top: 3.6rem; left: 50%; transform: translateX(-50%);
-  width: min(420px, calc(100vw - 32px)); z-index: 999990;
-}
-.st-key-calibrating:has([data-testid="stProgress"]) {
-  padding: 10px 16px 12px; border-radius: 12px;
-  background: rgba(17,17,24,0.94); border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.6); backdrop-filter: blur(6px);
-}
-.st-key-calibrating [data-testid="stProgress"] p {
-  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px;
-}
-
 /* Matchup card: a translation of the Figma Make "team image card" design.
    Sized in --u units (1/680 of the card width) so it scales like the
    680x320 original in any column width. */
