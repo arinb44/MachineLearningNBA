@@ -1,4 +1,5 @@
 team,player,status,detail
+ATL,Henri Veesaar,Out,Knee
 ATL,Keshon Gilbert,Day-To-Day,Hip
 ATL,Mouhamed Gueye,Day-To-Day,Foot
 ATL,RayJ Dennis,Day-To-Day,Achilles
@@ -13,16 +14,14 @@ CHI,Zach Collins,Day-To-Day,Toe
 DAL,Dereck Lively II,Day-To-Day,Foot
 DAL,Kyrie Irving,Day-To-Day,Knee
 DAL,Santi Aldama,Day-To-Day,Knee
-DEN,Aaron Gordon,Day-To-Day,Calf
 DEN,Trevon Brazile,Day-To-Day,Undisclosed
 GSW,Jimmy Butler III,Out,Knee
 GSW,Moses Moody,Out,Knee
-HOU,Fred VanVleet,Day-To-Day,Knee
-HOU,Kevin Durant,Day-To-Day,Ankle
 HOU,Steven Adams,Day-To-Day,Ankle
 IND,Johnny Furphy,Out,Knee
 IND,Tyrese Haliburton,Day-To-Day,Achilles
 LAC,Bradley Beal,Day-To-Day,Hip
+LAC,Brandon Ingram,Day-To-Day,Heel
 LAC,Jordan Miller,Out,Shoulder
 LAC,Yanic Konan Niederhauser,Day-To-Day,Foot
 MEM,Jaylen Wells,Day-To-Day,Toe
@@ -39,7 +38,6 @@ MIA,Trevor Keels,Day-To-Day,Knee
 MIL,Kevin Porter Jr.,Day-To-Day,Knee
 MIN,Donte DiVincenzo,Out,Achilles
 NOP,Bryce McGowens,Day-To-Day,Toe
-NOP,Micah Peavy,Day-To-Day,Rest
 NYK,Jalen Brunson,Day-To-Day,Wrist
 NYK,Mohamed Diawara,Day-To-Day,Finger
 OKC,Ajay Mitchell,Day-To-Day,Calf
@@ -51,24 +49,23 @@ OKC,Thomas Sorber,Day-To-Day,Knee
 ORL,Franz Wagner,Day-To-Day,Calf
 ORL,Izaiyah Nelson,Day-To-Day,Ankle
 ORL,Jonathan Isaac,Day-To-Day,Knee
+PHI,Adem Bona,Day-To-Day,Foot
 PHI,Kentavious Caldwell-Pope,Day-To-Day,Finger
 PHX,CJ Huntley,Day-To-Day,Hamstring
-PHX,Mark Williams,Day-To-Day,Foot
+PHX,Duop Reath,Day-To-Day,Foot
+PHX,Mark Williams,Out,Shoulder
 POR,Damian Lillard,Day-To-Day,Achilles
 POR,Ja Morant,Day-To-Day,Elbow
 POR,Shaedon Sharpe,Out,Knee
 SAC,De'Andre Hunter,Day-To-Day,Eye
-SAC,Domantas Sabonis,Day-To-Day,Knee
 SAC,Keegan Murray,Day-To-Day,Ankle
 SAC,Zach LaVine,Day-To-Day,Hand
 SAS,David Jones Garcia,Day-To-Day,Ankle
 SAS,Jayden Quaintance,Out,Knee
 TOR,Alijah Martin,Day-To-Day,Knee
-TOR,Brandon Ingram,Day-To-Day,Heel
 TOR,Chucky Hepburn,Day-To-Day,Knee
 TOR,Collin Murray-Boyles,Day-To-Day,Finger
-TOR,Immanuel Quickley,Day-To-Day,Hamstring
-TOR,Nate Bittle,Day-To-Day,Knee
+TOR,Nate Bittle,Day-To-Day,Lower Leg
 UTA,Jaren Jackson Jr.,Day-To-Day,Knee
 UTA,Trey Alexander,Day-To-Day,Ribs
 WAS,Alex Sarr,Day-To-Day,Foot
