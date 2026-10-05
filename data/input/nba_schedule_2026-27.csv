@@ -1,60 +1,60 @@
 game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast,neutral_site
-401902644,2026-10-03,2026-10-03 19:00,7:00 PM,preseason,TOR,MIA,Videotron Centre,"Quebec City, PQ",,False
-401914127,2026-10-04,2026-10-04 19:00,7:00 PM,preseason,DEN,UTA,CU Events Center,"Boulder, CO",,False
-401918010,2026-10-04,2026-10-04 19:00,7:00 PM,preseason,LAC,GSW,Intuit Dome,"Inglewood, CA",,False
+401902644,2026-10-03,2026-10-03 19:00,7:00 PM,preseason,TOR,MIA,Videotron Centre,"Quebec City, PQ",NBA TV,False
+401914127,2026-10-04,2026-10-04 19:00,7:00 PM,preseason,DEN,UTA,CU Events Center,"Boulder, CO",NBA TV,False
+401918010,2026-10-04,2026-10-04 19:00,7:00 PM,preseason,LAC,GSW,Stan Sheriff Center,"Honolulu, HI",,True
 401898388,2026-10-05,2026-10-05 19:00,7:00 PM,preseason,ATL,MEM,State Farm Arena,"Atlanta, GA",,False
 401908947,2026-10-05,2026-10-05 19:00,7:00 PM,preseason,DET,PHX,Little Caesars Arena,"Detroit, MI",,False
-401914101,2026-10-05,2026-10-05 19:00,7:00 PM,preseason,PHI,NYK,Xfinity Mobile Arena,"Philadelphia, PA",,False
+401914101,2026-10-05,2026-10-05 19:00,7:00 PM,preseason,PHI,NYK,Xfinity Mobile Arena,"Philadelphia, PA",NBA TV,False
 401914102,2026-10-05,2026-10-05 20:00,8:00 PM,preseason,MIL,MIN,Fiserv Forum,"Milwaukee, WI",,False
-401898716,2026-10-05,2026-10-05 22:00,10:00 PM,preseason,SAC,LAL,Golden 1 Center,"Sacramento, CA",,False
-401901820,2026-10-06,2026-10-06 19:00,7:00 PM,preseason,CHA,BKN,Spectrum Center,"Charlotte, NC",,False
+401898716,2026-10-05,2026-10-05 22:00,10:00 PM,preseason,SAC,LAL,Golden 1 Center,"Sacramento, CA",NBA TV,False
+401901820,2026-10-06,2026-10-06 19:00,7:00 PM,preseason,CHA,BKN,Spectrum Center,"Charlotte, NC",NBA TV,False
 401898389,2026-10-06,2026-10-06 20:00,8:00 PM,preseason,OKC,NOP,BOK Center,"Tulsa, OK",,False
 401914128,2026-10-06,2026-10-06 21:00,9:00 PM,preseason,UTA,DEN,Delta Center,"Salt Lake City, UT",,False
-401898390,2026-10-06,2026-10-06 22:00,10:00 PM,preseason,GSW,LAL,Chase Center,"San Francisco, CA",,False
-401914123,2026-10-07,2026-10-07 19:00,7:00 PM,preseason,IND,MIN,Hilton Coliseum,"Ames, IA",,True
+401898390,2026-10-06,2026-10-06 22:00,10:00 PM,preseason,GSW,LAL,Chase Center,"San Francisco, CA",NBA TV,False
+401914123,2026-10-07,2026-10-07 19:00,7:00 PM,preseason,IND,MIN,Hilton Coliseum,"Ames, IA",NBA TV,True
 401898391,2026-10-07,2026-10-07 20:00,8:00 PM,preseason,MEM,ORL,FedExForum,"Memphis, TN",,False
 401908620,2026-10-07,2026-10-07 20:00,8:00 PM,preseason,OKC,MIL,Paycom Center,"Oklahoma City, OK",,False
 401908939,2026-10-07,2026-10-07 20:00,8:00 PM,preseason,CHI,PHX,United Center,"Chicago, IL",,False
-401914129,2026-10-07,2026-10-07 22:00,10:00 PM,preseason,POR,GSW,Moda Center,"Portland, OR",,False
+401914129,2026-10-07,2026-10-07 22:00,10:00 PM,preseason,POR,GSW,Moda Center,"Portland, OR",NBA TV,False
 401898392,2026-10-08,2026-10-08 19:00,7:00 PM,preseason,CLE,BOS,Rocket Arena,"Cleveland, OH",,False
 401898393,2026-10-08,2026-10-08 19:30,7:30 PM,preseason,MIA,NOP,Kaseya Center,"Miami, FL",,False
 401901823,2026-10-08,2026-10-08 19:30,7:30 PM,preseason,BKN,PHI,Barclays Center,"Brooklyn, NY",,False
-401906508,2026-10-08,2026-10-08 19:30,7:30 PM,preseason,NYK,WAS,Madison Square Garden,"New York, NY",MNMT,False
+401906508,2026-10-08,2026-10-08 19:30,7:30 PM,preseason,NYK,WAS,Madison Square Garden,"New York, NY",NBA TV / MNMT,False
 401898394,2026-10-08,2026-10-08 20:00,8:00 PM,preseason,SAS,ATL,Frost Bank Center,"San Antonio, TX",,False
 401898717,2026-10-08,2026-10-08 22:30,10:30 PM,preseason,LAL,SAC,crypto.com Arena,"Los Angeles, CA",ESPN2,False
-401898395,2026-10-09,2026-10-09 08:00,8:00 AM,preseason,DAL,HOU,Venetian Arena,,,True
-401908940,2026-10-09,2026-10-09 20:00,8:00 PM,preseason,CHI,MEM,United Center,"Chicago, IL",,False
+401898395,2026-10-09,2026-10-09 08:00,8:00 AM,preseason,DAL,HOU,Venetian Arena,,NBA TV,True
+401908940,2026-10-09,2026-10-09 20:00,8:00 PM,preseason,CHI,MEM,United Center,"Chicago, IL",NBA TV,False
 401902645,2026-10-10,2026-10-10 18:30,6:30 PM,preseason,TOR,LAC,Rogers Arena,"Vancouver, BC",,False
 401898396,2026-10-10,2026-10-10 19:00,7:00 PM,preseason,IND,ATL,Gainbridge Fieldhouse,"Indianapolis, IN",,False
 401906510,2026-10-10,2026-10-10 19:00,7:00 PM,preseason,WAS,DET,Capital One Arena,"Washington, DC",MNMT,False
 401898397,2026-10-10,2026-10-10 20:00,8:00 PM,preseason,MIA,MIN,Kaseya Center,"Miami, FL",,False
-401898398,2026-10-10,2026-10-10 20:00,8:00 PM,preseason,BOS,PHI,TD Garden,"Boston, MA",,False
+401898398,2026-10-10,2026-10-10 20:00,8:00 PM,preseason,BOS,PHI,TD Garden,"Boston, MA",NBA TV,False
 401898399,2026-10-10,2026-10-10 20:30,8:30 PM,preseason,GSW,SAC,Chase Center,"San Francisco, CA",,False
 401898720,2026-10-10,2026-10-10 22:30,10:30 PM,preseason,PHX,SAS,Mortgage Matchup Center,"Phoenix, AZ",ESPN2,False
-401898400,2026-10-11,2026-10-11 06:00,6:00 AM,preseason,HOU,DAL,Venetian Arena,,,True
+401898400,2026-10-11,2026-10-11 06:00,6:00 AM,preseason,HOU,DAL,Venetian Arena,,NBA TV,True
 401898401,2026-10-11,2026-10-11 18:30,6:30 PM,preseason,CLE,ORL,Rocket Arena,"Cleveland, OH",ESPN,False
 401901821,2026-10-11,2026-10-11 19:00,7:00 PM,preseason,CHA,MIL,Spectrum Center,"Charlotte, NC",,False
 401908941,2026-10-11,2026-10-11 21:00,9:00 PM,preseason,DEN,CHI,Ball Arena,"Denver, CO",ESPN,False
 401898402,2026-10-12,2026-10-12 19:00,7:00 PM,preseason,ATL,OKC,State Farm Arena,"Atlanta, GA",,False
 401901824,2026-10-12,2026-10-12 19:00,7:00 PM,preseason,WAS,BKN,Capital One Arena,"Washington, DC",MNMT,False
-401914124,2026-10-12,2026-10-12 19:30,7:30 PM,preseason,NYK,MIN,Madison Square Garden,"New York, NY",,False
+401914124,2026-10-12,2026-10-12 19:30,7:30 PM,preseason,NYK,MIN,Madison Square Garden,"New York, NY",NBA TV,False
 401898721,2026-10-12,2026-10-12 21:00,9:00 PM,preseason,UTA,SAS,Delta Center,"Salt Lake City, UT",,False
 401898403,2026-10-13,2026-10-13 19:00,7:00 PM,preseason,ORL,CLE,Kia Center,"Orlando, FL",Peacock / NBCSN,False
 401908944,2026-10-13,2026-10-13 19:00,7:00 PM,preseason,TOR,NYK,Scotiabank Arena,"Toronto, ON",,False
 401908621,2026-10-13,2026-10-13 20:00,8:00 PM,preseason,OKC,IND,Paycom Center,"Oklahoma City, OK",,False
-401898718,2026-10-13,2026-10-13 22:00,10:00 PM,preseason,LAL,GSW,T-Mobile Arena,"Las Vegas, NV",,True
+401898718,2026-10-13,2026-10-13 22:00,10:00 PM,preseason,LAL,GSW,T-Mobile Arena,"Las Vegas, NV",NBA TV,True
 401901826,2026-10-13,2026-10-13 22:00,10:00 PM,preseason,SAC,POR,Golden 1 Center,"Sacramento, CA",,False
 401898404,2026-10-14,2026-10-14 19:30,7:30 PM,preseason,MIA,BKN,Kaseya Center,"Miami, FL",,False
 401898405,2026-10-14,2026-10-14 19:30,7:30 PM,preseason,BOS,CHA,TD Garden,"Boston, MA",,False
 401898722,2026-10-14,2026-10-14 20:00,8:00 PM,preseason,SAS,PHX,Frost Bank Center,"San Antonio, TX",,False
-401901825,2026-10-14,2026-10-14 20:00,8:00 PM,preseason,DAL,NOP,American Airlines Center,"Dallas, TX",,False
+401901825,2026-10-14,2026-10-14 20:00,8:00 PM,preseason,DAL,NOP,American Airlines Center,"Dallas, TX",NBA TV,False
 401908942,2026-10-14,2026-10-14 20:00,8:00 PM,preseason,MIL,CHI,Fiserv Forum,"Milwaukee, WI",,False
 401914125,2026-10-14,2026-10-14 20:00,8:00 PM,preseason,MIN,DET,Target Center,"Minneapolis, MN",,False
-401918011,2026-10-14,2026-10-14 22:30,10:30 PM,preseason,LAC,DEN,Intuit Dome,"Inglewood, CA",,False
+401918011,2026-10-14,2026-10-14 22:30,10:30 PM,preseason,LAC,DEN,Intuit Dome,"Inglewood, CA",NBA TV,False
 401908945,2026-10-15,2026-10-15 19:30,7:30 PM,preseason,NYK,TOR,Madison Square Garden,"New York, NY",,False
-401908622,2026-10-15,2026-10-15 20:30,8:30 PM,preseason,HOU,OKC,Toyota Center (Houston),"Houston, TX",,False
+401908622,2026-10-15,2026-10-15 20:30,8:30 PM,preseason,HOU,OKC,Toyota Center (Houston),"Houston, TX",NBA TV,False
 401898406,2026-10-16,2026-10-16 19:00,7:00 PM,preseason,ORL,MIA,Kia Center,"Orlando, FL",,False
-401898407,2026-10-16,2026-10-16 19:00,7:00 PM,preseason,PHI,BOS,Xfinity Mobile Arena,"Philadelphia, PA",,False
+401898407,2026-10-16,2026-10-16 19:00,7:00 PM,preseason,PHI,BOS,Xfinity Mobile Arena,"Philadelphia, PA",NBA TV,False
 401908946,2026-10-16,2026-10-16 19:00,7:00 PM,preseason,DET,TOR,Little Caesars Arena,"Detroit, MI",,False
 401914126,2026-10-16,2026-10-16 19:00,7:00 PM,preseason,IND,MIL,Gainbridge Fieldhouse,"Indianapolis, IN",,False
 401898408,2026-10-16,2026-10-16 20:00,8:00 PM,preseason,DAL,ATL,American Airlines Center,"Dallas, TX",,False
