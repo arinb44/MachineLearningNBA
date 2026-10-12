@@ -8,7 +8,7 @@ game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast
 401914102,2026-10-05,2026-10-05 20:00,8:00 PM,preseason,MIL,MIN,Fiserv Forum,"Milwaukee, WI",,False
 401898716,2026-10-05,2026-10-05 22:00,10:00 PM,preseason,SAC,LAL,Golden 1 Center,"Sacramento, CA",NBA TV,False
 401901820,2026-10-06,2026-10-06 19:00,7:00 PM,preseason,CHA,BKN,Spectrum Center,"Charlotte, NC",NBA TV,False
-401898389,2026-10-06,2026-10-06 20:00,8:00 PM,preseason,OKC,NOP,BOK Center,"Tulsa, OK",,False
+401898389,2026-10-06,2026-10-06 20:00,8:00 PM,preseason,OKC,NOP,BOK Center,"Tulsa, OK",,True
 401914128,2026-10-06,2026-10-06 21:00,9:00 PM,preseason,UTA,DEN,Delta Center,"Salt Lake City, UT",,False
 401898390,2026-10-06,2026-10-06 22:00,10:00 PM,preseason,GSW,LAL,Chase Center,"San Francisco, CA",NBA TV,False
 401914123,2026-10-07,2026-10-07 19:00,7:00 PM,preseason,IND,MIN,Hilton Coliseum,"Ames, IA",NBA TV,True
@@ -21,7 +21,7 @@ game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast
 401901823,2026-10-08,2026-10-08 19:30,7:30 PM,preseason,BKN,PHI,Barclays Center,"Brooklyn, NY",,False
 401906508,2026-10-08,2026-10-08 19:30,7:30 PM,preseason,NYK,WAS,Madison Square Garden,"New York, NY",NBA TV / MNMT,False
 401898394,2026-10-08,2026-10-08 20:00,8:00 PM,preseason,SAS,ATL,Frost Bank Center,"San Antonio, TX",,False
-401898717,2026-10-08,2026-10-08 22:30,10:30 PM,preseason,LAL,SAC,crypto.com Arena,"Los Angeles, CA",ESPN2,False
+401898717,2026-10-08,2026-10-08 22:45,10:45 PM,preseason,LAL,SAC,crypto.com Arena,"Los Angeles, CA",ESPN2,False
 401898395,2026-10-09,2026-10-09 08:00,8:00 AM,preseason,DAL,HOU,Venetian Arena,,NBA TV,True
 401908940,2026-10-09,2026-10-09 20:00,8:00 PM,preseason,CHI,MEM,United Center,"Chicago, IL",NBA TV,False
 401902645,2026-10-10,2026-10-10 18:30,6:30 PM,preseason,TOR,LAC,Rogers Arena,"Vancouver, BC",,False
