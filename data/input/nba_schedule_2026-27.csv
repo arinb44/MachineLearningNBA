@@ -81,13 +81,13 @@ game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast
 401909842,2026-10-21,2026-10-21 22:30,10:30 PM,regular,LAC,SAC,Intuit Dome,"Inglewood, CA",,False
 401909093,2026-10-22,2026-10-22 19:00,7:00 PM,regular,PHI,CLE,Xfinity Mobile Arena,"Philadelphia, PA",ESPN,False
 401909094,2026-10-22,2026-10-22 21:30,9:30 PM,regular,OKC,DEN,Paycom Center,"Oklahoma City, OK",ESPN,False
+401909848,2026-10-23,2026-10-23 16:00,4:00 PM,regular,MIL,CHI,Fiserv Forum,"Milwaukee, WI",,False
 401909095,2026-10-23,2026-10-23 19:00,7:00 PM,regular,BOS,NYK,TD Garden,"Boston, MA",Prime Video,False
 401909843,2026-10-23,2026-10-23 19:00,7:00 PM,regular,CHA,ATL,Spectrum Center,"Charlotte, NC",,False
 401909844,2026-10-23,2026-10-23 19:00,7:00 PM,regular,IND,DAL,Gainbridge Fieldhouse,"Indianapolis, IN",,False
 401909845,2026-10-23,2026-10-23 19:00,7:00 PM,regular,ORL,MIN,Kia Center,"Orlando, FL",,False
 401909846,2026-10-23,2026-10-23 19:00,7:00 PM,regular,WAS,TOR,Capital One Arena,"Washington, DC",MNMT,False
 401909847,2026-10-23,2026-10-23 20:00,8:00 PM,regular,MIA,DET,Kaseya Center,"Miami, FL",,False
-401909848,2026-10-23,2026-10-23 20:00,8:00 PM,regular,MIL,CHI,Fiserv Forum,"Milwaukee, WI",,False
 401909096,2026-10-23,2026-10-23 21:30,9:30 PM,regular,SAS,HOU,Moody Center,"Austin, TX",Prime Video,False
 401909849,2026-10-23,2026-10-23 21:30,9:30 PM,regular,UTA,NOP,Delta Center,"Salt Lake City, UT",,False
 401909850,2026-10-23,2026-10-23 22:00,10:00 PM,regular,GSW,MEM,Chase Center,"San Francisco, CA",,False
@@ -96,9 +96,9 @@ game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast
 401909853,2026-10-24,2026-10-24 18:00,6:00 PM,regular,CHA,MIA,Spectrum Center,"Charlotte, NC",,False
 401909854,2026-10-24,2026-10-24 19:30,7:30 PM,regular,CLE,BKN,Rocket Arena,"Cleveland, OH",,False
 401909855,2026-10-24,2026-10-24 19:30,7:30 PM,regular,PHI,MIL,Xfinity Mobile Arena,"Philadelphia, PA",NBA TV,False
-401909856,2026-10-24,2026-10-24 20:00,8:00 PM,regular,ATL,HOU,State Farm Arena,"Atlanta, GA",,False
 401909857,2026-10-24,2026-10-24 20:00,8:00 PM,regular,CHI,WAS,United Center,"Chicago, IL",MNMT,False
 401909858,2026-10-24,2026-10-24 20:00,8:00 PM,regular,DAL,SAS,American Airlines Center,"Dallas, TX",,False
+401909856,2026-10-24,2026-10-24 20:30,8:30 PM,regular,ATL,HOU,State Farm Arena,"Atlanta, GA",,False
 401909859,2026-10-24,2026-10-24 21:00,9:00 PM,regular,DEN,NOP,Ball Arena,"Denver, CO",,False
 401909860,2026-10-24,2026-10-24 22:00,10:00 PM,regular,PHX,GSW,Mortgage Matchup Center,"Phoenix, AZ",NBA TV,False
 401909861,2026-10-25,2026-10-25 17:00,5:00 PM,regular,UTA,LAL,Delta Center,"Salt Lake City, UT",,False
