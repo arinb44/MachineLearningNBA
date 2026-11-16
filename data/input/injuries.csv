@@ -1,101 +1,106 @@
 team,player,status,detail
 ATL,Asa Newell,Out,Toe
 ATL,Henri Veesaar,Out,Knee
-ATL,Jock Landale,Out,Hip
-ATL,Keshon Gilbert,Out,Knee
+ATL,Jock Landale,Day-To-Day,Hip
+ATL,Kingston Flemings,Day-To-Day,Back
 ATL,Mouhamed Gueye,Out,Foot
-BKN,Egor Demin,Out,Leg
-BKN,Grant Nelson,Day-To-Day,Knee
-BKN,Mikel Brown Jr.,Day-To-Day,Rest
-CHA,Brandon Miller,Out,Groin
+BOS,Neemias Queta,Day-To-Day,Rest
 CHA,Dennis Schroder,Out,Hamstring
-CHA,Grant Williams,Out,Hamstring
 CHA,Kon Knueppel,Out,Hamstring
-CHA,Moussa Diabate,Day-To-Day,Quadriceps
-CHI,Norman Powell,Day-To-Day,Shoulder
-CHI,Zach Collins,Day-To-Day,Illness
-CLE,Jarrett Allen,Day-To-Day,Knee
-CLE,Jaylon Tyson,Out,Ankle
+CHI,Caleb Wilson,Out,Hand
+CHI,Jalen Smith,Day-To-Day,Finger
+CHI,Tobe Awaka,Out,Back
+CLE,Evan Mobley,Out,Toe
+CLE,Jaylon Tyson,Day-To-Day,Ankle
+CLE,Nae'Qwan Tomlin,Out,Back
+CLE,Peyton Watson,Day-To-Day,Abdomen
 CLE,Sam Merrill,Out,Elbow
 DAL,Dereck Lively II,Out,Foot
-DAL,Morez Johnson Jr.,Day-To-Day,Leg
+DAL,Kyrie Irving,Day-To-Day,Knee
+DAL,Max Christie,Day-To-Day,Ankle
+DAL,Santi Aldama,Day-To-Day,Ankle
 DAL,Sergio de Larrea,Out,Knee
 DAL,Tarik Biberovic,Out,Heel
-DEN,Aaron Gordon,Day-To-Day,Lower Body
-DEN,Cameron Johnson,Day-To-Day,Ankle
-DEN,Christian Braun,Day-To-Day,Calf
-DEN,DeMar DeRozan,Day-To-Day,Back
-DEN,Jamal Murray,Day-To-Day,Lower Leg
 DEN,Julian Strawther,Out,Knee
-DEN,Nikola Jokic,Day-To-Day,Elbow
+DET,Duncan Robinson,Day-To-Day,Thigh
 DET,Isaiah Joe,Out,Hip
 DET,Jalen Duren,Out,Hamstring
-GSW,Gary Payton II,Day-To-Day,Knee
-GSW,Gui Santos,Day-To-Day,Knee
+GSW,Brandon Williams,Out,Hamstring
+GSW,Gui Santos,Day-To-Day,Ankle
 GSW,Jimmy Butler III,Out,Knee
 GSW,Kristaps Porzingis,Out,Illness
 GSW,Moses Moody,Out,Knee
-GSW,Will Richard,Out,Thumb
+GSW,Stephen Curry,Out,Abdomen
+HOU,Amen Thompson,Day-To-Day,Knee
 HOU,Clint Capela,Out,Ankle
-HOU,Oscar Tshiebwe,Out,Illness
+HOU,Julian Phillips,Day-To-Day,Wrist
+HOU,Marcus Smart,Suspension,Suspension
 HOU,Steven Adams,Out,Calf
+IND,Andrew Nembhard,Day-To-Day,Hip
 IND,Ben Sheppard,Out,Knee
 IND,Johnny Furphy,Out,Knee
-IND,T.J. McConnell,Day-To-Day,Hamstring
 IND,Tyrese Haliburton,Out,Hamstring
 LAC,Bradley Beal,Out,Knee
 LAC,Brandon Ingram,Out,Achilles
-LAC,Isaiah Jackson,Day-To-Day,Groin
 LAC,Jordan Miller,Out,Shoulder
 LAC,Yanic Konan Niederhauser,Out,Foot
-LAL,Austin Reaves,Day-To-Day,Illness
-LAL,Quentin Grimes,Out,Finger
-MEM,Isaiah Stewart,Out,Knee
+LAL,Austin Reaves,Day-To-Day,Heel
+MEM,GG Jackson,Out,Foot
+MEM,Isaiah Stewart,Out,Illness
+MEM,Quinten Post,Out,Concussion
 MEM,Richie Saunders,Out,Knee
 MEM,Scotty Pippen Jr.,Out,Back
-MIL,Gary Trent Jr.,Day-To-Day,Illness
+MEM,Ty Jerome,Out,Hip
+MEM,Zach Edey,Day-To-Day,Ankle
+MIA,Nikola Jovic,Day-To-Day,Illness
+MIA,Pelle Larsson,Day-To-Day,Illness
+MIL,Ousmane Dieng,Out,Finger
+MIL,Ryan Rollins,Day-To-Day,Illness
 MIN,Anthony Edwards,Out,Knee
 MIN,Donte DiVincenzo,Out,Achilles
-NOP,Yves Missi,Out,Knee
-NYK,Josh Hart,Day-To-Day,Ankle
+MIN,Jaylen Clark,Out,Hamstring
+NOP,Bennedict Mathurin,Out,Foot
+NOP,Bryce McGowens,Out,Elbow
+NOP,Dejounte Murray,Out,Ankle
+NOP,Trendon Watford,Out,Ankle
+NOP,Trey Murphy III,Out,Knee
 OKC,Cason Wallace,Out,Shoulder
 OKC,Chet Holmgren,Out,Knee
 OKC,Jalen Williams,Out,Leg
 OKC,Jaylin Williams,Out,Back
 OKC,Thomas Sorber,Out,Knee
-ORL,Desmond Bane,Day-To-Day,Illness
 ORL,Izaiyah Nelson,Out,Ankle
-ORL,Jalen Suggs,Out,Knee
 ORL,Jonathan Isaac,Out,Knee
 ORL,Noah Penda,Out,Hamstring
 ORL,Paolo Banchero,Out,Ankle
-PHI,Adem Bona,Day-To-Day,Back
+PHI,Adem Bona,Out,Back
 PHI,Ariel Hukporti,Out,Achilles
 PHI,Dominick Barlow,Out,Back
-PHX,Jordan Goodwin,Out,Calf
+PHI,Joel Embiid,Day-To-Day,Foot
+PHI,LeBron James,Out,Back
 PHX,Mark Williams,Out,Shoulder
+POR,Chris Youngblood,Out,Foot
 POR,Ja Morant,Out,Hamstring
-POR,Robert Williams III,Day-To-Day,Rest
 POR,Shaedon Sharpe,Out,Knee
 POR,Vit Krejci,Out,Ankle
 SAC,Ben Simmons,Out,Achilles
-SAC,Domantas Sabonis,Day-To-Day,Knee
+SAC,De'Andre Hunter,Day-To-Day,Hip
 SAC,Maxime Raynaud,Out,Knee
-SAS,Devin Vassell,Out,Groin
+SAC,Precious Achiuwa,Day-To-Day,Ankle
+SAC,Zach LaVine,Day-To-Day,Illness
+SAS,De'Aaron Fox,Day-To-Day,Hip
 SAS,Jayden Quaintance,Out,Knee
 SAS,Tobias Harris,Out,Calf
-TOR,Collin Murray-Boyles,Day-To-Day,Illness
-TOR,Immanuel Quickley,Day-To-Day,Hamstring
 TOR,Kawhi Leonard,Out,Knee
+TOR,Kevin McCullar Jr.,Day-To-Day,Illness
 TOR,Nate Bittle,Out,Foot
-TOR,Scottie Barnes,Day-To-Day,Groin
 UTA,Jaren Jackson Jr.,Out,Knee
+UTA,Jaxson Hayes,Day-To-Day,Knee
 UTA,Jusuf Nurkic,Out,Foot
-UTA,Keyonte George,Day-To-Day,Ankle
-UTA,Lauri Markkanen,Day-To-Day,Wrist
-WAS,Anthony Davis,Day-To-Day,Ankle
-WAS,Bilal Coulibaly,Day-To-Day,Hand
+UTA,Lauri Markkanen,Out,Hand
+UTA,Trey Alexander,Out,Ankle
 WAS,Jamir Watkins,Out,Knee
 WAS,Justin Champagnie,Out,Foot
 WAS,Reece Beekman,Out,Shoulder
+WAS,Tre Johnson,Day-To-Day,Back
 WAS,Tristan Vukcevic,Out,Hip

@@ -283,8 +283,8 @@ game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast
 401910012,2026-11-18,2026-11-18 19:30,7:30 PM,regular,TOR,WAS,Scotiabank Arena,"Toronto, ON",MNMT,False
 401910013,2026-11-18,2026-11-18 20:00,8:00 PM,regular,NOP,DET,Smoothie King Center,"New Orleans, LA",GCSEN / Pelicans.com,False
 401910014,2026-11-18,2026-11-18 20:00,8:00 PM,regular,OKC,ATL,Paycom Center,"Oklahoma City, OK",KSBI / Thunder App,False
-401910015,2026-11-18,2026-11-18 21:00,9:00 PM,regular,DEN,BOS,Ball Arena,"Denver, CO",,False
-401910016,2026-11-18,2026-11-18 21:30,9:30 PM,regular,DAL,GSW,American Airlines Center,"Dallas, TX",ESPN / KFAA-TV / MavsTV,False
+401910016,2026-11-18,2026-11-18 20:00,8:00 PM,regular,DAL,GSW,American Airlines Center,"Dallas, TX",KFAA-TV / MavsTV,False
+401910015,2026-11-18,2026-11-18 21:30,9:30 PM,regular,DEN,BOS,Ball Arena,"Denver, CO",ESPN,False
 401910017,2026-11-18,2026-11-18 22:00,10:00 PM,regular,LAL,UTA,crypto.com Arena,"Los Angeles, CA",Spectrum Sports Net / Spectrum Sports Net + / KJZZ-TV / Jazz+,False
 401910018,2026-11-18,2026-11-18 22:00,10:00 PM,regular,SAC,PHX,Golden 1 Center,"Sacramento, CA",Suns Live / Arizona's Family 3TV,False
 401910019,2026-11-19,2026-11-19 20:00,8:00 PM,regular,MEM,GSW,FedExForum,"Memphis, TN",DAZN MEM,False
@@ -573,7 +573,7 @@ game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast
 401910265,2027-01-05,2027-01-05 19:00,7:00 PM,regular,CHA,ATL,Spectrum Center,"Charlotte, NC",DAZN CHA,False
 401910266,2027-01-05,2027-01-05 19:00,7:00 PM,regular,CLE,TOR,Rocket Arena,"Cleveland, OH",DAZN CLE,False
 401910267,2027-01-05,2027-01-05 19:00,7:00 PM,regular,ORL,LAC,Kia Center,"Orlando, FL",ClipperVision,False
-401910268,2027-01-05,2027-01-05 19:00,7:00 PM,regular,WAS,LAL,Capital One Arena,"Washington, DC",Spectrum Sports Net / Spectrum Sports Net +,False
+401910268,2027-01-05,2027-01-05 19:00,7:00 PM,regular,WAS,LAL,Capital One Arena,"Washington, DC",Spectrum Sports Net / Spectrum Sports Net + / MNMT,False
 401910269,2027-01-05,2027-01-05 19:30,7:30 PM,regular,MIA,MEM,Kaseya Center,"Miami, FL",DAZN MEM,False
 401910270,2027-01-05,2027-01-05 20:00,8:00 PM,regular,CHI,MIL,United Center,"Chicago, IL",MyMi / Bucks App,False
 401910271,2027-01-05,2027-01-05 20:00,8:00 PM,regular,HOU,MIN,Toyota Center (Houston),"Houston, TX",NBC / DAZN MIN,False
@@ -587,7 +587,7 @@ game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast
 401910279,2027-01-07,2027-01-07 19:00,7:00 PM,regular,ATL,IND,State Farm Arena,"Atlanta, GA",DAZN IND,False
 401910280,2027-01-07,2027-01-07 19:00,7:00 PM,regular,CHA,DEN,Spectrum Center,"Charlotte, NC",DAZN CHA,False
 401910281,2027-01-07,2027-01-07 19:00,7:00 PM,regular,ORL,CLE,Kia Center,"Orlando, FL",DAZN CLE,False
-401910282,2027-01-07,2027-01-07 19:00,7:00 PM,regular,WAS,OKC,Capital One Arena,"Washington, DC",KSBI / Thunder App,False
+401910282,2027-01-07,2027-01-07 19:00,7:00 PM,regular,WAS,OKC,Capital One Arena,"Washington, DC",KSBI / Thunder App / MNMT,False
 401910283,2027-01-07,2027-01-07 19:30,7:30 PM,regular,BKN,MIA,Barclays Center,"Brooklyn, NY",DAZN (YES),False
 401910284,2027-01-07,2027-01-07 19:30,7:30 PM,regular,TOR,MIN,Scotiabank Arena,"Toronto, ON",Prime Video,False
 401910285,2027-01-07,2027-01-07 20:00,8:00 PM,regular,DAL,POR,American Airlines Center,"Dallas, TX",BlazerVision / KFAA-TV / MavsTV,False
@@ -597,7 +597,7 @@ game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast
 401910289,2027-01-07,2027-01-07 22:00,10:00 PM,regular,LAL,BOS,crypto.com Arena,"Los Angeles, CA",Prime Video / Spectrum Sports Net / Spectrum Sports Net +,False
 401910290,2027-01-07,2027-01-07 22:00,10:00 PM,regular,SAC,CHI,Golden 1 Center,"Sacramento, CA",,False
 401910291,2027-01-08,2027-01-08 19:00,7:00 PM,regular,PHI,MIA,Xfinity Mobile Arena,"Philadelphia, PA",ESPN,False
-401910292,2027-01-08,2027-01-08 19:00,7:00 PM,regular,WAS,MIN,Capital One Arena,"Washington, DC",DAZN MIN,False
+401910292,2027-01-08,2027-01-08 19:00,7:00 PM,regular,WAS,MIN,Capital One Arena,"Washington, DC",DAZN MIN / MNMT,False
 401910293,2027-01-08,2027-01-08 19:30,7:30 PM,regular,TOR,UTA,Scotiabank Arena,"Toronto, ON",KJZZ-TV / Jazz+,False
 401910294,2027-01-08,2027-01-08 20:00,8:00 PM,regular,NOP,ORL,Smoothie King Center,"New Orleans, LA",GCSEN / Pelicans.com,False
 401910295,2027-01-08,2027-01-08 20:00,8:00 PM,regular,SAS,MEM,Frost Bank Center,"San Antonio, TX",DAZN SAS / DAZN MEM,False
@@ -619,7 +619,7 @@ game_id,date,tip_et,time_et,season_type,home_team,away_team,venue,city,broadcast
 401910311,2027-01-10,2027-01-10 19:00,7:00 PM,regular,PHX,CHI,Mortgage Matchup Center,"Phoenix, AZ",Suns Live / Arizona's Family 3TV,False
 401910312,2027-01-10,2027-01-10 21:00,9:00 PM,regular,SAC,CHA,Golden 1 Center,"Sacramento, CA",DAZN CHA,False
 401910313,2027-01-11,2027-01-11 19:00,7:00 PM,regular,IND,BKN,Gainbridge Fieldhouse,"Indianapolis, IN",DAZN (YES) / DAZN IND,False
-401910314,2027-01-11,2027-01-11 19:00,7:00 PM,regular,WAS,ATL,Capital One Arena,"Washington, DC",,False
+401910314,2027-01-11,2027-01-11 19:00,7:00 PM,regular,WAS,ATL,Capital One Arena,"Washington, DC",MNMT,False
 401910315,2027-01-11,2027-01-11 19:30,7:30 PM,regular,BOS,HOU,TD Garden,"Boston, MA",,False
 401910316,2027-01-11,2027-01-11 19:30,7:30 PM,regular,NYK,DEN,Madison Square Garden,"New York, NY",NBCSN,False
 401910317,2027-01-11,2027-01-11 20:00,8:00 PM,regular,MIN,CLE,Target Center,"Minneapolis, MN",DAZN MIN / DAZN CLE / NBCSN,False
