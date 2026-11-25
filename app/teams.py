@@ -6,13 +6,13 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from app.common import (INK, INK_MUTED, NEUTRAL, add_logo, load_player_pool,
+from app.common import (ACCENT, BG, INK, INK_MUTED, NEUTRAL, RED, add_logo, load_player_pool,
                         section, show, style_fig, team, team_game_log,
                         team_label, team_summary)
 from app.components import team_header
 
-HOME_COLOR = '#f58426'
-ROAD_COLOR = '#5b9cf5'
+HOME_COLOR = ACCENT
+ROAD_COLOR = '#d9cfbf'
 
 st.title('Teams')
 st.caption('How all 30 teams stack up this season, from every game result so far.')
@@ -48,7 +48,8 @@ baseline = 0 if col in ('margin', 'last10_margin') else ranked[col].min() * 0.97
 span = ranked[col].max() - min(baseline, ranked[col].min())
 fig = go.Figure(go.Bar(
     x=ranked[col] - baseline, base=baseline, y=ranked['team'], orientation='h',
-    marker=dict(color=[team(t)['accent'] for t in ranked['team']], opacity=0.9,
+    # Margins read blue above even and red below; other metrics are all blue
+    marker=dict(color=[RED if v < 0 else ACCENT for v in ranked[col]],
                 cornerradius=4),
     customdata=ranked[['name', 'wins', 'losses']],
     text=[fmt.format(v) for v in ranked[col]], textposition='outside',
@@ -91,7 +92,7 @@ fig.add_vline(x=x_avg, line=avg_line)
 fig.add_hline(y=y_avg, line=avg_line)
 x_lo, x_hi = summary['pts_for'].min() - x_pad, summary['pts_for'].max() + x_pad
 y_lo, y_hi = summary['pts_against'].min() - y_pad, summary['pts_against'].max() + y_pad
-corner = dict(showarrow=False, font=dict(color=INK_MUTED, size=11, family="'Barlow Condensed'"))
+corner = dict(showarrow=False, font=dict(color=INK_MUTED, size=11, family="'Archivo'"))
 fig.add_annotation(x=x_hi, y=y_lo, text='GOOD OFFENSE · GOOD DEFENSE', xanchor='right', yanchor='top', **corner)
 fig.add_annotation(x=x_lo, y=y_hi, text='POOR OFFENSE · POOR DEFENSE', xanchor='left', yanchor='bottom', **corner)
 fig.update_xaxes(title='Points scored per game', range=[x_lo, x_hi])
@@ -144,7 +145,7 @@ for row in hr.itertuples():
 for label, col, color in (('Road', 'road_margin', ROAD_COLOR), ('Home', 'home_margin', HOME_COLOR)):
     fig.add_trace(go.Scatter(
         x=hr[col], y=hr['team'], mode='markers', name=label,
-        marker=dict(size=10, color=color, line=dict(color='#09090b', width=2)),
+        marker=dict(size=10, color=color, line=dict(color=BG, width=2)),
         customdata=hr[['name', 'gap']],
         hovertemplate='<b>%{customdata[0]}</b><br>' + label +
                       ' margin %{x:+.1f}<br>Home edge %{customdata[1]:+.1f}<extra></extra>',
@@ -177,7 +178,7 @@ c4.metric('Last 10 margin', f"{row.last10_margin:+.1f}")
 g = log[log['team'] == abbr]
 fig = go.Figure(go.Bar(
     x=g['date'], y=g['margin'],
-    marker=dict(color=[team(abbr)['accent'] if w else NEUTRAL for w in g['won']],
+    marker=dict(color=[ACCENT if w else RED for w in g['won']],
                 cornerradius=2),
     customdata=g[['opponent', 'pts_for', 'pts_against']].assign(
         venue=g['is_home'].map({True: 'vs', False: '@'})),
@@ -186,7 +187,7 @@ fig = go.Figure(go.Bar(
 ))
 fig.update_xaxes(showgrid=False)
 fig.update_yaxes(title='Point margin')
-style_fig(fig, height=300, title='Game by game (wins in team color, losses in gray)')
+style_fig(fig, height=300, title='Game by game (wins in blue, losses in red)')
 fig.update_layout(bargap=0.15)
 show(fig)
 
@@ -198,7 +199,7 @@ if not roster.empty:
     roster = roster.iloc[::-1]
     fig = go.Figure(go.Bar(
         x=roster['PTS'], y=roster['PLAYER_NAME'], orientation='h',
-        marker=dict(color=team(abbr)['accent'], cornerradius=4),
+        marker=dict(color=ACCENT, cornerradius=4),
         text=roster['PTS'].map('{:.1f}'.format), textposition='outside',
         textfont=dict(color=INK), cliponaxis=False,
         customdata=roster[['REB', 'AST', 'GP', 'MIN', 'STATS_TEAM']],

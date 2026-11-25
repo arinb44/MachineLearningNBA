@@ -6,12 +6,12 @@ import streamlit as st
 
 import fetch_rosters
 import player_pool
-from app.common import (INK, INK_MUTED, NEUTRAL, SURFACE, add_logo,
+from app.common import (ACCENT, INK, INK_MUTED, NEUTRAL, SURFACE, add_logo,
                         clear_roster_caches, load_player_pool, section, show, style_fig,
                         team, team_label)
 from app.components import player_header
 
-COMPARE_COLOR = '#a1a1aa'
+COMPARE_COLOR = '#d9cfbf'
 
 STATS = {
     'Points': ('PTS', '{:.1f}'),
@@ -133,7 +133,7 @@ lo = min(0, leaders[col].min())
 hi = leaders[col].max()
 fig = go.Figure(go.Bar(
     x=leaders[col], y=leaders['PLAYER_NAME'], orientation='h',
-    marker=dict(color=[team(t)['accent'] for t in leaders['TEAM_ABBREVIATION']],
+    marker=dict(color=ACCENT,
                 opacity=0.9, cornerradius=4),
     text=[fmt.format(v) for v in leaders[col]], textposition='outside',
     textfont=dict(color=INK, size=12), cliponaxis=False,
@@ -177,7 +177,7 @@ fig = go.Figure()
 rest = scorers[~highlighted]
 fig.add_trace(go.Scatter(
     x=rest['USG_PCT'], y=rest['TS_PCT'], mode='markers', name='Other players',
-    marker=dict(size=9, color=NEUTRAL if highlighted.any() else '#a1a1aa',
+    marker=dict(size=9, color=NEUTRAL if highlighted.any() else '#b0a596',
                 opacity=0.45 if highlighted.any() else 0.8,
                 line=dict(color=SURFACE, width=1)),
     customdata=rest[cols], hovertemplate=hover, showlegend=bool(highlighted.any()),

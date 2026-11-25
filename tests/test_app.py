@@ -10,7 +10,8 @@ from streamlit.testing.v1 import AppTest
 APP = os.path.join(os.path.dirname(__file__), '..', 'streamlit_app.py')
 
 
-@pytest.mark.parametrize('page', ['app/predictions.py', 'app/teams.py', 'app/players.py'])
+@pytest.mark.parametrize('page', ['app/home.py', 'app/predictions.py', 'app/teams.py',
+                                  'app/players.py', 'app/about.py'])
 def test_page_runs(page):
     at = AppTest.from_file(APP, default_timeout=60)
     at.run()
@@ -21,6 +22,7 @@ def test_page_runs(page):
 def test_slate_filters_to_one_team():
     at = AppTest.from_file(APP, default_timeout=60)
     at.run()
+    at.switch_page('app/predictions.py').run()
     team_box = next(box for box in at.selectbox if box.label == 'Team')
     team_box.select('BOS').run()
     assert not at.exception, [e.value for e in at.exception]

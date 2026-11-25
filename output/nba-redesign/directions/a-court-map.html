@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction A · Court map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:wght@600;800;900&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#17130f; --surface:#201a15; --line:#3a3029; --line-soft:#2a231d;
+  --text:#f1e8da; --muted:#b3a593; --faint:#8c7f6f;
+  --accent:#e8823a; --accent-ink:#1a0f06;
+  --display:'Big Shoulders',sans-serif; --body:'Public Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);color:var(--text);font:400 16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+body{margin:0}
+::selection{background:var(--accent);color:var(--accent-ink)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+
+/* mockup chrome, not part of the design */
+.mock-bar{background:#000;color:#9a9a9a;font:500 12px/1 system-ui;padding:10px 16px;display:flex;gap:16px;justify-content:space-between;position:sticky;top:0;z-index:50}
+.mock-bar a{color:#ddd}
+.mock-divider{margin:96px 0 0;background:#000;color:#9a9a9a;font:500 12px/1 system-ui;padding:12px 16px;text-align:center}
+
+/* header */
+header{border-bottom:1px solid var(--line-soft)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{white-space:nowrap;font:900 22px/1 var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand svg{width:22px;height:22px}
+nav{display:flex;gap:28px}
+nav a{font:800 15px/1 var(--display);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent}
+nav a:hover{color:var(--text)}
+nav a[aria-current]{color:var(--text);border-color:var(--accent)}
+
+/* home */
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center;padding:64px 0 32px}
+h1{font:900 clamp(44px,6vw,84px)/.92 var(--display);text-transform:uppercase;letter-spacing:-.01em;margin:0 0 20px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{color:var(--muted);font-size:18px;max-width:46ch;margin:0 0 32px}
+.drives{border-top:1px solid var(--line);padding-top:18px;max-width:46ch}
+.drives h2{font:800 15px/1 var(--display);text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin:0 0 10px}
+.drives p{margin:0;color:var(--text)}
+.drives p span{color:var(--muted)}
+.court-wrap{position:relative}
+.court-cap{font:800 14px/1 var(--display);text-transform:uppercase;letter-spacing:.12em;color:var(--faint);margin:0 0 14px}
+.court{width:100%;height:auto;display:block}
+.court .ln{fill:none;stroke:#5a4a3c;stroke-width:2}
+.court .paint{fill:#231c16}
+.spot{cursor:pointer}
+.spot circle.dot{fill:var(--bg);stroke:var(--accent);stroke-width:3;transition:r .25s cubic-bezier(.2,.8,.2,1),fill .25s}
+.spot text{fill:var(--text);font:800 19px var(--display);text-transform:uppercase;letter-spacing:.05em}
+.spot text.where{fill:var(--muted);font:600 12px var(--body);text-transform:none;letter-spacing:0}
+.spot:hover circle.dot,.spot:focus-visible circle.dot{fill:var(--accent);r:13}
+.spot:focus-visible{outline:none}
+.tonight{margin:56px 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr)}
+.tonight a{padding:22px 24px 22px 0;text-decoration:none;display:block}
+.tonight a+a{padding-left:24px;border-left:1px solid var(--line-soft)}
+.tonight .t{font:600 13px/1 var(--body);color:var(--faint);margin-bottom:10px}
+.tonight .m{font:800 26px/1 var(--display);text-transform:uppercase}
+.tonight .p{color:var(--muted);margin-top:6px}
+.tonight .p b{color:var(--accent);font-weight:700}
+.section-label{font:800 15px/1 var(--display);text-transform:uppercase;letter-spacing:.12em;color:var(--faint);margin:64px 0 0}
+
+/* predictions */
+.page-head{display:flex;justify-content:space-between;align-items:end;gap:24px;padding:56px 0 28px;border-bottom:1px solid var(--line)}
+.page-head h1{margin:0;font-size:clamp(40px,5vw,64px)}
+.page-head p{color:var(--muted);margin:10px 0 0;max-width:56ch}
+.daynav{display:flex;align-items:center;gap:6px}
+.daynav button{background:var(--surface);color:var(--text);border:1px solid var(--line);height:40px;padding:0 14px;font:600 14px var(--body);border-radius:6px;cursor:pointer}
+.daynav button:hover{border-color:var(--muted)}
+.daynav .d{font:800 20px/1 var(--display);text-transform:uppercase;padding:0 12px;white-space:nowrap}
+.slate{list-style:none;margin:0;padding:0}
+.game{display:grid;grid-template-columns:90px 1fr 1fr 220px;gap:24px;align-items:center;padding:24px 0;border-bottom:1px solid var(--line-soft)}
+.game .tip{font:800 20px/1 var(--display)}
+.game .tip small{display:block;font:500 12px/1.4 var(--body);color:var(--faint);margin-top:6px}
+.team{display:flex;align-items:center;gap:14px}
+.team img{width:44px;height:44px;object-fit:contain}
+.team .nm{font:800 24px/1 var(--display);text-transform:uppercase}
+.team .ct{font:500 13px/1.3 var(--body);color:var(--faint)}
+.team.home{justify-content:flex-start}
+.team .at{font:800 16px var(--display);color:var(--faint);margin-right:4px}
+.odds .bar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--line-soft)}
+.odds .bar i{display:block;height:100%}
+.odds .lbl{display:flex;justify-content:space-between;font:600 14px var(--body);margin-top:8px;color:var(--muted)}
+.odds .lbl b{color:var(--text);font-weight:700}
+.odds .pick{font:800 18px/1 var(--display);text-transform:uppercase;margin-bottom:10px}
+.odds .pick span{color:var(--accent)}
+.flag{display:inline-block;font:600 12px/1 var(--body);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 9px;margin-top:10px}
+
+.detail{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;margin-top:64px}
+.detail h2{font:900 34px/1 var(--display);text-transform:uppercase;margin:0 0 6px}
+.detail .sub{color:var(--muted);margin:0 0 28px}
+.big{display:flex;align-items:baseline;gap:18px;margin-bottom:12px}
+.big .pct{font:900 112px/.85 var(--display);color:var(--text)}
+.big .who{font:800 24px/1.1 var(--display);text-transform:uppercase;color:var(--muted)}
+.big .who b{color:var(--accent);font-weight:800;display:block}
+.wpb{height:14px;border-radius:7px;display:flex;overflow:hidden;margin:18px 0 10px}
+.wpb i{display:block;height:100%}
+.wpb-l{display:flex;justify-content:space-between;font:600 13px var(--body);color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:28px}
+.facts div{padding:16px 0}
+.facts div+div{padding-left:18px;border-left:1px solid var(--line-soft)}
+.facts dt{font:600 13px var(--body);color:var(--faint)}
+.facts dd{margin:4px 0 0;font:800 30px/1 var(--display)}
+.tape{width:100%;border-collapse:collapse}
+.tape caption{text-align:left;font:800 15px/1 var(--display);text-transform:uppercase;letter-spacing:.1em;color:var(--faint);padding-bottom:14px}
+.tape th,.tape td{padding:11px 0;border-bottom:1px solid var(--line-soft)}
+.tape th{font:600 13px var(--body);color:var(--muted);text-align:center;font-weight:500}
+.tape td{font:700 17px var(--body);width:30%}
+.tape td:first-child{text-align:left}.tape td:last-child{text-align:right}
+.tape td.win{color:var(--accent)}
+.tape thead th{font:800 18px var(--display);color:var(--text);text-transform:uppercase}
+.tape thead th:first-child{text-align:left}.tape thead th:last-child{text-align:right}
+.note{margin-top:20px;color:var(--faint);font-size:13px}
+
+@media (max-width:900px){
+  .hero,.detail{grid-template-columns:1fr;gap:40px}
+  .game{grid-template-columns:70px 1fr;row-gap:16px}
+  .game .odds{grid-column:1/-1}
+  .tonight{grid-template-columns:1fr}
+  .tonight a+a{padding-left:0;border-left:0;border-top:1px solid var(--line-soft)}
+}
+@media (max-width:600px){
+  .wrap{padding:0 20px}
+  nav{display:none}
+  .page-head{flex-direction:column;align-items:flex-start}
+  .game{grid-template-columns:1fr}
+  .big .pct{font-size:84px}
+  .facts{grid-template-columns:1fr 1fr}
+  .facts div:nth-child(3){grid-column:1/-1;padding-left:0;border-left:0;border-top:1px solid var(--line-soft)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="mock-bar"><span>Direction A · Court map · sample numbers for layout only</span><span><a href="#home">Home</a> · <a href="#predictions">Predictions</a></span></div>
+
+<!-- ================= HOME ================= -->
+<header id="home"><div class="wrap">
+  <a class="brand" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2v20M5 5c3 3 3 11 0 14M19 5c-3 3-3 11 0 14"/></svg>The Tip Off</a>
+  <nav aria-label="Main"><a href="#predictions">Predictions</a><a href="#">Players</a><a href="#">Teams</a><a href="#">Model</a><a href="#">About</a></nav>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <h1>Win probabilities for <em>every</em> NBA game</h1>
+      <p class="lede">Pick two teams and a date. You get a predicted margin and a calibrated probability built from each team's form before tip-off. A coin flip reads as a coin flip.</p>
+      <div class="drives">
+        <h2>What drives the number</h2>
+        <p>Average margin, last-ten form and home/road splits, <span>adjusted for injuries by each player's minutes and PIE.</span></p>
+      </div>
+    </div>
+    <div class="court-wrap">
+      <p class="court-cap">Every section is a spot on the floor</p>
+      <svg class="court" viewBox="0 0 500 470" role="navigation" aria-label="Site sections on a half court">
+        <rect class="paint" x="170" y="0" width="160" height="190"/>
+        <path class="ln" d="M1 1H499V469H1Z"/>
+        <path class="ln" d="M170 0V190H330V0"/>
+        <circle class="ln" cx="250" cy="190" r="60"/>
+        <path class="ln" d="M30 0V140A237.5 237.5 0 0 0 470 140V0"/>
+        <path class="ln" d="M210 52.5A40 40 0 0 0 290 52.5"/>
+        <path class="ln" d="M220 40H280" stroke-width="3"/>
+        <circle class="ln" cx="250" cy="52.5" r="7.5"/>
+        <path class="ln" d="M190 470A60 60 0 0 1 310 470"/>
+        <a class="spot" href="#predictions" tabindex="0"><circle class="dot" cx="250" cy="130" r="9"/><text x="250" y="108" text-anchor="middle">Predictions</text><text class="where" x="250" y="160" text-anchor="middle">The paint</text></a>
+        <a class="spot" href="#"><circle class="dot" cx="170" cy="190" r="9"/><text x="150" y="196" text-anchor="end">Matchups</text><text class="where" x="150" y="214" text-anchor="end">Left elbow</text></a>
+        <a class="spot" href="#"><circle class="dot" cx="430" cy="250" r="9"/><text x="430" y="285" text-anchor="middle">Teams</text><text class="where" x="430" y="302" text-anchor="middle">Right wing</text></a>
+        <a class="spot" href="#"><circle class="dot" cx="60" cy="70" r="9"/><text x="60" y="105" text-anchor="middle">Players</text><text class="where" x="60" y="122" text-anchor="middle">Left corner</text></a>
+        <a class="spot" href="#"><circle class="dot" cx="250" cy="330" r="9"/><text x="250" y="365" text-anchor="middle">Model</text><text class="where" x="250" y="382" text-anchor="middle">Top of the key</text></a>
+        <a class="spot" href="#"><circle class="dot" cx="440" cy="70" r="9"/><text x="440" y="105" text-anchor="middle">Data</text><text class="where" x="440" y="122" text-anchor="middle">Right corner</text></a>
+      </svg>
+    </div>
+  </section>
+
+  <p class="section-label">Tonight · Tuesday, Nov 24</p>
+  <div class="tonight">
+    <a href="#predictions"><div class="t num">7:00 PM ET</div><div class="m">Pistons at Magic</div><div class="p">Magic <b class="num">61%</b> · by 3.1</div></a>
+    <a href="#predictions"><div class="t num">8:00 PM ET · NBC</div><div class="m">Celtics at Wizards</div><div class="p">Celtics <b class="num">81%</b> · by 9.4</div></a>
+    <a href="#predictions"><div class="t num">10:00 PM ET · NBCSN</div><div class="m">Mavericks at Nuggets</div><div class="p">Nuggets <b class="num">68%</b> · by 5.2</div></a>
+  </div>
+</main>
+
+<div class="mock-divider" id="predictions">Predictions page</div>
+
+<!-- ================= PREDICTIONS ================= -->
+<header><div class="wrap">
+  <a class="brand" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2v20M5 5c3 3 3 11 0 14M19 5c-3 3-3 11 0 14"/></svg>The Tip Off</a>
+  <nav aria-label="Main"><a href="#predictions" aria-current="page">Predictions</a><a href="#">Players</a><a href="#">Teams</a><a href="#">Model</a><a href="#">About</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="page-head">
+    <div><h1>Predictions</h1><p>Predicted margin and calibrated win probability from point-in-time team form.</p></div>
+    <div class="daynav"><button aria-label="Previous game day">‹ Prev</button><span class="d">Tue, Nov 24</span><button aria-label="Next game day">Next ›</button></div>
+  </div>
+
+  <ol class="slate">
+    <li class="game">
+      <div class="tip num">7:00<small>PM ET · Kia Center</small></div>
+      <div class="team"><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/DET.png" alt=""><div><div class="nm">Pistons</div><div class="ct">Detroit · away</div></div></div>
+      <div class="team home"><span class="at">@</span><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/ORL.png" alt=""><div><div class="nm">Magic</div><div class="ct">Orlando · home</div></div></div>
+      <div class="odds"><div class="pick"><span>Magic</span> by 3.1</div><div class="bar" role="img" aria-label="Pistons 39 percent, Magic 61 percent"><i style="width:39%;background:#C8102E"></i><i style="width:61%;background:#0077C0"></i></div><div class="lbl num"><span>39%</span><b>61%</b></div><span class="flag">Close to a coin flip</span></div>
+    </li>
+    <li class="game">
+      <div class="tip num">8:00<small>PM ET · NBC</small></div>
+      <div class="team"><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/BOS.png" alt=""><div><div class="nm">Celtics</div><div class="ct">Boston · away</div></div></div>
+      <div class="team home"><span class="at">@</span><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/WAS.png" alt=""><div><div class="nm">Wizards</div><div class="ct">Washington · home</div></div></div>
+      <div class="odds"><div class="pick"><span>Celtics</span> by 9.4</div><div class="bar" role="img" aria-label="Celtics 81 percent, Wizards 19 percent"><i style="width:81%;background:#007A33"></i><i style="width:19%;background:#E31837"></i></div><div class="lbl num"><b>81%</b><span>19%</span></div></div>
+    </li>
+    <li class="game">
+      <div class="tip num">10:00<small>PM ET · NBCSN</small></div>
+      <div class="team"><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/DAL.png" alt=""><div><div class="nm">Mavericks</div><div class="ct">Dallas · away</div></div></div>
+      <div class="team home"><span class="at">@</span><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/DEN.png" alt=""><div><div class="nm">Nuggets</div><div class="ct">Denver · home</div></div></div>
+      <div class="odds"><div class="pick"><span>Nuggets</span> by 5.2</div><div class="bar" role="img" aria-label="Mavericks 32 percent, Nuggets 68 percent"><i style="width:32%;background:#00538C"></i><i style="width:68%;background:#FEC524"></i></div><div class="lbl num"><span>32%</span><b>68%</b></div><span class="flag">Injury adjustment −1.4 pts</span></div>
+    </li>
+  </ol>
+
+  <section class="detail">
+    <div>
+      <h2>Celtics at Wizards</h2>
+      <p class="sub">Tue, Nov 24 · 8:00 PM ET · Capital One Arena</p>
+      <div class="big"><span class="pct num">81%</span><span class="who"><b>Celtics</b>win probability</span></div>
+      <div class="wpb" role="img" aria-label="Celtics 81 percent, Wizards 19 percent"><i style="width:81%;background:#007A33"></i><i style="width:19%;background:#E31837"></i></div>
+      <div class="wpb-l"><span>Celtics</span><span>Wizards</span></div>
+      <dl class="facts">
+        <div><dt>Predicted margin</dt><dd class="num">9.4 pts</dd></div>
+        <div><dt>Injury adjustment</dt><dd>None</dd></div>
+        <div><dt>Rest</dt><dd class="num">1 v 2 days</dd></div>
+      </dl>
+    </div>
+    <table class="tape">
+      <caption>Tale of the tape</caption>
+      <thead><tr><th>BOS</th><th></th><th>WAS</th></tr></thead>
+      <tbody class="num">
+        <tr><td class="win">+7.8</td><th>Avg margin</th><td>−6.1</td></tr>
+        <tr><td class="win">+5.2</td><th>Last 10 margin</th><td>−8.4</td></tr>
+        <tr><td class="win">116.4</td><th>Points for</th><td>109.8</td></tr>
+        <tr><td class="win">108.6</td><th>Points against</th><td>115.9</td></tr>
+        <tr><td class="win">.700</td><th>Win %</th><td>.267</td></tr>
+        <tr><td class="win">+4.1</td><th>Road / home margin</th><td>−3.3</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <p class="note">Probabilities are calibrated against held-out games: a 10-point favorite sits near 76%, and only lopsided matchups clear 85%.</p>
+  <div style="height:80px"></div>
+</main>
+</body>
+</html>

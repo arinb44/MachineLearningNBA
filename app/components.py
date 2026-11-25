@@ -1,6 +1,6 @@
 """
-HTML building blocks for the app: the Figma matchup card, the
-win-probability bar, the tale-of-the-tape comparison, and a team header.
+HTML building blocks for the app: the slate game row, the win-probability
+headline, the tale-of-the-tape comparison, and team and player headers.
 Styles live in app/styles.css.
 """
 
@@ -11,133 +11,108 @@ import streamlit as st
 from app.common import logo_url, team
 
 
-def _side(abbr, side):
-    t = team(abbr)
-    return f"""
-<div class="mc-side {side}">
-  <div class="mc-inner">
-    <div class="mc-radial" style="--c:{t['accent']}55"></div>
-    <div class="mc-logo-zone"><img class="mc-logo" src="{logo_url(abbr)}" alt="{escape(t['name'])} logo" style="--glow:{t['accent']}88"></div>
-    <div class="mc-text">
-      <span class="mc-city" style="color:{t['label']}">{escape(t['city'])}</span>
-      <span class="mc-name">{escape(t['nickname'])}</span>
-      <span class="mc-abbr" style="color:{t['accent']};filter:drop-shadow(0 0 8px {t['accent']})">{abbr}</span>
-    </div>
-  </div>
-</div>"""
-
-
-def _game_pill(game):
-    network = game['broadcast'] or ('NBA' if game['season_type'] == 'regular' else '')
-    if game['season_type'] == 'preseason':
-        return f"Preseason · {network}" if network else 'Preseason'
-    return network
-
-
-def matchup_card(result, game=None):
-    """
-    The Figma matchup card: away team on the left, home team on the right.
-    With a scheduled game (a row from the schedule), the center shows the
-    network, date and tip-off time and the footer shows the arena, as in the
-    design; the model's pick sits underneath. Without one, the pick is the
-    headline.
-    """
-    away, home = result['away_team'], result['home_team']
-    winner = team(result['predicted_winner'])
-    pick = f"{escape(winner['nickname'])} by {abs(result['predicted_margin']):.1f}"
-    prob = f"{result['win_probability']:.0f}%"
-    if game is not None:
-        center = f"""
-      <div class="mc-pill">{escape(_game_pill(game))}</div>
-      <div class="mc-pick">
-        <span class="mc-pick-main">{game['date']:%a · %b %-d}</span>
-        <span class="mc-pick-sub">{escape(game['time_et'])} ET</span>
-      </div>
-      <div class="mc-pick-line">{pick} · {prob}</div>"""
-        place = ' · '.join(p for p in (game['venue'], game['city']) if p)
-    else:
-        center = f"""
-      <div class="mc-pill">Model pick</div>
-      <div class="mc-pick">
-        <span class="mc-pick-main">{pick}</span>
-        <span class="mc-pick-sub">{prob} WIN PROBABILITY</span>
-      </div>"""
-        place = f"Home court · {team(home)['home_city']}"
-    html = f"""
-<div class="mc-wrap">
-  <div class="mc" style="--away-glow:{team(away)['accent']}22;--home-glow:{team(home)['accent']}22">
-    <div class="mc-noise"></div>
-    <div class="mc-divider"></div>
-    {_side(away, 'away')}
-    {_side(home, 'home')}
-    <div class="mc-center">{center}
-    </div>
-    <div class="mc-footer">{escape(place)}</div>
-  </div>
-</div>"""
-    st.html(html)
-
-
-def win_probability_bar(result):
-    away, home = result['away_team'], result['home_team']
+def _split(result):
+    """(away %, home %) win probabilities."""
+    home = result['home_team']
     home_pct = result['win_probability'] if result['predicted_winner'] == home \
         else 100 - result['win_probability']
-    away_pct = 100 - home_pct
+    return 100 - home_pct, home_pct
+
+
+def _tug(away, home, away_pct, home_pct, style=''):
+    return (f'<div class="tug" style="{style}" role="img" aria-label="{escape(team(away)["nickname"])} '
+            f'{away_pct:.0f} percent, {escape(team(home)["nickname"])} {home_pct:.0f} percent">'
+            f'<i style="width:{away_pct}%;background:{team(away)["accent"]}"></i>'
+            f'<i style="width:{home_pct}%;background:{team(home)["accent"]}"></i></div>')
+
+
+def _pick(result):
+    return f"{escape(team(result['predicted_winner'])['nickname'])} by {abs(result['predicted_margin']):.1f}"
+
+
+def _note(result):
+    """A margin note for the row: close games and injury adjustments."""
+    if result['win_probability'] < 60:
+        return 'close to a coin flip'
+    if abs(result['injury_adjustment']) >= 0.05:
+        return f"injury adjustment {result['injury_adjustment']:+.1f} pts".replace('-', '\u2212')
+    return ''
+
+
+def matchup_card(result, game):
+    """One row of the daily slate: tip-off, away team, home team, and the model's read."""
+    away, home = result['away_team'], result['home_team']
+    away_pct, home_pct = _split(result)
+    network = game['broadcast'] or ''
+    if game['season_type'] == 'preseason':
+        network = f"Preseason · {network}" if network else 'Preseason'
+    venue = game['venue'] if isinstance(game['venue'], str) else ''
+    place = network or venue
+    tip, _, ampm = game['time_et'].partition(' ')
+
+    def side(abbr, where):
+        t = team(abbr)
+        at = '<span class="at">at</span>' if where == 'home' else ''
+        return (f'<div class="team">{at}<img src="{logo_url(abbr)}" alt=""><div>'
+                f'<div class="nm">{escape(t["nickname"])}</div>'
+                f'<div class="ct">{escape(t["city"])} · {where}</div></div></div>')
+
+    note = _note(result)
+    fav_away = away_pct > home_pct
     st.html(f"""
-<div class="wp">
-  <div class="wp-row">
-    <img src="{logo_url(away)}" alt="{away}">
-    <div class="wp-bar" role="img" aria-label="{away} {away_pct:.0f}%, {home} {home_pct:.0f}%">
-      <div style="width:{away_pct}%;background:{team(away)['accent']}"></div>
-      <div style="width:{home_pct}%;background:{team(home)['accent']}"></div>
-    </div>
-    <img src="{logo_url(home)}" alt="{home}">
+<div class="game">
+  <div class="tip num">{escape(tip)}<small>{escape(ampm)} ET · {escape(place)}</small></div>
+  {side(away, 'away')}
+  {side(home, 'home')}
+  <div class="odds">
+    <div class="row1 num"><span class="pc{' fav' if fav_away else ''}">{away_pct:.0f}</span><span class="pc{'' if fav_away else ' fav'}">{home_pct:.0f}</span></div>
+    {_tug(away, home, away_pct, home_pct)}
+    <div class="mark">{_pick(result)}</div>
+    {f'<div class="note">{escape(note)}</div>' if note else ''}
   </div>
-  <div class="wp-labels">
-    <span>{away} {away_pct:.0f}% <span class="muted">away</span></span>
-    <span><span class="muted">home</span> {home} {home_pct:.0f}%</span>
-  </div>
+</div>""")
+
+
+def win_probability_bar(result, game=None):
+    """The headline for one matchup: the big win probability and the tug bar."""
+    away, home = result['away_team'], result['home_team']
+    away_pct, home_pct = _split(result)
+    winner = team(result['predicted_winner'])
+    if game is not None:
+        venue = game['venue'] if isinstance(game['venue'], str) else ''
+        when = (f"Next meeting: {game['date']:%a, %b %-d} · {escape(game['time_et'])} ET"
+                + (f" · {escape(venue)}" if venue else ''))
+    else:
+        when = f"Not on the schedule: a neutral read with {escape(team(home)['nickname'])} at home."
+    st.html(f"""
+<div class="win">
+  <div class="when">{when}</div>
+  <div class="big"><span class="v num">{result['win_probability']:.0f}%</span><span class="k">{escape(winner['nickname'])}<br>win it</span></div>
+  {_tug(away, home, away_pct, home_pct)}
+  <div class="ends num"><span>{away} {away_pct:.0f}%</span><span>{home} {home_pct:.0f}%</span></div>
 </div>""")
 
 
 def tale_of_the_tape(away, home, rows):
     """
     Side-by-side comparison. rows: (label, away_value, home_value, fmt,
-    league_min, league_max, higher_is_better). Each bar is scaled to where
-    the value sits in the league range for that stat, so every row reads on
-    its own scale; the better side of each row is drawn in its team color.
+    league_min, league_max, higher_is_better); the league range is unused
+    here. The side with the edge gets a marker circle.
     """
-    def fill(value, lo, hi):
-        share = 0.08 + 0.92 * (value - lo) / (hi - lo) if hi > lo else 0.5
-        share = max(0.05, min(1.0, share))
-        return share * 100
-
     body = []
-    for label, a, h, fmt, lo, hi, higher_better in rows:
-        a_better = (a > h) if higher_better else (a < h)
-        h_better = (h > a) if higher_better else (h < a)
-        # "Lower is better" stats: a lower value earns the longer bar
-        a_len = fill(a if higher_better else lo + hi - a, lo, hi)
-        h_len = fill(h if higher_better else lo + hi - h, lo, hi)
-        a_color = team(away)['accent'] if a_better else 'rgba(255,255,255,0.14)'
-        h_color = team(home)['accent'] if h_better else 'rgba(255,255,255,0.14)'
-        body.append(f"""
-<div class="tape-row">
-  <div class="tape-val left">{fmt.format(a)}</div>
-  <div class="tape-track left"><div style="width:{a_len:.0f}%;background:{a_color}"></div></div>
-  <div class="tape-label">{escape(label)}</div>
-  <div class="tape-track"><div style="width:{h_len:.0f}%;background:{h_color}"></div></div>
-  <div class="tape-val right">{fmt.format(h)}</div>
-</div>""")
+    for label, a, h, fmt, _lo, _hi, higher_better in rows:
+        a_edge = (a > h) if higher_better else (a < h)
+        h_edge = (h > a) if higher_better else (h < a)
 
+        def cell(value, edge):
+            text = fmt.format(value).replace('-', '\u2212')
+            return f'<td class="e"><span>{text}</span></td>' if edge else f'<td>{text}</td>'
+        body.append(f'<tr>{cell(a, a_edge)}<th>{escape(label)}</th>{cell(h, h_edge)}</tr>')
     st.html(f"""
-<div class="tape">
-  <div class="tape-head">
-    <img src="{logo_url(away)}" alt="{away}">
-    <img src="{logo_url(home)}" alt="{home}">
-  </div>
-  {''.join(body)}
-</div>""")
+<table class="tape num">
+  <thead><tr><th><img src="{logo_url(away)}" alt="{away}"></th><th></th><th><img src="{logo_url(home)}" alt="{home}"></th></tr></thead>
+  <tbody>{''.join(body)}</tbody>
+</table>""")
 
 
 def team_header(abbr, title=None, subtitle=None):
@@ -147,8 +122,8 @@ def team_header(abbr, title=None, subtitle=None):
 <div class="team-head">
   <img src="{logo_url(abbr)}" alt="{escape(t['name'])} logo">
   <div>
-    <div class="t-city">{escape(subtitle or t['city'])}</div>
     <div class="t-name">{escape(title or t['nickname'])}</div>
+    <div class="t-city">{escape(subtitle or t['city'])}</div>
   </div>
 </div>""")
 
@@ -167,10 +142,10 @@ def player_header(player):
     photo = (f'<img class="p-photo" src="{escape(headshot)}" alt="">' if headshot
              else f'<img class="p-photo" src="{logo_url(t["abbr"])}" alt="">')
     st.html(f"""
-<div class="player-head" style="--c:{t['accent']}">
+<div class="player-head">
   <div class="p-frame">{photo}<img class="p-logo" src="{logo_url(t['abbr'])}" alt="{t['abbr']}"></div>
   <div>
-    <div class="t-city">{escape(' · '.join(details))}</div>
     <div class="t-name">{escape(player['PLAYER_NAME'])}</div>
+    <div class="t-city">{escape(' · '.join(details))}</div>
   </div>
 </div>""")
