@@ -14,3 +14,5 @@
 | 2026-11-24 | Missing sections | Matchups -> Predictions "Any matchup"; Model + Data -> short About page (user) |
 | 2026-11-24 | Repository | https://github.com/arinb44/MachineLearningNBA (user); work on branch design/the-tip-off, push only after asking |
 | 2026-11-24 | Home court | Drawn as a pick-and-roll in play-diagram notation: cuts solid, passes dashed, dribble zigzag, screen T-bar; ball movement blue (user asked for more arrows / a real play) |
+| 2026-11-24 | Push | design/the-tip-off pushed to arinb44/MachineLearningNBA (user) |
+| 2026-11-24 | Phase 5 | Design spec + final/ assets written (user) |
