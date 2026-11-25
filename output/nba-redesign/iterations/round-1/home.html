@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Tip Off · Home (round 1)</title>
+<style id="shared">
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Kalam:wght@400;700&display=swap');
+
+/* The Tip Off: court-map structure, whiteboard materials */
+:root{
+  --bg:#1a1714; --surface:#221e1a; --line:#3d3630; --line-soft:#2c2722; --court:#4d443b;
+  --text:#efe7da; --muted:#b0a596; --faint:#8d8275; --chalk:#d9cfbf;
+  --accent:#7eaee8; --accent-ink:#0b1626; --accent-wash:#1f2a38;
+  --red:#e46a5a; --ball:#e8873f;
+  --sans:'Archivo',system-ui,sans-serif; --hand:'Kalam',cursive;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);color:var(--text);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+body{margin:0}
+::selection{background:var(--accent);color:var(--accent-ink)}
+a{color:inherit}
+:focus-visible{outline:2px dashed var(--accent);outline-offset:4px}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.hand{font-family:var(--hand)}
+
+/* mockup chrome, not part of the design */
+.mock-bar{background:#000;color:#9a9a9a;font:500 12px/1 system-ui;padding:10px 16px;display:flex;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:50}
+.mock-bar a{color:#ddd;margin-left:10px}
+
+/* header */
+header{border-bottom:1px solid var(--line-soft)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:10px;white-space:nowrap;text-decoration:none;font:800 24px/1 var(--sans);font-stretch:70%;text-transform:uppercase}
+.brand svg{width:30px;height:30px}
+nav{display:flex;gap:28px}
+nav a{font:700 16px/1 var(--sans);font-stretch:75%;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-decoration:none;padding:8px 0;border-bottom:2px solid transparent}
+nav a:hover{color:var(--text)}
+nav a[aria-current]{color:var(--text);border-color:var(--accent)}
+
+/* type */
+h1{font:900 clamp(52px,7vw,96px)/.9 var(--sans);font-stretch:62%;text-transform:uppercase;margin:0 0 24px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent)}
+h2{font:900 40px/1 var(--sans);font-stretch:62%;text-transform:uppercase;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 24px;max-width:62ch}
+.note{font:400 18px/1.3 var(--hand);color:var(--faint)}
+.mark{font:700 20px/1.2 var(--hand);color:var(--accent)}
+section{margin-top:72px}
+
+/* page head */
+.ph{display:flex;align-items:end;justify-content:space-between;gap:24px;padding:56px 0 24px;border-bottom:2px solid var(--line)}
+.ph h1{font-size:clamp(48px,6vw,80px);margin:0}
+.ph p{margin:10px 0 0;color:var(--muted);max-width:60ch}
+
+/* controls */
+.day{display:flex;align-items:center;gap:8px}
+.circle-btn{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:none;color:var(--text);cursor:pointer;display:grid;place-items:center}
+.circle-btn:hover{border-color:var(--accent);color:var(--accent)}
+.circle-btn svg{width:18px;height:18px}
+.day span{font:800 22px/1 var(--sans);font-stretch:70%;text-transform:uppercase;padding:0 6px;white-space:nowrap}
+.select{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 16px;border:2px solid var(--line);border-radius:999px;background:none;color:var(--text);font:600 15px var(--sans);cursor:pointer}
+.select:hover{border-color:var(--accent)}
+.select svg{width:14px;height:14px;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:24px}
+.controls label{font-size:13px;color:var(--faint);margin-right:-4px}
+
+/* tug-of-war bar: two team colors */
+.tug{display:flex;height:8px;border-radius:4px;overflow:hidden}
+.tug i{display:block;height:100%}
+
+/* matchup detail (predictions) */
+.big{display:flex;align-items:flex-end;gap:16px}
+.big .v{font:900 132px/.8 var(--sans);font-stretch:62%;letter-spacing:-.02em}
+.big .k{font:700 22px/1.15 var(--hand);color:var(--accent);padding-bottom:8px}
+.facts{display:flex;flex-wrap:wrap;gap:12px 40px;margin:28px 0 0;padding-top:20px;border-top:1px solid var(--line)}
+.facts dt{font-size:13px;color:var(--faint)}
+.facts dd{margin:2px 0 0;font:800 30px/1 var(--sans);font-stretch:70%}
+.tape{width:100%;border-collapse:collapse}
+.tape th,.tape td{padding:12px 0;border-bottom:1px dashed var(--line)}
+.tape thead th{font:900 26px var(--sans);font-stretch:62%;text-transform:uppercase;border-bottom:2px solid var(--line)}
+.tape thead th:last-child,.tape td:last-child{text-align:right}
+.tape thead th:first-child,.tape td:first-child{text-align:left}
+.tape tbody th{font-weight:500;color:var(--muted);font-size:15px}
+.tape td{font:800 22px var(--sans);font-stretch:75%;width:26%;position:relative}
+/* the marker circle around the side with the edge */
+.tape td.e::after{content:"";position:absolute;top:50%;width:58px;height:32px;transform:translateY(-50%) rotate(-4deg);border:2px solid var(--accent);border-radius:50%}
+.tape td.e:first-child::after{left:-14px}
+.tape td.e:last-child::after{right:-14px}
+
+/* ranked bar rows (teams, players) */
+.rows{list-style:none;margin:0;padding:0;border-top:2px solid var(--line)}
+.row{display:grid;grid-template-columns:36px 36px 220px 1fr 64px;gap:14px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line-soft)}
+.row .rk{font:800 18px var(--sans);font-stretch:70%;color:var(--faint);text-align:right}
+.row img{width:30px;height:30px;object-fit:contain}
+.row .nm{font:800 20px/1.1 var(--sans);font-stretch:70%;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .nm small{font:500 13px var(--sans);font-stretch:100%;text-transform:none;color:var(--faint);margin-left:6px}
+.row .v{font:800 20px var(--sans);font-stretch:75%;text-align:right}
+.track{position:relative;height:14px}
+.track i{position:absolute;top:0;bottom:0;border-radius:3px}
+.track.div::before{content:"";position:absolute;left:50%;top:-10px;bottom:-10px;border-left:2px dashed var(--court)}
+.row:hover{background:var(--surface)}
+
+.legend{display:flex;gap:20px;font-size:14px;color:var(--muted);margin:0 0 16px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:14px;height:14px;border-radius:3px;display:inline-block}
+
+footer{margin-top:96px;border-top:1px solid var(--line-soft);padding:24px 0 48px;color:var(--faint);font-size:14px}
+
+@media (max-width:900px){
+  nav{gap:18px}
+}
+@media (max-width:820px){
+  header .wrap{flex-wrap:wrap;height:auto;padding-top:16px;padding-bottom:4px;gap:6px}
+  nav{width:100%;overflow-x:auto;gap:22px}
+}
+@media (max-width:900px){
+  .row{grid-template-columns:28px 30px 210px 1fr 56px;gap:10px}
+}
+@media (max-width:600px){
+  .wrap{padding:0 18px}
+  .ph{flex-direction:column;align-items:flex-start}
+  .big .v{font-size:96px}
+  .row{grid-template-columns:24px 26px 1fr 52px}
+  .row .track{grid-column:2/-1;grid-row:2}
+  .row img{width:24px;height:24px}
+  .row .nm small{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center;padding:56px 0 24px}
+.lede{font-size:19px;color:var(--muted);max-width:44ch;margin:0 0 28px}
+.drives{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;max-width:46ch;padding-top:20px;border-top:1px solid var(--line)}
+.drives svg{width:36px;height:36px;color:var(--accent)}
+.drives p{margin:0}
+.drives .mark{display:block;margin-bottom:2px}
+.court{width:100%;height:auto;display:block}
+.court .ln{fill:none;stroke:var(--court);stroke-width:2}
+.court .arrow{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-dasharray:7 7;stroke-linecap:round}
+.court .ball{fill:var(--ball)}
+.spot circle{fill:var(--bg);stroke:var(--chalk);stroke-width:2.5;transition:stroke .2s,fill .2s}
+.spot .n{fill:var(--chalk);font:800 17px var(--sans);text-anchor:middle}
+.spot .lab{fill:var(--text);font:700 23px var(--hand)}
+.spot .where{fill:var(--faint);font:500 12px var(--sans)}
+.spot:hover circle,.spot:focus-visible circle{stroke:var(--accent);fill:var(--accent-wash)}
+.spot:hover .lab,.spot:focus-visible .lab{fill:var(--accent)}
+.spot:focus-visible{outline:none}
+.spot.sixth circle{stroke-dasharray:5 4}
+.court-cap{text-align:right;margin:10px 0 0}
+.tonight{margin-top:56px;border-top:2px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr)}
+.tonight a{display:block;text-decoration:none;padding:22px 24px 22px 0}
+.tonight a+a{padding-left:24px;border-left:1px solid var(--line-soft)}
+.tonight a:hover .m{color:var(--accent)}
+.tonight .t{font-size:13px;color:var(--faint);margin-bottom:8px}
+.tonight .m{font:900 30px/1 var(--sans);font-stretch:62%;text-transform:uppercase;margin-bottom:14px;transition:color .2s}
+.tonight .tug{margin-bottom:10px}
+.tonight-h{display:flex;justify-content:space-between;align-items:baseline;margin-top:64px}
+.tonight-h h2{margin:0}
+.tonight-h a{font:700 18px var(--hand);color:var(--accent);text-decoration:none}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:40px}
+  .tonight{grid-template-columns:1fr}
+  .tonight a+a{padding-left:0;border-left:0;border-top:1px solid var(--line-soft)}
+}
+</style>
+</head>
+<body>
+<div class="mock-bar"><span>The Tip Off · round 1 · sample predictions</span><span><a href="home.html">Home</a><a href="predictions.html">Predictions</a><a href="teams.html">Teams</a><a href="players.html">Players</a></span></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="16" cy="16" r="4.5" fill="#e8873f"/><path d="M16 2v8M16 22v8" stroke="currentColor" stroke-width="2.2"/></symbol>
+  <marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#7eaee8" stroke-width="2"/></marker>
+</defs></svg>
+
+<header><div class="wrap">
+  <a class="brand" href="home.html"><svg aria-hidden="true"><use href="#mark"/></svg>The Tip Off</a>
+  <nav aria-label="Main"><a href="predictions.html">Predictions</a><a href="players.html">Players</a><a href="teams.html">Teams</a><a href="#">Model</a><a href="#">About</a></nav>
+</div></header>
+
+<main class="wrap">
+  <section class="hero" style="margin-top:0">
+    <div>
+      <h1>Win probabilities for <em>every</em> NBA game</h1>
+      <p class="lede">Pick two teams and a date. You get a predicted margin and a calibrated win probability, built only from games played before tip-off.</p>
+      <div class="drives">
+        <svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M8 30L30 8M30 8H18M30 8V20"/></svg>
+        <p><span class="mark">What drives the number</span>Average margin, last-ten form and home/road splits, adjusted for injuries by each player's minutes and PIE.</p>
+      </div>
+    </div>
+    <div>
+      <svg class="court" viewBox="0 0 500 470" role="navigation" aria-label="Site sections drawn as players in their positions">
+        <path class="ln" d="M1 1H499V469H1Z"/>
+        <path class="ln" d="M170 0V190H330V0"/>
+        <circle class="ln" cx="250" cy="190" r="60"/>
+        <path class="ln" d="M30 0V140A237.5 237.5 0 0 0 470 140V0"/>
+        <path class="ln" d="M210 52.5A40 40 0 0 0 290 52.5"/>
+        <path class="ln" d="M220 40H280" stroke-width="3"/>
+        <circle class="ln" cx="250" cy="52.5" r="7.5"/>
+        <path class="ln" d="M190 470A60 60 0 0 1 310 470"/>
+        <circle class="ball" cx="274" cy="350" r="8"/>
+        <path class="arrow" d="M266 314C300 260 340 200 348 132" marker-end="url(#head)"/>
+        <a class="spot" href="predictions.html"><circle cx="250" cy="330" r="16"/><text class="n" x="250" y="336">1</text><text class="lab" x="226" y="334" text-anchor="end">Predictions</text><text class="where" x="226" y="351" text-anchor="end">Point guard</text></a>
+        <a class="spot" href="#"><circle cx="430" cy="230" r="16"/><text class="n" x="430" y="236">2</text><text class="lab" x="430" y="274" text-anchor="middle">Matchups</text><text class="where" x="430" y="291" text-anchor="middle">Shooting guard</text></a>
+        <a class="spot" href="teams.html"><circle cx="70" cy="230" r="16"/><text class="n" x="70" y="236">3</text><text class="lab" x="70" y="274" text-anchor="middle">Teams</text><text class="where" x="70" y="291" text-anchor="middle">Small forward</text></a>
+        <a class="spot" href="players.html"><circle cx="146" cy="104" r="16"/><text class="n" x="146" y="110">4</text><text class="lab" x="146" y="148" text-anchor="middle">Players</text><text class="where" x="146" y="165" text-anchor="middle">Power forward</text></a>
+        <a class="spot" href="#"><circle cx="354" cy="104" r="16"/><text class="n" x="354" y="110">5</text><text class="lab" x="380" y="100">Model</text><text class="where" x="380" y="117">Center</text></a>
+        <a class="spot sixth" href="#"><circle cx="62" cy="420" r="16"/><text class="n" x="62" y="426">6</text><text class="lab" x="88" y="418">Data</text><text class="where" x="88" y="435">Sixth man</text></a>
+      </svg>
+      <p class="note court-cap">Every section plays a position.</p>
+    </div>
+  </section>
+
+  <div class="tonight-h"><h2>Tonight · Tue, Nov 24</h2><a href="predictions.html">full slate →</a></div>
+  <div class="tonight">
+    <a href="predictions.html"><div class="t num">7:00 PM ET · Kia Center</div><div class="m">Pistons at Magic</div><div class="tug" role="img" aria-label="Pistons 39 percent, Magic 61 percent"><i style="width:39%;background:#C8102E"></i><i style="width:61%;background:#0077C0"></i></div><div class="mark">Magic 61% · by 3.1</div></a>
+    <a href="predictions.html"><div class="t num">8:00 PM ET · NBC</div><div class="m">Celtics at Wizards</div><div class="tug" role="img" aria-label="Celtics 81 percent, Wizards 19 percent"><i style="width:81%;background:#007A33"></i><i style="width:19%;background:#E31837"></i></div><div class="mark">Celtics 81% · by 9.4</div></a>
+    <a href="predictions.html"><div class="t num">10:00 PM ET · NBCSN</div><div class="m">Mavericks at Nuggets</div><div class="tug" role="img" aria-label="Mavericks 32 percent, Nuggets 68 percent"><i style="width:32%;background:#00538C"></i><i style="width:68%;background:#FEC524"></i></div><div class="mark">Nuggets 68% · by 5.2</div></a>
+  </div>
+</main>
+<footer><div class="wrap">Data refreshes weekly from ESPN and the NBA stats API. Probabilities are calibrated against held-out games.</div></footer>
+</body>
+</html>

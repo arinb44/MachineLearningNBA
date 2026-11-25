@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction B · Box score</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;800;900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#14110e; --surface:#1c1814; --rule:#4a4036; --rule-soft:#2b251f;
+  --text:#efe6d8; --muted:#ab9f8e; --faint:#8a7e6f;
+  --accent:#86c27e; --accent-ink:#0f1a0d;
+  --head:'Libre Franklin',system-ui,sans-serif; --mono:'Spline Sans Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);color:var(--text);font:400 16px/1.55 var(--head);-webkit-font-smoothing:antialiased}
+body{margin:0}
+::selection{background:var(--accent);color:var(--accent-ink)}
+a{color:inherit;text-underline-offset:3px;text-decoration-color:var(--rule)}
+a:hover{text-decoration-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:1160px;margin:0 auto;padding:0 32px}
+
+.mock-bar{background:#000;color:#9a9a9a;font:500 12px/1 system-ui;padding:10px 16px;display:flex;justify-content:space-between;position:sticky;top:0;z-index:50}
+.mock-bar a{color:#ddd}
+.mock-divider{margin:96px 0 0;background:#000;color:#9a9a9a;font:500 12px/1 system-ui;padding:12px 16px;text-align:center}
+
+/* masthead */
+.mast{padding:28px 0 0;text-align:center}
+.mast .name{font:900 clamp(48px,8vw,104px)/.9 var(--head);letter-spacing:-.035em;text-transform:uppercase;margin:0;text-decoration:none;display:inline-block}
+.mast .name span{color:var(--accent)}
+.dateline{display:flex;justify-content:space-between;gap:16px;border-top:3px double var(--rule);border-bottom:1px solid var(--rule);margin-top:18px;padding:9px 0;font:500 13px/1.2 var(--mono);color:var(--muted)}
+.dateline nav{display:flex;gap:22px}
+.dateline nav a{text-decoration:none;color:var(--text)}
+.dateline nav a[aria-current]{color:var(--accent)}
+.mast.small{padding-top:18px}
+.mast.small .name{font-size:44px}
+
+/* home: front page */
+.front{display:grid;grid-template-columns:1.35fr 1fr;gap:0;margin-top:32px}
+.lead{padding-right:36px;border-right:1px solid var(--rule)}
+.lead h1{font:900 clamp(38px,4.6vw,62px)/1 var(--head);letter-spacing:-.03em;margin:0 0 16px;text-wrap:balance}
+.lead .deck{font:500 20px/1.45 var(--head);color:var(--muted);margin:0 0 24px;max-width:40ch}
+.lead .body{columns:2;column-gap:28px;column-rule:1px solid var(--rule-soft);font-size:16px}
+.lead .body p{margin:0 0 12px}
+.lead .body p:first-child::first-letter{font:900 52px/.8 var(--head);float:left;margin:6px 8px 0 0;color:var(--accent)}
+.side{padding-left:32px}
+.side h2,.agate h2{font:800 14px/1 var(--head);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px;padding-bottom:8px;border-bottom:2px solid var(--text)}
+.box{width:100%;border-collapse:collapse;font-size:15px}
+.box th{font:600 12px/1 var(--mono);color:var(--faint);text-align:right;padding:6px 0;border-bottom:1px solid var(--rule)}
+.box th:first-child{text-align:left}
+.box td{padding:10px 0;border-bottom:1px solid var(--rule-soft);vertical-align:baseline}
+.box td.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.box td a{font-weight:800;text-decoration:none}
+.box td a:hover{color:var(--accent)}
+.box td small{display:block;color:var(--faint);font-size:13px;font-weight:400}
+.box tfoot td{font:500 13px var(--mono);color:var(--faint);border-bottom:0;padding-top:10px}
+.why{margin-top:28px;border:1px solid var(--rule);padding:16px 18px}
+.why b{font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.06em;color:var(--accent);display:block;margin-bottom:6px}
+.why p{margin:0}
+
+.agate{margin-top:48px}
+.slate{width:100%;border-collapse:collapse}
+.slate th{font:600 12px/1 var(--mono);color:var(--faint);text-align:left;padding:8px 12px 8px 0;border-bottom:1px solid var(--rule)}
+.slate th.r,.slate td.r{text-align:right}
+.slate td{padding:16px 12px 16px 0;border-bottom:1px solid var(--rule-soft);vertical-align:middle}
+.slate .tm{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.slate .tm img{width:28px;height:28px;object-fit:contain}
+.slate .tm .ab{font:500 13px var(--mono);color:var(--faint)}
+.slate .fav{color:var(--accent)}
+.slate td.mono{font-size:16px}
+.meter{display:flex;align-items:center;gap:10px}
+.meter .track{flex:1;height:6px;background:var(--rule-soft);position:relative;min-width:120px}
+.meter .track i{position:absolute;inset:0 auto 0 0;background:var(--accent)}
+.meter .track::after{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--faint)}
+.foot{font:500 13px/1.5 var(--mono);color:var(--faint);margin-top:12px}
+
+/* predictions detail */
+.story{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:48px;border-top:2px solid var(--text);padding-top:24px}
+.story .l{padding-right:32px;border-right:1px solid var(--rule)}
+.story .r{padding-left:32px}
+.story h2{font:900 40px/1.02 var(--head);letter-spacing:-.03em;margin:0 0 10px}
+.story .deck{color:var(--muted);margin:0 0 24px}
+.line{display:grid;grid-template-columns:auto 1fr;gap:4px 24px;align-items:baseline}
+.line .k{font:600 13px var(--mono);color:var(--faint);text-transform:uppercase}
+.line .v{font:800 22px var(--head)}
+.line .v.big{font:900 88px/.9 var(--head);letter-spacing:-.04em;color:var(--accent)}
+.split{display:flex;height:12px;margin:22px 0 8px}
+.split i{display:block;height:100%}
+.split-l{display:flex;justify-content:space-between;font:500 13px var(--mono);color:var(--muted)}
+.tape{width:100%;border-collapse:collapse}
+.tape th,.tape td{padding:9px 0;border-bottom:1px solid var(--rule-soft)}
+.tape thead th{font:800 14px var(--head);text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid var(--text);text-align:right}
+.tape thead th:first-child{text-align:left}
+.tape tbody th{text-align:left;font-weight:500;color:var(--muted)}
+.tape td{text-align:right;font:500 16px var(--mono);font-variant-numeric:tabular-nums;width:22%}
+.tape td.w{color:var(--accent);font-weight:600}
+
+@media (max-width:900px){
+  .front,.story{grid-template-columns:1fr}
+  .lead,.story .l{padding-right:0;border-right:0;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+  .side,.story .r{padding-left:0;padding-top:28px}
+  .slate .hide-m{display:none}
+  .meter .track{min-width:60px}
+  .dateline{flex-direction:column;align-items:center}
+  .dateline nav{gap:14px;flex-wrap:wrap;justify-content:center}
+}
+@media (max-width:600px){
+  .wrap{padding:0 18px}
+  .lead .body{columns:1}
+  .slate .meter .track{min-width:60px}
+  .line .v.big{font-size:64px}
+}
+</style>
+</head>
+<body>
+<div class="mock-bar"><span>Direction B · Box score · sample numbers for layout only</span><span><a href="#home">Home</a> · <a href="#predictions">Predictions</a></span></div>
+
+<!-- ================= HOME ================= -->
+<header class="wrap mast" id="home">
+  <a class="name" href="#home">The Tip<span>·</span>Off</a>
+  <div class="dateline"><span>Tuesday, November 24, 2026</span><nav aria-label="Main"><a href="#predictions">Predictions</a><a href="#">Players</a><a href="#">Teams</a><a href="#">Model</a><a href="#">About</a></nav><span>3 games tonight</span></div>
+</header>
+
+<main class="wrap">
+  <div class="front">
+    <article class="lead">
+      <h1>Celtics favored by 9.4 in Washington, the biggest edge on tonight's slate</h1>
+      <p class="deck">Win probabilities for every NBA game, written up like a morning box score: one calibrated number per game, and the reasons behind it.</p>
+      <div class="body">
+        <p>Boston arrives with a +7.8 average margin against Washington's −6.1, and the model gives the Celtics an 81% chance. That is about as confident as it gets here: only lopsided matchups clear 85%.</p>
+        <p>The closest game is in Orlando, where the Magic are 61% against Detroit. In Denver the Nuggets are 68%, down from 72% after an injury adjustment of −1.4 points.</p>
+        <p><a href="#predictions">Full slate and the tale of the tape →</a></p>
+      </div>
+    </article>
+    <aside class="side">
+      <h2>Box score</h2>
+      <table class="box">
+        <thead><tr><th>Section</th><th>Count</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#predictions">Predictions</a><small>Two teams, a date, a probability</small></td><td class="n">3 today</td></tr>
+          <tr><td><a href="#">Matchups</a><small>Any two teams, head to head</small></td><td class="n">870</td></tr>
+          <tr><td><a href="#">Teams</a><small>Form, margins, home and road</small></td><td class="n">30</td></tr>
+          <tr><td><a href="#">Players</a><small>Who is steady, who is streaky</small></td><td class="n">582</td></tr>
+          <tr><td><a href="#">Model</a><small>What moves the number</small></td><td class="n">11 inputs</td></tr>
+          <tr><td><a href="#">About the data</a><small>Sources and refresh schedule</small></td><td class="n">weekly</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="2">Every section is a line in the box score.</td></tr></tfoot>
+      </table>
+      <div class="why"><b>What drives the number</b><p>Average margin, last-ten form and home/road splits, adjusted for injuries by each player's minutes and PIE.</p></div>
+    </aside>
+  </div>
+</main>
+
+<div class="mock-divider" id="predictions">Predictions page</div>
+
+<!-- ================= PREDICTIONS ================= -->
+<header class="wrap mast small">
+  <a class="name" href="#home">The Tip<span>·</span>Off</a>
+  <div class="dateline"><span>Tuesday, November 24</span><nav aria-label="Main"><a href="#predictions" aria-current="page">Predictions</a><a href="#">Players</a><a href="#">Teams</a><a href="#">Model</a><a href="#">About</a></nav><span><a href="#">‹ Prev day</a> · <a href="#">Next day ›</a></span></div>
+</header>
+
+<main class="wrap">
+  <section class="agate">
+    <h2>Tonight's slate</h2>
+    <table class="slate">
+      <thead><tr><th>Tip (ET)</th><th>Away</th><th>Home</th><th class="hide-m">Pick</th><th class="r">Margin</th><th>Win probability</th><th class="hide-m">TV</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">7:00</td>
+          <td><span class="tm"><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/DET.png" alt="">Pistons <span class="ab">DET</span></span></td>
+          <td><span class="tm fav"><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/ORL.png" alt="">Magic <span class="ab">ORL</span></span></td>
+          <td class="hide-m">ORL</td><td class="mono r">3.1</td>
+          <td><span class="meter"><span class="track"><i style="width:61%"></i></span><span class="mono">61%</span></span></td><td class="hide-m mono">—</td></tr>
+        <tr><td class="mono">8:00</td>
+          <td><span class="tm fav"><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/BOS.png" alt="">Celtics <span class="ab">BOS</span></span></td>
+          <td><span class="tm"><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/WAS.png" alt="">Wizards <span class="ab">WAS</span></span></td>
+          <td class="hide-m">BOS</td><td class="mono r">9.4</td>
+          <td><span class="meter"><span class="track"><i style="width:81%"></i></span><span class="mono">81%</span></span></td><td class="hide-m mono">NBC</td></tr>
+        <tr><td class="mono">10:00</td>
+          <td><span class="tm"><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/DAL.png" alt="">Mavericks <span class="ab">DAL</span></span></td>
+          <td><span class="tm fav"><img src="https://raw.githubusercontent.com/arinb44/MachineLearningNBA/main/static/logos/DEN.png" alt="">Nuggets <span class="ab">DEN</span></span></td>
+          <td class="hide-m">DEN*</td><td class="mono r">5.2</td>
+          <td><span class="meter"><span class="track"><i style="width:68%"></i></span><span class="mono">68%</span></span></td><td class="hide-m mono">NBCSN</td></tr>
+      </tbody>
+    </table>
+    <p class="foot">* Injury adjustment −1.4 pts. Bar tick marks 50%. Probabilities are calibrated against held-out games.</p>
+  </section>
+
+  <section class="story">
+    <div class="l">
+      <h2>Celtics at Wizards</h2>
+      <p class="deck">8:00 PM ET · Capital One Arena · NBC</p>
+      <div class="line">
+        <span class="k">Celtics win</span><span class="v big mono">81%</span>
+        <span class="k">Margin</span><span class="v mono">BOS by 9.4</span>
+        <span class="k">Injuries</span><span class="v">No adjustment</span>
+      </div>
+      <div class="split" role="img" aria-label="Celtics 81 percent, Wizards 19 percent"><i style="width:81%;background:#007A33"></i><i style="width:19%;background:#E31837"></i></div>
+      <div class="split-l"><span>BOS 81</span><span>WAS 19</span></div>
+    </div>
+    <div class="r">
+      <table class="tape">
+        <thead><tr><th>Tale of the tape</th><th>BOS</th><th>WAS</th></tr></thead>
+        <tbody>
+          <tr><th>Avg margin</th><td class="w">+7.8</td><td>−6.1</td></tr>
+          <tr><th>Last 10 margin</th><td class="w">+5.2</td><td>−8.4</td></tr>
+          <tr><th>Points for</th><td class="w">116.4</td><td>109.8</td></tr>
+          <tr><th>Points against</th><td class="w">108.6</td><td>115.9</td></tr>
+          <tr><th>Win %</th><td class="w">.700</td><td>.267</td></tr>
+          <tr><th>Road / home margin</th><td class="w">+4.1</td><td>−3.3</td></tr>
+          <tr><th>Rest days</th><td>1</td><td class="w">2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <div style="height:80px"></div>
+</main>
+</body>
+</html>

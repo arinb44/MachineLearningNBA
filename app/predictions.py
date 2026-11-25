@@ -4,17 +4,13 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from app.common import (add_logo, load_builder, load_games,
-                        load_injuries, load_predictor, load_schedule, section,
-                        show, style_fig, team, team_game_log, team_label,
-                        team_summary)
+from app.common import (add_logo, load_games, load_injuries, load_predictor,
+                        load_schedule, predict, section, show, style_fig, team,
+                        team_game_log, team_label, team_summary)
 from app.components import matchup_card, tale_of_the_tape, win_probability_bar
 
-st.title('NBA Game Predictor')
-st.caption(
-    'Predicted margin and calibrated win probability from point-in-time team '
-    'form. Trained with walk-forward validation on the 2025-26 season.'
-)
+st.title('Predictions')
+st.caption('Predicted margin and calibrated win probability from point-in-time team form.')
 
 predictor = load_predictor()
 if predictor is None:
@@ -22,20 +18,11 @@ if predictor is None:
     st.stop()
 
 games = load_games()
-builder = load_builder()
 injuries = load_injuries()
 schedule = load_schedule()
 as_of_date = games['date'].max() + pd.Timedelta(days=1)
 teams = sorted(set(games['home_team']) | set(games['away_team']))
 today = pd.Timestamp.now(tz='America/New_York').normalize().tz_localize(None)
-
-
-def predict(home, away, date=None):
-    # Features only ever use games played before the date, so a future
-    # game is predicted from all the results available today.
-    when = max(as_of_date, date) if date is not None else as_of_date
-    return predictor.predict_game({'home_team': home, 'away_team': away},
-                                  builder, when, injuries)
 
 
 # ---------- daily slate ----------
@@ -92,14 +79,10 @@ else:
             st.caption(f"Until new-season results come in, predictions use each team's form "
                        f"through {games['date'].max():%B %-d, %Y}; summer roster moves "
                        "aren't reflected yet.")
-        cols = st.columns(2, gap='medium')
-        for i, game in enumerate(slate.itertuples()):
+        for game in slate.itertuples():
             result = predict(game.home_team, game.away_team, game.date)
-            if result is None:
-                continue
-            with cols[i % 2]:
+            if result is not None:
                 matchup_card(result, game=game._asdict())
-                st.write('')
 
 # ---------- matchup picker ----------
 
@@ -126,10 +109,7 @@ if result is None:
     st.warning('Not enough game history for one of these teams.')
     st.stop()
 
-st.write('')
-matchup_card(result, game=next_meeting)
-win_probability_bar(result)
-st.write('')
+win_probability_bar(result, game=next_meeting)
 
 m1, m2, m3 = st.columns(3)
 m1.metric('Predicted margin', f"{abs(result['predicted_margin']):.1f} pts",
@@ -152,8 +132,7 @@ if result['win_probability'] < 60:
 
 # ---------- tale of the tape ----------
 
-section('Tale of the tape', 'Season form going into the game. The better side of each row is '
-        'drawn in its team color; bar length shows where the value sits in the league.')
+section('Tale of the tape', 'Season form going into the game. The circled number has the edge.')
 
 summary = team_summary().set_index('team')
 a, h = summary.loc[away], summary.loc[home]
@@ -218,32 +197,7 @@ fig.update_yaxes(title='Point margin', ticksuffix='')
 show(style_fig(fig, height=380, legend=True))
 
 
-with st.expander('How this model works, and how well'):
-    st.markdown(
-        """
-**Measured on the full 2025-26 regular season (1,225 games)**, scored only on
-games the model had never seen during training:
-
-| Metric | Model | Naive baseline |
-|---|---|---|
-| Winner accuracy | **67.5%** | 55.2% (always pick the home team) |
-| Margin error (MAE) | **11.91 pts** | 13.40 (constant home-court edge) |
-
-- **No data leakage.** Every game's features come only from games played
-  *before* it: season-to-date margin, last-10 form, home/road splits, rest
-  days, back-to-backs.
-- **Walk-forward validation.** The model always trains on the past and is
-  tested on the future, never on a random split of the season.
-- **Calibrated probabilities.** Win probability comes from a logistic
-  calibrator fit on held-out predictions, so a stated 65% really does win
-  about 65% of the time.
-- **Injuries** are pulled from ESPN and each absent player is valued by
-  minutes and PIE, weighted by their status.
-
-An ~11.9 point average margin error is normal for NBA models - single-game
-variance is genuinely large. Predictions are one input, not betting advice.
-        """
-    )
+st.page_link('app/about.py', label='How this model works, and how well', icon=':material/arrow_forward:')
 
 st.caption(
     f"Model trained on games through {games['date'].max():%B %d, %Y}. "

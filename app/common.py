@@ -16,15 +16,17 @@ import player_pool
 from predict_games import NBAPredictor, load_injury_impacts
 from teams import team
 
-# Design tokens, taken from the Figma matchup card
-BG = '#09090b'
-SURFACE = '#111118'
-INK = 'rgba(255,255,255,0.92)'
-INK_MUTED = 'rgba(255,255,255,0.45)'
-GRID = 'rgba(255,255,255,0.07)'
-NEUTRAL = '#52525b'
-DISPLAY_FONT = "'Barlow Condensed', sans-serif"
-BODY_FONT = "'Inter', system-ui, sans-serif"
+# Design tokens: The Tip Off (output/nba-redesign/iterations/round-2/tipoff.css)
+BG = '#1a1714'
+SURFACE = '#221e1a'
+INK = '#efe7da'
+INK_MUTED = '#b0a596'
+GRID = '#2c2722'
+NEUTRAL = '#4d443b'
+ACCENT = '#7eaee8'
+RED = '#e46a5a'
+DISPLAY_FONT = "'Archivo', sans-serif"
+BODY_FONT = "'Archivo', system-ui, sans-serif"
 
 
 # ---------- data ----------
@@ -224,6 +226,20 @@ def team_label(abbr):
 
 
 def section(title, caption=None):
-    st.markdown(f"<h3 class='section-title'>{title}</h3>", unsafe_allow_html=True)
+    # The anchor lets links jump to a section, e.g. predictions#any-matchup from the Home court
+    st.subheader(title, anchor=title.lower().replace(' ', '-').replace('.', ''))
     if caption:
         st.caption(caption)
+
+
+def predict(home, away, date=None):
+    """Model prediction for one game, or None if the model or team history is missing."""
+    predictor = load_predictor()
+    if predictor is None:
+        return None
+    # Features only ever use games played before the date, so a future
+    # game is predicted from all the results available today.
+    as_of_date = load_games()['date'].max() + pd.Timedelta(days=1)
+    when = max(as_of_date, date) if date is not None else as_of_date
+    return predictor.predict_game({'home_team': home, 'away_team': away},
+                                  load_builder(), when, load_injuries())
